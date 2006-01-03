@@ -1,0 +1,14 @@
+<html
+	xmlns:ptl = "http://www.dublinux.net/ptl">
+	<body>
+	<p><ptl:translate key="Hello"/></p>
+	<ptl:loop data="$properties" var="property">
+		<ptl:if var="$property" neq="">
+		<!-- <p><b><ptl:out value="$property"/></b></p> -->
+		</ptl:if>
+	</ptl:loop>
+	<ptl:loop data="('Stillorgan','Blackrock','Killiney')" var="city">
+	<p><b><ptl:out value="$city"/></b></p>
+	</ptl:loop>
+	</body>
+</html>
