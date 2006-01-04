@@ -22,13 +22,17 @@
 	</ptl:loop>
 	
 	<h1><ptl:translate en="Towns"/></h1>
-	<ptl:loop data="('Stillorgan','Blackrock','Killiney')" var="town">
-	<p><b><entity:nbsp/><ptl:out value="%town"/></b></p>
+	<table>
+	<ptl:loop data="('Stillorgan','Blackrock','Killiney')" var="town" background-colors="#EEEEEE, #FFFFFF">
+	<p><ptl:tr style="background-color:%background-color"><td><b><ptl:out value="%town"/></b></td></ptl:tr></p>
 	</ptl:loop>
+	</table>
 
 	<h1><ptl:translate en="Cities"/></h1>
+	<table>
 	<ptl:loop data="%cities" var="city">
-	<p><b><entity:nbsp/><ptl:out value="%city"/></b></p>
+	<p><tr><td><b><ptl:out value="%city"/></b></td></tr></p>
 	</ptl:loop>
+	</table>
 	</body>
 </html>

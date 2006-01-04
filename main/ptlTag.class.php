@@ -50,6 +50,12 @@
 		{
 			$data = $element->getAttribute("data");
 			$var = $element->getAttribute("var");
+			$backgroundColors = $element->getAttribute("background-colors");
+			
+			if ($backgroundColors)
+			{
+				$backgroundColors = explode(",", $backgroundColors);
+			}
 
 			if ($data{0} == '(')
 			{
@@ -63,12 +69,27 @@
 
 			if (is_array($data))
 			{
+				$bgcolorIndex = 0;
+				
 				foreach ($data as $tmp)
 				{
+					if (is_array($backgroundColors) && count($backgroundColors) > 0)
+					{
+						if ($bgcolorIndex >= count($backgroundColors))
+						{
+							$bgcolorIndex = 0;
+						}
+						
+						$engine->setData("%background-color", $backgroundColors[$bgcolorIndex]);
+						$bgcolorIndex++;
+					}
+					
 					$engine->setData("%" . $var, $tmp);
 					$engine->process($element->firstChild);
 					$engine->unsetData("%" . $var);
 				}
+				
+				$engine->unsetData("%background-color");
 			}
 		}
 
@@ -79,6 +100,41 @@
 		{
 			$to = $element->getAttribute("to");
 			header("Location: $to");
+		}
+		
+		/**
+		 * 
+		 */
+		function tag_tr($engine, $element)
+		{
+			$style = $element->getAttribute("style");
+			
+			if ($style)
+			{
+				$engine->append("<tr");
+				
+				if ($element->hasAttributes())
+				{
+					$attributes = $element->attributes; 
+					$i = 0;
+					
+					while ($attr = $attributes->item($i++))
+					{
+						$value = $attr->nodeValue;
+						
+						if ($engine->hasData("%background-color"))
+						{
+							$value = str_replace("%background-color", $engine->getData("%background-color"), $value);
+						}
+						
+						$engine->append(" " . $attr->nodeName . "=\"" . $value . "\"");
+					}
+				}
+
+				$engine->append(">");
+				$engine->process($element->firstChild);
+				$engine->append("</tr>");
+			}
 		}
 		
 		/**
