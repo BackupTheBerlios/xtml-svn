@@ -21,7 +21,7 @@
 		function tag_translate($engine, $element)
 		{
 			// TODO: implement translate logic
-			print $element->getAttribute("en");
+			$engine->append($element->getAttribute("en"));
 		}
 
 		/**
@@ -75,17 +75,21 @@
 		/**
 		 * 
 		 */
+		
+		/**
+		 * 
+		 */
 		function tag_out($engine, $element)
 		{
 			$value = $element->getAttribute("value");
 		
 			if ($value{0} == '%')
 			{
-				print $engine->getData($value);
+				$engine->append($engine->getData($value));
 			}
 			else
 			{
-				print "$value";
+				$engine->append("$value");
 			}
 			
 			$engine->process($element->firstChild);

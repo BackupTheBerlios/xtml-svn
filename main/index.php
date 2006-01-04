@@ -16,4 +16,5 @@
 	$cities = array("Dublin", "Belfast", "Cork", "Limerick");
 	$engine->setData("%cities", $cities);
 	$engine->run();
+	print $engine->getOutput();
 ?>

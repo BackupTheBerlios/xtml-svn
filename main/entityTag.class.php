@@ -20,7 +20,7 @@
 		 */
 		function tag_nbsp($engine, $element)
 		{
-			print "&nbsp;";
+			$engine->append("&nbsp;");
 		}
 	}
 ?>
