@@ -11,6 +11,6 @@
 
 RewriteEngine On
 Options -MultiViews
-# rule to prefix all urls with ptl.php?
-RewriteRule ^ ptl.php?
+# rule to prefix all urls with PTLEngine.php?
+RewriteRule ^ PTLEngine.php?
 
