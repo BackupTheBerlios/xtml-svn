@@ -75,6 +75,11 @@
 		/**
 		 * 
 		 */
+		function tag_redirect($engine, $element)
+		{
+			$to = $element->getAttribute("to");
+			header("Location: $to");
+		}
 		
 		/**
 		 * 
