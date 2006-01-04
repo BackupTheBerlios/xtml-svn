@@ -14,6 +14,6 @@
 	
 	$engine = new PTLEngine("index");
 	$engine->setData("%cities", array("Dublin", "Belfast", "Cork", "Limerick"));
-	$engine->run();
+	$engine->start();
 	print $engine->getOutput();
 ?>
