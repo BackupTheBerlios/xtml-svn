@@ -1,6 +1,7 @@
 <html
 	xmlns:ptl = "http://www.dublinux.net/ptl">
 	<body>
+	<title><ptl:translate key="PTL Example"/></title>
 	<p><ptl:translate key="Hello"/></p>
 	<ptl:loop data="$properties" var="property">
 		<ptl:if var="$property" neq="">
