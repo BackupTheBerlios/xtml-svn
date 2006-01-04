@@ -21,10 +21,8 @@
 	/**
 	 *
 	 */
-	function process($element)
+	function process($child)
 	{
-		$child = $element;
-
 		while ($child)
 		{
 			//print "<pre>";
@@ -52,6 +50,10 @@
 					process($child->firstChild);
 					print "</" . $child->tagName . ">";
 				}
+			}
+			else if ($child->nodeType == XML_TEXT_NODE)
+			{
+				print $child->nodeValue;
 			}
 			else
 			{
