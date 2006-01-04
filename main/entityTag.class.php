@@ -13,7 +13,7 @@
 	/**
 	 *
 	 */
-	class entity
+	class entityTag
 	{
 		/**
 		 * 

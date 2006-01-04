@@ -13,7 +13,7 @@
 	/**
 	 *
 	 */
-	class ptl
+	class ptlTag
 	{
 		/**
 		 * 

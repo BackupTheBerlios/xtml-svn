@@ -14,7 +14,7 @@
 	{
 		$file = "";
 		
-		if (file_exists($file = $class_name . '.tag.php'))
+		if (file_exists($file = $class_name . '.class.php'))
 		{
 			require_once $file;
 		}
@@ -107,13 +107,15 @@
 				{
 					if (($tag = explode(":", $child->tagName)) && count($tag) == 2)
 					{
-						// create the class
-						if (!isset($tagClasses[$tag[0]]))
+						$tagClass = $tag[0] . "Tag";
+						
+						// create the class, if necessary
+						if (!isset($this->classCache[$tagClass]))
 						{
-							$tagClasses[$tag[0]] = new $tag[0];
+							$this->classCache[$tagClass] = new $tagClass;
 						}
 	
-						$_class = $tagClasses[$tag[0]];
+						$_class = $this->classCache[$tagClass];
 						$_method = "tag_" . $tag[1];
 	
 						//print $tag[0] . "->" . "$_method\n";
