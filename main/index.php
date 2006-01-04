@@ -13,8 +13,7 @@
 	require_once "PTLEngine.class.php";
 	
 	$engine = new PTLEngine("index");
-	$cities = array("Dublin", "Belfast", "Cork", "Limerick");
-	$engine->setData("%cities", $cities);
+	$engine->setData("%cities", array("Dublin", "Belfast", "Cork", "Limerick"));
 	$engine->run();
 	print $engine->getOutput();
 ?>
