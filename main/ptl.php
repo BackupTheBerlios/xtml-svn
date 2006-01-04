@@ -54,6 +54,17 @@
 	/**
 	 *
 	 */
+	class entity
+	{
+		function _nbsp($element)
+		{
+			print "&nbsp;";
+		}
+	}
+
+	/**
+	 *
+	 */
 	class ptl
 	{
 		function _translate($element)
@@ -153,23 +164,6 @@
 
 	if ($doc->load($ptp))
 	{
-		
-		if ($doc->documentElement->hasAttributes())
-		{
-			$attributes = $doc->documentElement->attributes;
-	
-			print $attributes->length . "<br>";
-					
-			for ($i=0; $attributes->item($i) != null; $i++)
-			{
-				print "attr=" . $attributes->item($i)->nodeName . "<br/>";
-			}
-		}
-		else
-		{
-			print $doc->documentElement->nodeName . " HAS NO ATTRIBUTES<br>";
-		}
-		
 		process($doc->documentElement);
 	}
 	else

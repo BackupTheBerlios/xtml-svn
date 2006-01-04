@@ -8,9 +8,8 @@
 		<!-- <p><b><ptl:out value="$property"/></b></p> -->
 		</ptl:if>
 	</ptl:loop>
-	<!-- <entity:nbsp/> -->
 	<ptl:loop data="('Stillorgan','Blackrock','Killiney')" var="city">
-	<p><b><ptl:out value="$city"/></b></p>
+	<p><b><entity:nbsp/><ptl:out value="$city"/></b></p>
 	</ptl:loop>
 	</body>
 </html>
