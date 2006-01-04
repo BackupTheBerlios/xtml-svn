@@ -11,10 +11,77 @@
 	 */
 	
 	/**
+	 * 
+	 */
+	class TableHelper
+	{
+		var $rowClasses;
+		var $rowCount;
+		
+		/**
+		 * 
+		 */
+		function TableHelper()
+		{
+			$this->rowClasses = null;
+			$this->rowCount = 0;
+		}
+		
+		/**
+		 * 
+		 */
+		function setRowClasses($classes)
+		{
+			$this->rowClasses = $classes;
+		}
+		
+		/**
+		 * 
+		 */
+		function getRowClasses()
+		{
+			return $this->rowClasses; 
+		}
+		
+		/**
+		 * 
+		 */
+		function incrementRowCount()
+		{
+			$this->rowCount++;
+		}
+
+		/**
+		 * 
+		 */
+		function getRowCount()
+		{
+			return $this->rowCount;
+		}
+	}
+	
+	/**
 	 *
 	 */
 	class ptlTag
 	{
+		var $tableHelpers;
+		var $tableHelpersIndex;
+		
+		function ptlTag()
+		{
+			$this->tableHelpers = array();
+			$this->tableHelpersIndex = 0;
+		}
+
+		/**
+		 * 
+		 */
+		function getTableHelper()
+		{
+			return $this->tableHelpers[$this->tableHelpersIndex-1];
+		}
+		
 		/**
 		 * 
 		 */
@@ -46,16 +113,59 @@
 		/**
 		 * 
 		 */
+		function tag_table($engine, $element)
+		{
+			$this->tableHelpers[$this->tableHelpersIndex++] = new TableHelper();
+			$tableHelper = $this->getTableHelper();
+			
+			$rowClasses = $element->getAttribute("row-classes");
+			
+			if ($rowClasses)
+			{
+				$element->removeAttribute("row-classes");
+				$tableHelper->setRowClasses(explode(",", $rowClasses));
+			}
+			
+			$engine->append($element);
+			$engine->process($element->firstChild);
+			$engine->append("</table>");
+			
+			unset($this->tableHelpers[--$this->tableHelpersIndex]);
+		}
+		
+		/**
+		 * 
+		 */
+		function tag_tr($engine, $element)
+		{
+			$tableHelper = $this->getTableHelper();
+			
+			if ($tableHelper)
+			{
+				if ($rowClasses = $tableHelper->getRowClasses())
+				{
+					$index = ($tableHelper->getRowCount() % count($rowClasses));
+					$element->setAttribute("class", $rowClasses[$index]);
+				}
+			}
+			
+			$engine->append($element);
+			$engine->process($element->firstChild);
+			$engine->append("</tr>");
+			
+			if ($tableHelper)
+			{
+				$tableHelper->incrementRowCount();
+			}
+		}
+		
+		/**
+		 * 
+		 */
 		function tag_loop($engine, $element)
 		{
 			$data = $element->getAttribute("data");
 			$var = $element->getAttribute("var");
-			$backgroundColors = $element->getAttribute("background-colors");
-			
-			if ($backgroundColors)
-			{
-				$backgroundColors = explode(",", $backgroundColors);
-			}
 
 			if ($data{0} == '(')
 			{
@@ -69,27 +179,12 @@
 
 			if (is_array($data))
 			{
-				$bgcolorIndex = 0;
-				
 				foreach ($data as $tmp)
 				{
-					if (is_array($backgroundColors) && count($backgroundColors) > 0)
-					{
-						if ($bgcolorIndex >= count($backgroundColors))
-						{
-							$bgcolorIndex = 0;
-						}
-						
-						$engine->setData("%background-color", $backgroundColors[$bgcolorIndex]);
-						$bgcolorIndex++;
-					}
-					
 					$engine->setData("%" . $var, $tmp);
 					$engine->process($element->firstChild);
 					$engine->unsetData("%" . $var);
 				}
-				
-				$engine->unsetData("%background-color");
 			}
 		}
 
@@ -100,41 +195,6 @@
 		{
 			$to = $element->getAttribute("to");
 			header("Location: $to");
-		}
-		
-		/**
-		 * 
-		 */
-		function tag_tr($engine, $element)
-		{
-			$style = $element->getAttribute("style");
-			
-			if ($style)
-			{
-				$engine->append("<tr");
-				
-				if ($element->hasAttributes())
-				{
-					$attributes = $element->attributes; 
-					$i = 0;
-					
-					while ($attr = $attributes->item($i++))
-					{
-						$value = $attr->nodeValue;
-						
-						if ($engine->hasData("%background-color"))
-						{
-							$value = str_replace("%background-color", $engine->getData("%background-color"), $value);
-						}
-						
-						$engine->append(" " . $attr->nodeName . "=\"" . $value . "\"");
-					}
-				}
-
-				$engine->append(">");
-				$engine->process($element->firstChild);
-				$engine->append("</tr>");
-			}
 		}
 		
 		/**

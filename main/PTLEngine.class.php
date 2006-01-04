@@ -49,7 +49,40 @@
 		 */
 		function append($s)
 		{
-			$this->output .= $s;
+			if (is_object($s))
+			{
+				if (get_class($s) == "DOMElement")
+				{
+					if (($tag = explode(":", $s->tagName)) && count($tag) == 2)
+					{
+						$this->append("<" . $tag[1]);
+					}
+					else
+					{
+						$this->append("<" . $s->tagName);
+					}
+					
+					if ($s->hasAttributes())
+					{
+						$attributes = $s->attributes; 
+						$i = 0;
+						
+						while ($attr = $attributes->item($i++))
+						{
+							$this->append(" " . $attr->nodeName . "=\"" . $attr->nodeValue . "\"");
+						}
+					}
+					
+					$this->append(">");
+				}
+				else
+				{
+				}
+			}
+			else
+			{
+				$this->output .= $s;
+			}
 		}
 		
 		/**

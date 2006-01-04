@@ -12,6 +12,9 @@
 <html
 	xmlns:ptl = "http://www.dublinux.net/ptl"
 	xmlns:entity = "http://www.dublinux.net/ptl/entity">
+	<head>
+		<link href="ptl.css" rel="stylesheet" type="text/css"/>
+	</head>
 	<body>
 	<title><ptl:translate en="PTL Example"/></title>
 	<!-- <ptl:redirect to="http://www.bbc.co.uk"/> -->
@@ -22,17 +25,17 @@
 	</ptl:loop>
 	
 	<h1><ptl:translate en="Towns"/></h1>
-	<table>
-	<ptl:loop data="('Stillorgan','Blackrock','Killiney')" var="town" background-colors="#EEEEEE, #FFFFFF">
-	<p><ptl:tr style="background-color:%background-color"><td><b><ptl:out value="%town"/></b></td></ptl:tr></p>
+	<ptl:table row-classes="light,dark">
+	<ptl:loop data="('Stillorgan','Blackrock','Killiney')" var="town">
+	<ptl:tr><td><b><ptl:out value="%town"/></b></td></ptl:tr>
 	</ptl:loop>
-	</table>
+	</ptl:table>
 
 	<h1><ptl:translate en="Cities"/></h1>
-	<table>
+	<ptl:table row-classes="light,dark">
 	<ptl:loop data="%cities" var="city">
-	<p><tr><td><b><ptl:out value="%city"/></b></td></tr></p>
+	<ptl:tr><td><b><ptl:out value="%city"/></b></td></ptl:tr>
 	</ptl:loop>
-	</table>
+	</ptl:table>
 	</body>
 </html>
