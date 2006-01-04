@@ -61,7 +61,7 @@
 			global $templateData;
 
 			// TODO: implement translate logic
-			print $element->getAttribute("key");
+			print $element->getAttribute("en");
 		}
 
 		function _if($element)
@@ -153,6 +153,23 @@
 
 	if ($doc->load($ptp))
 	{
+		
+		if ($doc->documentElement->hasAttributes())
+		{
+			$attributes = $doc->documentElement->attributes;
+	
+			print $attributes->length . "<br>";
+					
+			for ($i=0; $attributes->item($i) != null; $i++)
+			{
+				print "attr=" . $attributes->item($i)->nodeName . "<br/>";
+			}
+		}
+		else
+		{
+			print $doc->documentElement->nodeName . " HAS NO ATTRIBUTES<br>";
+		}
+		
 		process($doc->documentElement);
 	}
 	else
