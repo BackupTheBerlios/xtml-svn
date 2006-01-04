@@ -56,7 +56,7 @@
 				$_code = "\$data = array" . $data . ";";
 				eval($_code);
 			}
-			else if ($data{0} == '$' && $engine->hasData($data))
+			else if ($data{0} == '%' && $engine->hasData($data))
 			{
 				$data = $engine->getData($data);
 			}
@@ -65,10 +65,9 @@
 			{
 				foreach ($data as $tmp)
 				{
-					$key = "\$" . $var;
-					$engine->setData($key, $tmp);
+					$engine->setData("%" . $var, $tmp);
 					$engine->process($element->firstChild);
-					$engine->unsetData($key);
+					$engine->unsetData("%" . $var);
 				}
 			}
 		}
@@ -80,7 +79,7 @@
 		{
 			$value = $element->getAttribute("value");
 		
-			if ($value{0} == '$')
+			if ($value{0} == '%')
 			{
 				print $engine->getData($value);
 			}
