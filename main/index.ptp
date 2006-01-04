@@ -20,12 +20,12 @@
 		</ptl:if>
 	</ptl:loop>
 	
-	<h1>Towns</h1>
+	<h1><ptl:translate en="Towns"/></h1>
 	<ptl:loop data="('Stillorgan','Blackrock','Killiney')" var="town">
 	<p><b><entity:nbsp/><ptl:out value="%town"/></b></p>
 	</ptl:loop>
 
-	<h1>Cities</h1>
+	<h1><ptl:translate en="Cities"/></h1>
 	<ptl:loop data="%cities" var="city">
 	<p><b><entity:nbsp/><ptl:out value="%city"/></b></p>
 	</ptl:loop>
