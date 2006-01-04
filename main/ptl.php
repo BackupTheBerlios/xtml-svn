@@ -1,5 +1,16 @@
 <?
 	/**
+	 * $Author$
+	 * $LastChangedDate$
+	 * $LastChangedRevision$
+	 * $LastChangedBy$
+	 * $HeadURL$
+	 * 
+	 * Copyright 2005, 2006, the dublinux.net group.
+	 * Released under the GNU GPL v2
+	 */
+	
+	/**
 	 * NOTE: for URLs like http://yourvhost/test to automatically be rewritten
 	 * to http://yourvhost/ptl.php?test you must have MultiViews turned off
 	 * on your vhost
