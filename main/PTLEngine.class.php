@@ -12,7 +12,16 @@
 
 	function __autoload($class_name) 
 	{
-    	require_once $class_name . '.php';
+		$file = "";
+		
+		if (file_exists($file = $class_name . '.tag.php'))
+		{
+			require_once $file;
+		}
+		else if (file_exists($file = $class_name . '.php'))
+		{
+			require_once $file;
+		}
  	}
  	
 	class PTLEngine
@@ -131,7 +140,4 @@
 		}
 
 	};
-
-	$engine = new PTLEngine("index");
-	$engine->run();
 ?>
