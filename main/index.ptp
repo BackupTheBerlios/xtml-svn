@@ -13,7 +13,7 @@
 	xmlns:ptl = "http://www.dublinux.net/ptl"
 	xmlns:entity = "http://www.dublinux.net/ptl/entity">
 	<head>
-		<link href="ptl.css" rel="stylesheet" type="text/css"/>
+		<link href="/ptl.css" rel="stylesheet" type="text/css"/>
 	</head>
 	<body>
 	<title><ptl:translate en="PTL Example"/></title>

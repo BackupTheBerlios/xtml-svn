@@ -1,0 +1,3 @@
+RewriteEngine On 
+RewriteBase /
+RewriteRule ^ptp/(.*)$ index.php/$1 [L,NC]

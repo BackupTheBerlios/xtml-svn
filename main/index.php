@@ -12,7 +12,14 @@
 
 	require_once "PTLEngine.class.php";
 	
-	$engine = new PTLEngine("index");
+	$page = $_SERVER['PATH_TRANSLATED'];
+	
+	if (!$page)
+	{
+		$page = "index";
+	}
+	
+	$engine = new PTLEngine($page);
 	$engine->setData("%cities", array("Dublin", "Belfast", "Cork", "Limerick"));
 	$engine->start();
 	print $engine->getOutput();
