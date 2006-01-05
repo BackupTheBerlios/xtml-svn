@@ -12,7 +12,11 @@
 
 	require_once "PTLEngine.class.php";
 	
-	$page = $_SERVER['PATH_TRANSLATED'];
+	 
+	if (isset($_SERVER['PATH_TRANSLATED']))
+	{
+		$page = $_SERVER['PATH_TRANSLATED'];
+	}
 	
 	if (!$page)
 	{
