@@ -259,7 +259,10 @@
 				if ($row && $colClasses = $row->getColClasses())
 				{
 					$index = ($row->getColCount() % count($colClasses));
-					$element->setAttribute("class", $colClasses[$index]);
+					if ($colClasses[$index] != "*")
+					{
+						$element->setAttribute("class", $colClasses[$index]);
+					}
 				}
 			}
 			

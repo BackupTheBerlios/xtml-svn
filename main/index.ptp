@@ -32,9 +32,9 @@
 	</ptl:table>
 
 	<h1><ptl:translate en="Cities"/></h1>
-	<ptl:table row-classes="red,green,blue">
+	<ptl:table row-classes="light-red,light-green,light-blue">
 	<ptl:loop data="%cities" var="city">
-	<ptl:tr col-classes="prompt,text">
+	<ptl:tr col-classes="*,text">
 		<ptl:td><b>City:</b></ptl:td><ptl:td><b><ptl:out value="%city"/></b></ptl:td>
 	</ptl:tr>
 	</ptl:loop>
