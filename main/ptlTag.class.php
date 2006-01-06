@@ -319,7 +319,7 @@
 		 */
 		function tag_out($engine, $element)
 		{
-			$value = $element->getAttribute("value");
+			$value = $element->getAttribute("name");
 		
 			if ($value{0} == '%')
 			{
@@ -329,8 +329,6 @@
 			{
 				$engine->append("$value");
 			}
-			
-			$engine->process($element->firstChild);
 		}
 	}
 ?>

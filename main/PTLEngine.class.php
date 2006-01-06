@@ -120,11 +120,52 @@
 		/**
 		 * 
 		 */
+		function _getObjectData($object, $key, $index)
+		{
+			if (!is_object($object))
+			{
+				return $object;
+			}
+			else
+			{
+				$vars = get_object_vars($object);
+				
+				if (isset($vars[$key[$index]]))
+				{
+					return $this->_getObjectData($vars[$key[$index]], $key, ++$index);
+				}
+				else
+				{
+					return "";
+				}
+			}
+		}
+		
+		/**
+		 * 
+		 */
+		function getObjectData($key)
+		{
+			return $this->_getObjectData($this->data[$key[0]], $key, 1);
+		}
+		
+		/**
+		 * 
+		 */
 		function getData($key)
 		{
-			if ($this->hasData($key))
+			$key = explode(".", $key);
+			
+			if ($this->hasData($key[0]))
 			{
-				return $this->data[$key];
+				if (count($key) > 1)
+				{
+					return $this->getObjectData($key);
+				}
+				else
+				{
+					return $this->data[$key[0]];
+				}
 			}
 
 			return "";
@@ -163,6 +204,13 @@
 						$tagClass = $tag[0] . "Tag";
 						
 						// create the class, if necessary
+						
+						if (!class_exists($tagClass))
+						{
+							print "<b>$tag[0]</b>: supporting class ($tagClass) not found<br>";
+							die();
+						}
+						
 						if (!isset($this->classCache[$tagClass]))
 						{
 							$this->classCache[$tagClass] = new $tagClass;
@@ -172,6 +220,13 @@
 						$_method = "tag_" . $tag[1];
 	
 						//print $tag[0] . "->" . "$_method\n";
+						
+						if (!method_exists($_class, $_method))
+						{
+							print "<b>$tag[0]:$tag[1]</b>: supporting method ($tagClass:$_method) not found<br>";
+							die();
+						}
+						
 						$_class->$_method($this, $child);
 					}
 					else

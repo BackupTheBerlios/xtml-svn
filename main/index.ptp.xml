@@ -21,22 +21,23 @@
 	<!-- <ptl:redirect to="http://www.bbc.co.uk"/> -->
 	<ptl:loop data="%properties" var="property">
 		<ptl:if var="%property" neq="">
-		<!-- <p><b><ptl:out value="%property"/></b></p> -->
+		<!-- <p><b><ptl:out name="%property"/></b></p> -->
 		</ptl:if>
 	</ptl:loop>
 	
 	<h1><ptl:translate en="Towns"/></h1>
 	<ptl:table row-classes="light,dark">
 	<ptl:loop data="('Stillorgan','Blackrock','Killiney')" var="town">
-	<ptl:tr><td><b><ptl:out value="%town"/></b></td></ptl:tr>
+	<ptl:tr><td><b><ptl:out name="%town"/></b></td></ptl:tr>
 	</ptl:loop>
 	</ptl:table>
 
 	<h1><ptl:translate en="Cities"/></h1>
 	<ptl:table row-classes="light-red,light-green,light-blue">
-	<ptl:loop data="%cities" var="city">
+	<tr><th>Code</th><th>Name</th></tr>
+	<ptl:loop data="%countries" var="country">
 	<ptl:tr col-classes="*,text">
-		<ptl:td><b>City:</b></ptl:td><ptl:td><b><ptl:out value="%city"/></b></ptl:td>
+		<ptl:td><ptl:out name="%country.code"/></ptl:td><ptl:td><b><ptl:out name="%country.name"/></b></ptl:td>
 	</ptl:tr>
 	</ptl:loop>
 	</ptl:table>

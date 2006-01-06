@@ -1,6 +1,23 @@
 <?
+	class Login
+	{
+		var $engine;
+		
+		function Login($engine)
+		{
+			$this->engine = $engine;
+		}
+		
+		function go()
+		{
+			$this->engine->setData("%id", "jallen");
+		}
+	}
+	
 	function ptlScript($engine)
 	{
-		$engine->setData("%cities", array("Dublin", "Belfast", "Cork", "Limerick"));
+		$login = new Login($engine);
+		
+		$login->go();
 	}
 ?>
