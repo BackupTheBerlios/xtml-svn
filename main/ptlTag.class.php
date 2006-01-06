@@ -13,18 +13,36 @@
 	/**
 	 * 
 	 */
-	class TableHelper
+	class ptlTable
 	{
 		var $rowClasses;
 		var $rowCount;
+		var $row;
 		
 		/**
 		 * 
 		 */
-		function TableHelper()
+		function ptlTable()
 		{
 			$this->rowClasses = null;
 			$this->rowCount = 0;
+			$this->row = new ptlRow();
+		}
+		
+		/**
+		 * 
+		 */
+		function getRow()
+		{
+			return $this->row;
+		}
+		
+		/**
+		 * 
+		 */
+		function setColumnCount($count = 0)
+		{
+			$this->row->setColumnCount($count);
 		}
 		
 		/**
@@ -61,25 +79,83 @@
 	}
 	
 	/**
-	 *
+	 * 
 	 */
-	class ptlTag
+	class ptlRow
 	{
-		var $tableHelpers;
-		var $tableHelpersIndex;
+		var $colClasses;
+		var $colCount;
 		
-		function ptlTag()
+		/**
+		 * 
+		 */
+		function ptlRow()
 		{
-			$this->tableHelpers = array();
-			$this->tableHelpersIndex = 0;
+			$this->colClasses = null;
+			$this->colCount = 0;
+		}
+		
+		/**
+		 * 
+		 */
+		function setColumnCount($count = 0)
+		{
+			$this->colCount = 0;
+		}
+		
+		/**
+		 * 
+		 */
+		function setColClasses($classes)
+		{
+			$this->colClasses = $classes;
+		}
+		
+		/**
+		 * 
+		 */
+		function getColClasses()
+		{
+			return $this->colClasses; 
+		}
+		
+		/**
+		 * 
+		 */
+		function incrementColCount()
+		{
+			$this->colCount++;
 		}
 
 		/**
 		 * 
 		 */
-		function getTableHelper()
+		function getColCount()
 		{
-			return $this->tableHelpers[$this->tableHelpersIndex-1];
+			return $this->colCount;
+		}
+	}
+	
+	/**
+	 *
+	 */
+	class ptlTag
+	{
+		var $tables;
+		var $tablesIndex;
+		
+		function ptlTag()
+		{
+			$this->tables = array();
+			$this->tablesIndex = 0;
+		}
+
+		/**
+		 * 
+		 */
+		function getTable()
+		{
+			return $this->tables[$this->tablesIndex-1];
 		}
 		
 		/**
@@ -115,22 +191,22 @@
 		 */
 		function tag_table($engine, $element)
 		{
-			$this->tableHelpers[$this->tableHelpersIndex++] = new TableHelper();
-			$tableHelper = $this->getTableHelper();
+			$this->tables[$this->tablesIndex++] = new ptlTable();
+			$table = $this->getTable();
 			
 			$rowClasses = $element->getAttribute("row-classes");
 			
 			if ($rowClasses)
 			{
 				$element->removeAttribute("row-classes");
-				$tableHelper->setRowClasses(explode(",", $rowClasses));
+				$table->setRowClasses(explode(",", $rowClasses));
 			}
 			
 			$engine->append($element);
 			$engine->process($element->firstChild);
 			$engine->append("</table>");
 			
-			unset($this->tableHelpers[--$this->tableHelpersIndex]);
+			unset($this->tables[--$this->tablesIndex]);
 		}
 		
 		/**
@@ -138,13 +214,24 @@
 		 */
 		function tag_tr($engine, $element)
 		{
-			$tableHelper = $this->getTableHelper();
+			$table = $this->getTable();
 			
-			if ($tableHelper)
+			if ($table)
 			{
-				if ($rowClasses = $tableHelper->getRowClasses())
+				$table->setColumnCount(0);
+				
+				$colClasses = $element->getAttribute("col-classes");
+				
+				if ($colClasses)
 				{
-					$index = ($tableHelper->getRowCount() % count($rowClasses));
+					$element->removeAttribute("col-classes");
+					$row = $table->getRow();
+					$row->setColClasses(explode(",", $colClasses));
+				}
+				
+				if ($rowClasses = $table->getRowClasses())
+				{
+					$index = ($table->getRowCount() % count($rowClasses));
 					$element->setAttribute("class", $rowClasses[$index]);
 				}
 			}
@@ -153,9 +240,36 @@
 			$engine->process($element->firstChild);
 			$engine->append("</tr>");
 			
-			if ($tableHelper)
+			if ($table)
 			{
-				$tableHelper->incrementRowCount();
+				$table->incrementRowCount();
+			}
+		}
+		
+		/**
+		 * 
+		 */
+		function tag_td($engine, $element)
+		{
+			$table = $this->getTable();
+			$row = null;
+			
+			if ($table && $row = $table->getRow())
+			{
+				if ($row && $colClasses = $row->getColClasses())
+				{
+					$index = ($row->getColCount() % count($colClasses));
+					$element->setAttribute("class", $colClasses[$index]);
+				}
+			}
+			
+			$engine->append($element);
+			$engine->process($element->firstChild);
+			$engine->append("</td>");
+			
+			if ($row)
+			{
+				$row->incrementColCount();
 			}
 		}
 		

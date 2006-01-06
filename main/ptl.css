@@ -17,3 +17,11 @@ tr.light-blue {
 tr.light-red {
     background-color: #FFBBBB;
 }
+
+td.prompt {
+    background-color: #CCCCCC;
+}
+
+td.text {
+    background-color: #CCCC00;
+}
