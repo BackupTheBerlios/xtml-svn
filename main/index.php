@@ -11,20 +11,20 @@
 	 */
 
 	require_once "PTLEngine.class.php";
-	
 	 
 	if (isset($_SERVER['PATH_TRANSLATED']))
 	{
 		$page = $_SERVER['PATH_TRANSLATED'];
 	}
-	
-	if (!$page)
+	else if (isset($_SERVER['REDIRECT_URL']))
 	{
-		$page = "index";
+		$page = $_SERVER['DOCUMENT_ROOT'] . $_SERVER['REDIRECT_URL'];
+	}
+	else
+	{
+		$page = $_SERVER['DOCUMENT_ROOT'] . "/index";
 	}
 	
-	$engine = new PTLEngine($page);
-	$engine->setData("%cities", array("Dublin", "Belfast", "Cork", "Limerick"));
-	$engine->start();
-	print $engine->getOutput();
+	$engine = new PTLEngine($page, $page);
+	$engine->render();
 ?>

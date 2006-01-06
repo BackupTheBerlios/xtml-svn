@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--
+ $Author$
+ $LastChangedDate$
+ $LastChangedRevision$
+ $LastChangedBy$
+ $HeadURL$
+ 
+ Copyright 2005, 2006, the dublinux.net group.
+ Released under the GNU GPL v2
+ -->
+
+<html
+	xmlns:ptl = "http://www.dublinux.net/ptl"
+	xmlns:entity = "http://www.dublinux.net/ptl/entity">
+	<head>
+		<link href="/ptl.css" rel="stylesheet" type="text/css"/>
+	</head>
+	<body>
+	<title><ptl:translate en="PTL Index Example"/></title>
+	<!-- <ptl:redirect to="http://www.bbc.co.uk"/> -->
+	<ptl:loop data="%properties" var="property">
+		<ptl:if var="%property" neq="">
+		<!-- <p><b><ptl:out value="%property"/></b></p> -->
+		</ptl:if>
+	</ptl:loop>
+	
+	<h1><ptl:translate en="Towns"/></h1>
+	<ptl:table row-classes="light,dark">
+	<ptl:loop data="('Stillorgan','Blackrock','Killiney')" var="town">
+	<ptl:tr><td><b><ptl:out value="%town"/></b></td></ptl:tr>
+	</ptl:loop>
+	</ptl:table>
+
+	<h1><ptl:translate en="Cities"/></h1>
+	<ptl:table row-classes="light-red,light-green,light-blue">
+	<ptl:loop data="%cities" var="city">
+	<ptl:tr col-classes="*,text">
+		<ptl:td><b>City:</b></ptl:td><ptl:td><b><ptl:out value="%city"/></b></ptl:td>
+	</ptl:tr>
+	</ptl:loop>
+	</ptl:table>
+	</body>
+</html>
