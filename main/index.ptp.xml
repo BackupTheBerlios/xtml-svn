@@ -17,7 +17,7 @@
 		<link href="/ptl.css" rel="stylesheet" type="text/css"/>
 	</head>
 	<body>
-	<ptl:setlang lang="en"/>
+	<ptl:setlang lang="%language"/>
 	<title><ptl:translate en="PTL Index Example"/></title>
 	<!-- <ptl:redirect to="http://www.bbc.co.uk"/> -->
 	

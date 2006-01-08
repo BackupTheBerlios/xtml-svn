@@ -13,6 +13,8 @@
 	
 	function ptlScript($engine)
 	{
+		$engine->setData("%language", "en");
+		 
 		$engine->setData("%countries", 
 			array(
 				new Country("US", "United States"), 

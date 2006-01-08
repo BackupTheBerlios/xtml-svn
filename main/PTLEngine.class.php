@@ -220,7 +220,7 @@
 						
 						if (!isset($this->classCache[$tagClass]))
 						{
-							$this->classCache[$tagClass] = new $tagClass;
+							$this->classCache[$tagClass] = new $tagClass($this);
 						}
 	
 						$_class = $this->classCache[$tagClass];
@@ -234,7 +234,7 @@
 							die();
 						}
 						
-						$_class->$_method($this, $child);
+						$_class->$_method($child);
 					}
 					else
 					{

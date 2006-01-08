@@ -140,14 +140,19 @@
 	 *
 	 */
 	class ptlTag
+		extends tagImpl
 	{
 		var $lang;
 		var $tables;
 		var $tablesIndex;
 		
-		function ptlTag()
+		function ptlTag($engine)
 		{
-			$this->lang = "en";
+			parent::tagImpl($engine);
+			// default language to en (English)
+			
+			$this->lang = isset($_REQUEST['lang']) ? $_REQUEST['lang']:"en";
+			
 			$this->tables = array();
 			$this->tablesIndex = 0;
 		}
@@ -163,6 +168,14 @@
 		/**
 		 * 
 		 */
+		function getlang()
+		{
+			return $this->lang;
+		}
+		
+		/**
+		 * 
+		 */
 		function setlang($lang)
 		{
 			$this->lang = $lang;
@@ -171,44 +184,54 @@
 		/**
 		 * 
 		 */
-		function tag_setlang($engine, $element)
+		function tag_setlang($element)
 		{
-			$this->setLang($element->getAttribute("lang"));
+			$lang = $this->engine->getData($element->getAttribute("en"));
+			$this->setLang($lang);
 		}
 		
 		/**
 		 * 
 		 */
-		function tag_translate($engine, $element)
+		function tag_getlang($element)
+		{
+			$this->engine->append($this->getlang());
+		}
+		
+		/**
+		 * 
+		 */
+		function tag_translate($element)
 		{
 			// TODO: implement translate logic
-			$text = $engine->getData($element->getAttribute("en"));
-			$engine->append($text);
+			
+			$text = $this->engine->getData($element->getAttribute("en"));
+			$this->engine->append($text);
 		}
 
 		/**
 		 * 
 		 */
-		function tag_if($engine, $element)
+		function tag_if($element)
 		{
 			$var = $element->getAttribute("var");
 			$eq = $element->getAttribute("eq");
 			$neq = $element->getAttribute("neq");
 
-			if (isset($eq) && $engine->getData($var) == $var)
+			if (isset($eq) && $this->engine->getData($var) == $var)
 			{
-				$engine->process($element->firstChild);
+				$this->engine->process($element->firstChild);
 			}
-			else if (isset($neq) && $engine->getData($var) != $var)
+			else if (isset($neq) && $this->engine->getData($var) != $var)
 			{
-				$engine->process($element->firstChild);
+				$this->engine->process($element->firstChild);
 			}
 		}
 
 		/**
 		 * 
 		 */
-		function tag_table($engine, $element)
+		function tag_table($element)
 		{
 			$this->tables[$this->tablesIndex++] = new ptlTable();
 			$table = $this->getTable();
@@ -221,9 +244,9 @@
 				$table->setRowClasses(explode(",", $rowClasses));
 			}
 			
-			$engine->append($element);
-			$engine->process($element->firstChild);
-			$engine->append("</table>");
+			$this->engine->append($element);
+			$this->engine->process($element->firstChild);
+			$this->engine->append("</table>");
 			
 			unset($this->tables[--$this->tablesIndex]);
 		}
@@ -231,7 +254,7 @@
 		/**
 		 * 
 		 */
-		function tag_tr($engine, $element)
+		function tag_tr($element)
 		{
 			$table = $this->getTable();
 			
@@ -255,9 +278,9 @@
 				}
 			}
 			
-			$engine->append($element);
-			$engine->process($element->firstChild);
-			$engine->append("</tr>");
+			$this->engine->append($element);
+			$this->engine->process($element->firstChild);
+			$this->engine->append("</tr>");
 			
 			if ($table)
 			{
@@ -268,7 +291,7 @@
 		/**
 		 * 
 		 */
-		function tag_td($engine, $element)
+		function tag_td($element)
 		{
 			$table = $this->getTable();
 			$row = null;
@@ -285,9 +308,9 @@
 				}
 			}
 			
-			$engine->append($element);
-			$engine->process($element->firstChild);
-			$engine->append("</td>");
+			$this->engine->append($element);
+			$this->engine->process($element->firstChild);
+			$this->engine->append("</td>");
 			
 			if ($row)
 			{
@@ -298,7 +321,7 @@
 		/**
 		 * 
 		 */
-		function tag_loop($engine, $element)
+		function tag_loop($element)
 		{
 			$data = $element->getAttribute("data");
 			$var = $element->getAttribute("var");
@@ -308,18 +331,18 @@
 				$_code = "\$data = array" . $data . ";";
 				eval($_code);
 			}
-			else if ($data{0} == '%' && $engine->hasData($data))
+			else if ($data{0} == '%' && $this->engine->hasData($data))
 			{
-				$data = $engine->getData($data);
+				$data = $this->engine->getData($data);
 			}
 
 			if (is_array($data))
 			{
 				foreach ($data as $tmp)
 				{
-					$engine->setData("%" . $var, $tmp);
-					$engine->process($element->firstChild);
-					$engine->unsetData("%" . $var);
+					$this->engine->setData("%" . $var, $tmp);
+					$this->engine->process($element->firstChild);
+					$this->engine->unsetData("%" . $var);
 				}
 			}
 		}
@@ -327,7 +350,7 @@
 		/**
 		 * 
 		 */
-		function tag_redirect($engine, $element)
+		function tag_redirect($element)
 		{
 			$to = $element->getAttribute("to");
 			header("Location: $to");
@@ -336,17 +359,17 @@
 		/**
 		 * 
 		 */
-		function tag_out($engine, $element)
+		function tag_out($element)
 		{
 			$value = $element->getAttribute("name");
 		
 			if ($value{0} == '%')
 			{
-				$engine->append($engine->getData($value));
+				$this->engine->append($this->engine->getData($value));
 			}
 			else
 			{
-				$engine->append("$value");
+				$this->engine->append("$value");
 			}
 		}
 	}

@@ -13,20 +13,13 @@
 	/**
 	 *
 	 */
-	class entityTag
-		extends tagImpl
+	class tagImpl
 	{
-		function entityTag($engine)
-		{
-			parent::tagImpl($engine);
-		}
+		var $engine;
 		
-		/**
-		 * 
-		 */
-		function tag_nbsp($element)
+		function tagImpl($engine)
 		{
-			$engine->append("&nbsp;");
+			$this->engine = $engine;
 		}
 	}
 ?>
