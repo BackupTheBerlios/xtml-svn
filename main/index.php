@@ -12,7 +12,7 @@
 
 	$doc = new DOMDocument();
 	
-	if ($doc->load("config/config.xml"))
+	if ($doc->load($_SERVER['DOCUMENT_ROOT'] . "/config/config.xml"))
 	{
 		$include_path = ini_get('include_path');
 		$nodes = $doc->getElementsByTagName("Initialisation");
