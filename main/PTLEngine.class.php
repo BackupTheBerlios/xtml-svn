@@ -12,16 +12,8 @@
 
 	function __autoload($class_name) 
 	{
-		$file = "";
-		
-		if (file_exists($file = $class_name . '.class.php'))
-		{
-			require_once $file;
-		}
-		else if (file_exists($file = $class_name . '.php'))
-		{
-			require_once $file;
-		}
+		$file = $class_name . '.class.php';
+		require_once $file;
  	}
  	
 	class PTLEngine
