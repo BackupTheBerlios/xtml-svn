@@ -17,27 +17,26 @@
 		<link href="/ptl.css" rel="stylesheet" type="text/css"/>
 	</head>
 	<body>
+	<ptl:setlang lang="en"/>
 	<title><ptl:translate en="PTL Index Example"/></title>
 	<!-- <ptl:redirect to="http://www.bbc.co.uk"/> -->
-	<ptl:loop data="%properties" var="property">
-		<ptl:if var="%property" neq="">
-		<!-- <p><b><ptl:out name="%property"/></b></p> -->
-		</ptl:if>
-	</ptl:loop>
 	
+	<!-- An example of a loop over static data defined in the xml file -->
+	<!--
 	<h1><ptl:translate en="Towns"/></h1>
 	<ptl:table row-classes="light,dark">
 	<ptl:loop data="('Stillorgan','Blackrock','Killiney')" var="town">
 	<ptl:tr><td><b><ptl:out name="%town"/></b></td></ptl:tr>
 	</ptl:loop>
 	</ptl:table>
-
+	-->
+	
 	<h1><ptl:translate en="Cities"/></h1>
 	<ptl:table row-classes="light-red,light-green,light-blue">
-	<tr><th>Code</th><th>Name</th></tr>
+	<tr><th><ptl:translate en="Code"/></th><th><ptl:translate en="Name"/></th></tr>
 	<ptl:loop data="%countries" var="country">
 	<ptl:tr col-classes="*,text">
-		<ptl:td><ptl:out name="%country.code"/></ptl:td><ptl:td><b><ptl:out name="%country.name"/></b></ptl:td>
+		<ptl:td><ptl:translate en="%country.code"/></ptl:td><ptl:td><b><ptl:translate en="%country.name"/></b></ptl:td>
 	</ptl:tr>
 	</ptl:loop>
 	</ptl:table>

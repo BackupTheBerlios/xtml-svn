@@ -154,21 +154,28 @@
 		 */
 		function getData($key)
 		{
-			$key = explode(".", $key);
-			
-			if ($this->hasData($key[0]))
+			if ($key{0} == '%')
 			{
-				if (count($key) > 1)
+				$key = explode(".", $key);
+				
+				if ($this->hasData($key[0]))
 				{
-					return $this->getObjectData($key);
+					if (count($key) > 1)
+					{
+						return $this->getObjectData($key);
+					}
+					else
+					{
+						return $this->data[$key[0]];
+					}
 				}
-				else
-				{
-					return $this->data[$key[0]];
-				}
+	
+				return "";
 			}
-
-			return "";
+			else
+			{
+				return $key;
+			}
 		}
 		
 		/**

@@ -141,11 +141,13 @@
 	 */
 	class ptlTag
 	{
+		var $lang;
 		var $tables;
 		var $tablesIndex;
 		
 		function ptlTag()
 		{
+			$this->lang = "en";
 			$this->tables = array();
 			$this->tablesIndex = 0;
 		}
@@ -161,10 +163,27 @@
 		/**
 		 * 
 		 */
+		function setlang($lang)
+		{
+			$this->lang = $lang;
+		}
+		
+		/**
+		 * 
+		 */
+		function tag_setlang($engine, $element)
+		{
+			$this->setLang($element->getAttribute("lang"));
+		}
+		
+		/**
+		 * 
+		 */
 		function tag_translate($engine, $element)
 		{
 			// TODO: implement translate logic
-			$engine->append($element->getAttribute("en"));
+			$text = $engine->getData($element->getAttribute("en"));
+			$engine->append($text);
 		}
 
 		/**
