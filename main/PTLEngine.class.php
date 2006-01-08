@@ -162,11 +162,11 @@
 				{
 					if (count($key) > 1)
 					{
-						return $this->getObjectData($key);
+						return $this->getData($this->getObjectData($key));
 					}
 					else
 					{
-						return $this->data[$key[0]];
+						return $this->getData($this->data[$key[0]]);
 					}
 				}
 	
