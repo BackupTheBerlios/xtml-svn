@@ -30,6 +30,8 @@
 	</ptl:table>
 	-->
 	
+	<ptl:out var="%include_path"/><br/>
+	
 	<h1><ptl:translate en="Cities"/>(<ptl:getlang/>)</h1>
 	<ptl:table row-classes="light-red,light-green,light-blue">
 	<tr><th><ptl:translate en="Code"/></th><th><ptl:translate en="Name"/></th></tr>

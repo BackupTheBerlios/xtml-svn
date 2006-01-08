@@ -35,15 +35,47 @@
 		/**
 		 * 
 		 */
-		function PTLEngine($task, $script = null)
+		function PTLEngine($task = null, $script = null)
 		{
-			$this->task = $task;
-			$this->script = $script;
+			if ($task == null)
+			{
+				$this->task = PTLEngine::getPageLocation();
+				$this->script = PTLEngine::getPageLocation();
+			}
+			else
+			{
+				$this->task = $task;
+				$this->script = $script;
+			}
+			
 			$this->output = "";
 			$this->classCache = array();
 			$this->data = array();
 			$this->doc = new DOMDocument();
 			$this->doc->preserveWhiteSpace = true;
+
+			$this->setData("%include_path", ini_get('include_path'));
+		}
+
+		/**
+		 * 
+		 */
+		function getPageLocation()
+		{
+			if (isset($_SERVER['PATH_TRANSLATED']))
+			{
+				$pageloc = $_SERVER['PATH_TRANSLATED'];
+			}
+			else if (isset($_SERVER['REDIRECT_URL']))
+			{
+				$pageloc = $_SERVER['DOCUMENT_ROOT'] . $_SERVER['REDIRECT_URL'];
+			}
+			else
+			{
+				$pageloc = $_SERVER['DOCUMENT_ROOT'] . "/index";
+			}
+			
+			return $pageloc;
 		}
 		
 		/**

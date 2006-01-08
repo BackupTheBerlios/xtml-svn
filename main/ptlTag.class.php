@@ -360,7 +360,7 @@
 		 */
 		function tag_out($element)
 		{
-			$value = $element->getAttribute("name");
+			$value = $element->getAttribute("var");
 		
 			if ($value{0} == '%')
 			{

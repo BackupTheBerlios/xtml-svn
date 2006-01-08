@@ -10,21 +10,23 @@
 	 * Released under the GNU GPL v2
 	 */
 
+	$doc = new DOMDocument();
+	
+	if ($doc->load("config/config.xml"))
+	{
+		$include_path = ini_get('include_path');
+		$nodes = $doc->getElementsByTagName("Initialisation");
+		
+		if ($nodes->length > 0)
+		{
+			$element = $nodes->item(0);
+			$include_path = $element->getAttribute("include_path");
+			ini_set('include_path', $include_path . ini_get('include_path'));
+		}
+	}
+
 	require_once "PTLEngine.class.php";
 	 
-	if (isset($_SERVER['PATH_TRANSLATED']))
-	{
-		$page = $_SERVER['PATH_TRANSLATED'];
-	}
-	else if (isset($_SERVER['REDIRECT_URL']))
-	{
-		$page = $_SERVER['DOCUMENT_ROOT'] . $_SERVER['REDIRECT_URL'];
-	}
-	else
-	{
-		$page = $_SERVER['DOCUMENT_ROOT'] . "/index";
-	}
-	
-	$engine = new PTLEngine($page, $page);
+	$engine = new PTLEngine();
 	$engine->render();
 ?>
