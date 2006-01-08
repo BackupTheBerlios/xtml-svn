@@ -17,7 +17,6 @@
 		<link href="/ptl.css" rel="stylesheet" type="text/css"/>
 	</head>
 	<body>
-	<ptl:setlang lang="%language"/>
 	<title><ptl:translate en="PTL Index Example"/></title>
 	<!-- <ptl:redirect to="http://www.bbc.co.uk"/> -->
 	
@@ -31,7 +30,7 @@
 	</ptl:table>
 	-->
 	
-	<h1><ptl:translate en="Cities"/></h1>
+	<h1><ptl:translate en="Cities"/>(<ptl:getlang/>)</h1>
 	<ptl:table row-classes="light-red,light-green,light-blue">
 	<tr><th><ptl:translate en="Code"/></th><th><ptl:translate en="Name"/></th></tr>
 	<ptl:loop data="%countries" var="country">

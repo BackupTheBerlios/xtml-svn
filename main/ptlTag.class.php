@@ -152,7 +152,6 @@
 			// default language to en (English)
 			
 			$this->lang = isset($_REQUEST['lang']) ? $_REQUEST['lang']:"en";
-			
 			$this->tables = array();
 			$this->tablesIndex = 0;
 		}
