@@ -72,7 +72,9 @@
 			}
 			else
 			{
-				$pageloc = $_SERVER['DOCUMENT_ROOT'] . "/index";
+				$scriptName = basename($_SERVER['SCRIPT_FILENAME']);
+				$scriptDir =  str_replace($scriptName, "", $_SERVER['SCRIPT_FILENAME']);
+				$pageloc = $scriptDir . "/index";
 			}
 			
 			return $pageloc;
