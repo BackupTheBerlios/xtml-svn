@@ -14,11 +14,11 @@
 	 *
 	 */
 	class entityTag
-		extends tagImpl
+		extends tagBase
 	{
 		function entityTag($engine)
 		{
-			parent::tagImpl($engine);
+			parent::tagBase($engine);
 		}
 		
 		/**

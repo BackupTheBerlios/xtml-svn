@@ -16,7 +16,7 @@
 		require_once $file;
  	}
  	
-	class PTLEngine
+	class PSTL
 	{
 		var $task;
 		var $script;
@@ -27,12 +27,12 @@
 		/**
 		 * 
 		 */
-		function PTLEngine($task = null, $script = null)
+		function PSTL($task = null, $script = null)
 		{
 			if ($task == null)
 			{
-				$this->task = PTLEngine::getPageLocation();
-				$this->script = PTLEngine::getPageLocation();
+				$this->task = PSTL::getPageLocation();
+				$this->script = PSTL::getPageLocation();
 			}
 			else
 			{
@@ -295,5 +295,5 @@
 			}
 		}
 
-	};
+	}
 ?>

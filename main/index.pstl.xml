@@ -11,35 +11,35 @@
  -->
 
 <html
-	xmlns:ptl = "http://www.dublinux.net/ptl"
-	xmlns:entity = "http://www.dublinux.net/ptl/entity">
+	xmlns:pstl = "http://www.dublinux.net/pstl"
+	xmlns:entity = "http://www.dublinux.net/pstl/entity">
 	<head>
-		<link href="/ptl.css" rel="stylesheet" type="text/css"/>
+		<link href="/pstl.css" rel="stylesheet" type="text/css"/>
 	</head>
 	<body>
-	<title><ptl:translate en="PTL Index Example"/></title>
-	<!-- <ptl:redirect to="http://www.bbc.co.uk"/> -->
+	<title><pstl:translate en="PTL Index Example"/></title>
+	<!-- <pstl:redirect to="http://www.bbc.co.uk"/> -->
 	
 	<!-- An example of a loop over static data defined in the xml file -->
 	<!--
-	<h1><ptl:translate en="Towns"/></h1>
-	<ptl:table row-classes="light,dark">
-	<ptl:loop data="('Stillorgan','Blackrock','Killiney')" var="town">
-	<ptl:tr><td><b><ptl:out name="$town"/></b></td></ptl:tr>
-	</ptl:loop>
-	</ptl:table>
+	<h1><pstl:translate en="Towns"/></h1>
+	<pstl:table row-classes="light,dark">
+	<pstl:loop data="('Stillorgan','Blackrock','Killiney')" var="town">
+	<pstl:tr><td><b><pstl:out name="$town"/></b></td></pstl:tr>
+	</pstl:loop>
+	</pstl:table>
 	-->
 	
-	Include path: [<ptl:out var="$include_path"/>]<br/>
+	Include path: [<pstl:out var="$include_path"/>]<br/>
 	
-	<h1><ptl:translate en="Cities"/>(<ptl:getlang/>)</h1>
-	<ptl:table row-classes="light-red,light-green,light-blue">
-	<tr><th><ptl:translate en="Code"/></th><th><ptl:translate en="Name"/></th></tr>
-	<ptl:loop data="$countries" var="country">
-	<ptl:tr col-classes="*,text">
-		<ptl:td><ptl:translate en="$country.code"/></ptl:td><ptl:td><b><ptl:translate en="$country.name"/></b></ptl:td>
-	</ptl:tr>
-	</ptl:loop>
-	</ptl:table>
+	<h1><pstl:translate en="Cities"/>(<pstl:getlang/>)</h1>
+	<pstl:table row-classes="light-red,light-green,light-blue">
+	<tr><th><pstl:translate en="Code"/></th><th><pstl:translate en="Name"/></th></tr>
+	<pstl:loop data="$countries" var="country">
+	<pstl:tr col-classes="*,text">
+		<pstl:td><pstl:translate en="$country.code"/></pstl:td><pstl:td><b><pstl:translate en="$country.name"/></b></pstl:td>
+	</pstl:tr>
+	</pstl:loop>
+	</pstl:table>
 	</body>
 </html>

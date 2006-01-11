@@ -13,11 +13,11 @@
 	/**
 	 *
 	 */
-	class tagImpl
+	class tagBase
 	{
 		var $engine;
 		
-		function tagImpl($engine)
+		function tagBase($engine)
 		{
 			$this->engine = $engine;
 		}

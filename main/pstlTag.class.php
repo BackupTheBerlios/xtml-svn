@@ -139,19 +139,20 @@
 	/**
 	 *
 	 */
-	class ptlTag
-		extends tagImpl
+	class pstlTag
+		extends tagBase
 	{
 		var $lang;
 		var $tables;
 		var $tablesIndex;
 		
-		function ptlTag($engine)
+		function pstlTag($engine)
 		{
-			parent::tagImpl($engine);
-			// default language to en (English)
+			parent::tagBase($engine);
 			
+			// Set language, default to en (English)
 			$this->lang = isset($_REQUEST['lang']) ? $_REQUEST['lang']:"en";
+			
 			$this->tables = array();
 			$this->tablesIndex = 0;
 		}

@@ -28,8 +28,8 @@
         }
 	}
 
-	require_once "PTLEngine.class.php";
+	require_once "PSTL.class.php";
 	 
-	$engine = new PTLEngine();
+	$engine = new PSTL();
 	$engine->render();
 ?>
