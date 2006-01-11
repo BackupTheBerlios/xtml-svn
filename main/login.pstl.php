@@ -10,7 +10,7 @@
 		
 		function go()
 		{
-			$this->engine->setData("%id", "jallen");
+			$this->engine->setData("id", "jallen");
 		}
 	}
 	

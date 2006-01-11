@@ -17,6 +17,6 @@
 	</head>
 	<body>
 	<title><ptl:translate en="PTL Login Example"/></title>
-	<ptl:out name="%id"/>
+	<ptl:out name="$id"/>
 	</body>
 </html>

@@ -330,7 +330,7 @@
 				$_code = "\$data = array" . $data . ";";
 				eval($_code);
 			}
-			else if ($data{0} == '%' && $this->engine->hasData($data))
+			else if ($data{0} == '$' && $this->engine->hasData($data))
 			{
 				$data = $this->engine->getData($data);
 			}
@@ -339,9 +339,9 @@
 			{
 				foreach ($data as $tmp)
 				{
-					$this->engine->setData("%" . $var, $tmp);
+					$this->engine->setData($var, $tmp);
 					$this->engine->process($element->firstChild);
-					$this->engine->unsetData("%" . $var);
+					$this->engine->unsetData($var);
 				}
 			}
 		}
@@ -362,7 +362,7 @@
 		{
 			$value = $element->getAttribute("var");
 		
-			if ($value{0} == '%')
+			if ($value{0} == '$')
 			{
 				$this->engine->append($this->engine->getData($value));
 			}

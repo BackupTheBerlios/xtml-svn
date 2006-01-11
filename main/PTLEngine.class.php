@@ -46,7 +46,7 @@
 			$this->doc = new DOMDocument();
 			$this->doc->preserveWhiteSpace = true;
 
-			$this->setData("%include_path", ini_get('include_path'));
+			$this->setData("include_path", ini_get('include_path'));
 		}
 
 		/**
@@ -122,12 +122,12 @@
 		
 			if ($this->script)
 			{
-				$script = $this->script . ".ptp.php";
+				$script = $this->script . ".pstl.php";
 				require_once "$script";
 				ptlScript($this); 
 			}
 			
-			if ($this->doc->load($this->task . ".ptp.xml"))
+			if ($this->doc->load($this->task . ".pstl.xml"))
 			{
 				$this->process($this->doc->documentElement);
 			}
@@ -180,7 +180,7 @@
 		 */
 		function getData($key)
 		{
-			if ($key{0} == '%')
+			if ($key{0} == '$')
 			{
 				$key = explode(".", $key);
 				
@@ -209,7 +209,7 @@
 		 */
 		function setData($key, $data)
 		{
-			$this->data[$key] = $data;
+			$this->data["\$$key"] = $data;
 		}
 		
 		/**
@@ -217,7 +217,7 @@
 		 */
 		function unsetData($key)
 		{
-			unset($this->data[$key]);
+			unset($this->data["\$$key"]);
 		}
 		
 		/**
