@@ -30,6 +30,6 @@
 
 	require_once "PSTL.class.php";
 	 
-	$engine = new PSTL();
-	$engine->render();
+	$pstl = new PSTL();
+	$pstl->render();
 ?>

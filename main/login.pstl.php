@@ -1,22 +1,22 @@
 <?
 	class Login
 	{
-		var $engine;
+		var $pstl;
 		
-		function Login($engine)
+		function Login($pstl)
 		{
-			$this->engine = $engine;
+			$this->pstl = $pstl;
 		}
 		
 		function go()
 		{
-			$this->engine->setData("id", "jallen");
+			$this->pstl->setData("id", "jallen");
 		}
 	}
 	
-	function ptlScript($engine)
+	function ptlScript($pstl)
 	{
-		$login = new Login($engine);
+		$login = new Login($pstl);
 		
 		$login->go();
 	}

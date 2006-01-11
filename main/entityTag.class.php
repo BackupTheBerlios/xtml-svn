@@ -16,9 +16,9 @@
 	class entityTag
 		extends tagBase
 	{
-		function entityTag($engine)
+		function entityTag($pstl)
 		{
-			parent::tagBase($engine);
+			parent::tagBase($pstl);
 		}
 		
 		/**
@@ -26,7 +26,7 @@
 		 */
 		function tag_nbsp($element)
 		{
-			$engine->append("&nbsp;");
+			$pstl->append("&nbsp;");
 		}
 	}
 ?>

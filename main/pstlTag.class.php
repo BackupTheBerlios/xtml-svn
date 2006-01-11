@@ -146,9 +146,9 @@
 		var $tables;
 		var $tablesIndex;
 		
-		function pstlTag($engine)
+		function pstlTag($pstl)
 		{
-			parent::tagBase($engine);
+			parent::tagBase($pstl);
 			
 			// Set language, default to en (English)
 			$this->lang = isset($_REQUEST['lang']) ? $_REQUEST['lang']:"en";
@@ -186,7 +186,7 @@
 		 */
 		function tag_setlang($element)
 		{
-			$lang = $this->engine->getData($element->getAttribute("en"));
+			$lang = $this->pstl->getData($element->getAttribute("en"));
 			$this->setLang($lang);
 		}
 		
@@ -195,7 +195,7 @@
 		 */
 		function tag_getlang($element)
 		{
-			$this->engine->append($this->getlang());
+			$this->pstl->append($this->getlang());
 		}
 		
 		/**
@@ -205,8 +205,8 @@
 		{
 			// TODO: implement translate logic
 			
-			$text = $this->engine->getData($element->getAttribute("en"));
-			$this->engine->append($text);
+			$text = $this->pstl->getData($element->getAttribute("en"));
+			$this->pstl->append($text);
 		}
 
 		/**
@@ -218,13 +218,13 @@
 			$eq = $element->getAttribute("eq");
 			$neq = $element->getAttribute("neq");
 
-			if (isset($eq) && $this->engine->getData($var) == $var)
+			if (isset($eq) && $this->pstl->getData($var) == $var)
 			{
-				$this->engine->process($element->firstChild);
+				$this->pstl->process($element->firstChild);
 			}
-			else if (isset($neq) && $this->engine->getData($var) != $var)
+			else if (isset($neq) && $this->pstl->getData($var) != $var)
 			{
-				$this->engine->process($element->firstChild);
+				$this->pstl->process($element->firstChild);
 			}
 		}
 
@@ -244,9 +244,9 @@
 				$table->setRowClasses(explode(",", $rowClasses));
 			}
 			
-			$this->engine->append($element);
-			$this->engine->process($element->firstChild);
-			$this->engine->append("</table>");
+			$this->pstl->append($element);
+			$this->pstl->process($element->firstChild);
+			$this->pstl->append("</table>");
 			
 			unset($this->tables[--$this->tablesIndex]);
 		}
@@ -278,9 +278,9 @@
 				}
 			}
 			
-			$this->engine->append($element);
-			$this->engine->process($element->firstChild);
-			$this->engine->append("</tr>");
+			$this->pstl->append($element);
+			$this->pstl->process($element->firstChild);
+			$this->pstl->append("</tr>");
 			
 			if ($table)
 			{
@@ -308,9 +308,9 @@
 				}
 			}
 			
-			$this->engine->append($element);
-			$this->engine->process($element->firstChild);
-			$this->engine->append("</td>");
+			$this->pstl->append($element);
+			$this->pstl->process($element->firstChild);
+			$this->pstl->append("</td>");
 			
 			if ($row)
 			{
@@ -331,18 +331,18 @@
 				$_code = "\$data = array" . $data . ";";
 				eval($_code);
 			}
-			else if ($data{0} == '$' && $this->engine->hasData($data))
+			else if ($data{0} == '$' && $this->pstl->hasData($data))
 			{
-				$data = $this->engine->getData($data);
+				$data = $this->pstl->getData($data);
 			}
 
 			if (is_array($data))
 			{
 				foreach ($data as $tmp)
 				{
-					$this->engine->setData($var, $tmp);
-					$this->engine->process($element->firstChild);
-					$this->engine->unsetData($var);
+					$this->pstl->setData($var, $tmp);
+					$this->pstl->process($element->firstChild);
+					$this->pstl->unsetData($var);
 				}
 			}
 		}
@@ -365,11 +365,11 @@
 		
 			if ($value{0} == '$')
 			{
-				$this->engine->append($this->engine->getData($value));
+				$this->pstl->append($this->pstl->getData($value));
 			}
 			else
 			{
-				$this->engine->append("$value");
+				$this->pstl->append("$value");
 			}
 		}
 	}

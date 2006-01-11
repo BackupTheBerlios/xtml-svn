@@ -11,11 +11,11 @@
 		}
 	}
 	
-	function ptlScript($engine)
+	function ptlScript($pstl)
 	{
-		$engine->setData("language", "en");
+		$pstl->setData("language", "en");
 		 
-		$engine->setData("countries", 
+		$pstl->setData("countries", 
 			array(
 				new Country("US", "United States"), 
 				new Country("IE", "Ireland"), 

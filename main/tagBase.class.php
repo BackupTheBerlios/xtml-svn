@@ -15,11 +15,11 @@
 	 */
 	class tagBase
 	{
-		var $engine;
+		var $pstl;
 		
-		function tagBase($engine)
+		function tagBase($pstl)
 		{
-			$this->engine = $engine;
+			$this->pstl = $pstl;
 		}
 	}
 ?>
