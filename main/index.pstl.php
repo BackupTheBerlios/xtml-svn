@@ -23,7 +23,7 @@
 		}
 	}
 	
-	function ptlScript($pstl)
+	function pstlScript($pstl)
 	{
 		$pstl->setData("language", "en");
 		 

@@ -125,7 +125,7 @@
 			{
 				$script = $this->script . ".pstl.php";
 				require_once "$script";
-				ptlScript($this); 
+				pstlScript($this); 
 			}
 			
 			if ($this->doc->load($this->task . ".pstl.xml"))

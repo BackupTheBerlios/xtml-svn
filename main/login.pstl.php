@@ -26,7 +26,7 @@
 		}
 	}
 	
-	function ptlScript($pstl)
+	function pstlScript($pstl)
 	{
 		$login = new Login($pstl);
 		
