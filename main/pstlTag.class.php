@@ -202,11 +202,27 @@
 		/**
 		 * 
 		 */
-		function tag_translate($element)
+		function tag_i8n($element)
 		{
 			// TODO: implement translate logic
+			$englishText = $element->getAttribute("en");
+			$maxlen = $element->getAttribute("maxlen");
+			$ellipsis = $element->getAttribute("ellipsis") == "true" ? true:false;
 			
-			$text = $this->pstl->getData($element->getAttribute("en"));
+			$text = $this->pstl->getData($englishText);
+			
+			if ($maxlen && strlen($text) > $maxlen)
+			{
+				if ($ellipsis)
+				{
+					$text = substr($text, 0, $maxlen-3) . "...";
+				}
+				else
+				{
+					$text = substr($text, 0, $maxlen);
+				}
+			}
+
 			$this->pstl->append($text);
 		}
 

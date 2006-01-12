@@ -17,7 +17,7 @@
 		<link href="/pstl.css" rel="stylesheet" type="text/css"/>
 	</head>
 	<body>
-	<title><pstl:translate en="PTL Login Example"/></title>
+	<title><pstl:i8n en="PTL Login Example"/></title>
 	<pstl:out name="$id"/>
 	</body>
 </html>

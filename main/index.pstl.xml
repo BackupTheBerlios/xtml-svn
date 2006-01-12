@@ -18,12 +18,12 @@
 		<link href="/pstl.css" rel="stylesheet" type="text/css"/>
 	</head>
 	<body>
-	<title><pstl:translate en="PTL Index Example %pstl:now(format:'d-m-Y' locale:'en-IE')"/></title>
+	<title><pstl:i8n en="PTL Index Example"/></title>
 	<!-- <pstl:redirect to="http://www.bbc.co.uk"/> -->
 	
 	<!-- An example of a loop over static data defined in the xml file -->
 	<!--
-	<h1><pstl:translate en="Towns"/></h1>
+	<h1><pstl:i8n en="Towns"/></h1>
 	<pstl:table row-classes="light,dark">
 	<pstl:loop data="('Stillorgan','Blackrock','Killiney')" var="town">
 	<pstl:tr><td><b><pstl:out name="$town"/></b></td></pstl:tr>
@@ -31,16 +31,20 @@
 	</pstl:table>
 	-->
 	
-	Include path: [<pstl:out var="$include_path"/>]<br/>
+	<!-- Include path: [<pstl:out var="$include_path"/>]<br/> -->
 	
-	<h1><pstl:translate en="Cities"/>(<pstl:getlang/>)</h1>
+	<h1><pstl:i8n en="Cities"/>(<pstl:getlang/>)</h1>
 	<pstl:table row-classes="light-red,light-green,light-blue">
-	<tr><th><pstl:translate en="Code"/></th><th><pstl:translate en="Name"/></th></tr>
+	<tr><th><pstl:i8n en="Code"/></th><th><pstl:i8n en="Name"/></th></tr>
 	<pstl:loop data="$countries" var="country">
 	<pstl:tr col-classes="*,text">
-		<pstl:td><pstl:translate en="$country.code"/></pstl:td><pstl:td><b><pstl:translate en="$country.name"/></b></pstl:td>
+		<pstl:td><pstl:i8n en="$country.code"/></pstl:td><pstl:td><b><pstl:i8n en="$country.name" maxlen="13" ellipsis="true"/></b></pstl:td>
 	</pstl:tr>
 	</pstl:loop>
 	</pstl:table>
+	
+	<br/>
+	<pstl:i8n en="A booking fee of $$$booking.fee will apply to all bookings"/>
+	
 	</body>
 </html>

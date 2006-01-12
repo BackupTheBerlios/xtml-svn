@@ -23,6 +23,16 @@
 		}
 	}
 	
+	class Booking
+	{
+		var $fee;
+		
+		function Booking($fee)
+		{
+			$this->fee = $fee;
+		}
+	}
+	
 	function pstlScript($pstl)
 	{
 		$pstl->setData("language", "en");
@@ -32,5 +42,7 @@
 				new Country("US", "United States"), 
 				new Country("IE", "Ireland"), 
 				new Country("UK", "United Kingdom")));
+
+		$pstl->setData("booking", new Booking(20));
 	}
 ?>

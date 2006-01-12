@@ -214,42 +214,54 @@
 			
 			if (!is_array($data))
 			{
-				$matches = array();
+				$len = strlen($data);
+				$pos = 0;
 				
-				if (preg_match("/(%[_A-Za-z]+:[_A-Za-z][_A-Za-z0-9]+)\(/", $data, $matches))
+				while ($pos < $len)
 				{
-					print "Have a function " . $matches[1] . " in the text<br>";
-					$pos = strpos($data, $matches[1]) + strlen($matches[1]) + 1;
-					
-					if ($data{$pos} != ')')
+					if ($data{$pos} == '$')
 					{
-						// we have arguments to the function
-						// arguments must be in the following format
-						// name:'data'
-						// they are order independant, and are converted into an 
-						// associative array
+						$kpos = $pos;
+						$key = "";
 						
-						// find the closing )
-						$epos = $pos;
-						
-						while ($data{$epos} != ')')
+						if ($data{$kpos+1} == '$')
 						{
-							if ($data{$epos} == "'")
+							$data = substr($data, 0, $pos) . substr($data, $pos+1);
+							$pos++;
+						}
+						else if ($data{$kpos+1} == '{')
+						{
+							$kpos+=2;
+							
+							while ($data{$kpos} != '}')
 							{
-								$epos++;
-								while ($data{$epos} != "'")
-								{
-									$epos++;
-								}
+								$key .= $data{$kpos};
+								$kpos++;
 							}
 							
-							$epos++;
+							$data = str_replace("\${$key}", $this->getData("\$$key"), $data);
 						}
-						
-						print "args=" . substr($data, $pos, $epos-$pos) ."<br>";
+						else
+						{
+							$kpos++;
+							
+							while ($data{$kpos} != ' ' && $kpos < $len)
+							{
+								$key .= $data{$kpos};
+								$kpos++;
+							}
+							
+							$data = str_replace("\$$key", $this->getData("\$$key"), $data);
+						}
+					}
+					else
+					{
+						$pos++;
 					}
 				}
 			}
+			
+			return $data;
 		}
 		
 		/**
