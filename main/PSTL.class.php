@@ -179,7 +179,7 @@
 		/**
 		 * 
 		 */
-		function getData($key)
+		function _getData($key)
 		{
 			if ($key{0} == '$')
 			{
@@ -202,6 +202,36 @@
 			else
 			{
 				return $key;
+			}
+		}
+		
+		/**
+		 * 
+		 */
+		function getData($key)
+		{
+			$data = $this->_getData($key);
+			
+			if (!is_array($data))
+			{
+				$matches = array();
+				
+				if (preg_match("/(%[_A-Za-z]+:[_A-Za-z][_A-Za-z0-9]+)\(/", $data, $matches))
+				{
+					print "Have a function " . $matches[1] . " in the text<br>";
+					$pos = strpos($data, $matches[1]) + strlen($matches[1]) + 1;
+					
+					if ($data{$pos} != ')')
+					{
+						// we have arguments to the function
+						// arguments must be in the following format
+						// name:'data'
+						// they are order independant, and are converted into an 
+						// associative array
+					}
+					
+					print "[" . $data{$pos} . "]<br>";
+				}
 			}
 		}
 		

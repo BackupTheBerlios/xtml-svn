@@ -16,7 +16,7 @@
 	$scriptDir =  str_replace($scriptName, "", $_SERVER['SCRIPT_FILENAME']);
 	$configFile = $scriptDir . "config/config.xml";
 
-	if ($doc->load($configFile))
+	if (file_exists($configFile) && $doc->load($configFile))
 	{
 		$include_path = ini_get('include_path');
 		$nodes = $doc->getElementsByTagName("Initialisation");
