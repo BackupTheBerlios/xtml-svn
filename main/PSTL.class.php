@@ -228,9 +228,26 @@
 						// name:'data'
 						// they are order independant, and are converted into an 
 						// associative array
+						
+						// find the closing )
+						$epos = $pos;
+						
+						while ($data{$epos} != ')')
+						{
+							if ($data{$epos} == "'")
+							{
+								$epos++;
+								while ($data{$epos} != "'")
+								{
+									$epos++;
+								}
+							}
+							
+							$epos++;
+						}
+						
+						print "args=" . substr($data, $pos, $epos-$pos) ."<br>";
 					}
-					
-					print "[" . $data{$pos} . "]<br>";
 				}
 			}
 		}

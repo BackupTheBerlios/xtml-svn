@@ -18,7 +18,7 @@
 		<link href="/pstl.css" rel="stylesheet" type="text/css"/>
 	</head>
 	<body>
-	<title><pstl:translate en="PTL Index Example %pstl:now(format:'d-m-Y')"/></title>
+	<title><pstl:translate en="PTL Index Example %pstl:now(format:'d-m-Y' locale:'en-IE')"/></title>
 	<!-- <pstl:redirect to="http://www.bbc.co.uk"/> -->
 	
 	<!-- An example of a loop over static data defined in the xml file -->
