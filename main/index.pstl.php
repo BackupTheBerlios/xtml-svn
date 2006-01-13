@@ -25,11 +25,15 @@
 	
 	class Booking
 	{
+		var $charge;
 		var $fee;
+		var $total;
 		
-		function Booking($fee)
+		function Booking($charge, $fee)
 		{
+			$this->charge = $charge;
 			$this->fee = $fee;
+			$this->total = $charge + $fee;
 		}
 	}
 	
@@ -43,6 +47,6 @@
 				new Country("IE", "Ireland"), 
 				new Country("UK", "United Kingdom")));
 
-		$pstl->setData("booking", new Booking(20));
+		$pstl->setData("booking", new Booking(275, 20));
 	}
 ?>

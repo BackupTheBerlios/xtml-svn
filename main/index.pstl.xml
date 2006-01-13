@@ -44,7 +44,11 @@
 	</pstl:table>
 	
 	<br/>
-	<pstl:i8n en="A booking fee of $$$booking.fee will apply to all bookings"/>
+	<pstl:i8n en="Booking cost: $$$booking.charge"/>
+	<br/>
+	<pstl:i8n en="Booking fee: $$$booking.fee"/>
+	<br/>
+	<pstl:i8n en="Total charge: $$$booking.total"/>
 	
 	</body>
 </html>
