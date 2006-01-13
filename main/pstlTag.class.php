@@ -202,7 +202,7 @@
 		/**
 		 * 
 		 */
-		function tag_i8n($element)
+		function tag_i18n($element)
 		{
 			// TODO: implement translate logic
 			$englishText = $element->getAttribute("en");
