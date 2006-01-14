@@ -260,9 +260,19 @@
 			$output .= $this->pstl->process($element->firstChild);
 			$output .= "</tr>";
 			
+			if ($colClasses)
+			{
+				$element->setAttribute("col-classes", $colClasses);
+			}
+			
 			if ($table && !$explicitClassSpecified)
 			{
 				$table->incrementRowCount();
+			}
+			
+			if (!$explicitClassSpecified)
+			{
+				$element->removeAttribute("class");
 			}
 
 			return $output;
@@ -304,38 +314,6 @@
 		/**
 		 * 
 		 */
-		function tag_th($element)
-		{
-			$output = "";
-			$table = $this->getTable();
-			$row = null;
-			
-			if ($table && $row = $table->getRow())
-			{
-				if ($row && $colClasses = $row->getColClasses())
-				{
-					$index = ($row->getColCount() % count($colClasses));
-					if ($colClasses[$index] != "*")
-					{
-						$element->setAttribute("class", $colClasses[$index]);
-					}
-				}
-			}
-			
-			$output .= $this->pstl->_totext($element);
-			$output .= $this->pstl->process($element->firstChild);
-			
-			if ($row)
-			{
-				$row->incrementColCount();
-			}
-			
-			return $output;
-		}
-		
-		/**
-		 * 
-		 */
 		function tag_loop($element)
 		{
 			$output = "";
@@ -354,12 +332,17 @@
 
 			if (is_array($data))
 			{
+				$firstChild = $element->firstChild;
+				$previousValue = $this->pstl->getVar($var);
+				
 				foreach ($data as $tmp)
 				{
 					$this->pstl->setVar($var, $tmp);
-					$output .= $this->pstl->process($element->firstChild);
-					$this->pstl->unsetVar($var);
+
+					$output .= $this->pstl->process($firstChild);
 				}
+
+				$this->pstl->setVar($var, $previousValue);
 			}
 			
 			return $output;
