@@ -224,6 +224,7 @@
 		 */
 		function tag_tr($element)
 		{
+			$explicitClassSpecified = false;
 			$output = "";
 			$table = $this->getTable();
 			
@@ -248,6 +249,10 @@
 					{
 						$element->setAttribute("class", $rowClasses[$index]);
 					}
+					else
+					{
+						$explicitClassSpecified = true;
+					}
 				}
 			}
 			
@@ -255,7 +260,7 @@
 			$output .= $this->pstl->process($element->firstChild);
 			$output .= "</tr>";
 			
-			if ($table)
+			if ($table && !$explicitClassSpecified)
 			{
 				$table->incrementRowCount();
 			}
