@@ -19,6 +19,6 @@
 	</head>
 	<body>
 	<title><i18n:message en="PTL Login Example"/></title>
-	<pstl:out name="$id"/>
+	<pstl:out var="$id"/>
 	</body>
 </html>

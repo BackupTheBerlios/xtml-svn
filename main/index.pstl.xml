@@ -27,13 +27,12 @@
 	<h1><i18n:message en="Towns"/></h1>
 	<pstl:table row-classes="light,dark">
 	<pstl:loop data="('Stillorgan','Blackrock','Killiney')" var="town">
-	<pstl:tr><td><b><pstl:out name="$town"/></b></td></pstl:tr>
+	<pstl:tr><td><b><pstl:out var="$town"/></b></td></pstl:tr>
 	</pstl:loop>
 	</pstl:table>
 	-->
 	
 	<!-- Include path: [<pstl:out var="$include_path"/>]<br/> -->
-	
 	<h1><i18n:message en="Cities"/>(<i18n:getlang/>)</h1>
 	<pstl:table row-classes="light-red,light-green,light-blue">
 	<tr><th><i18n:message en="Code"/></th><th><i18n:message en="Name"/></th></tr>
