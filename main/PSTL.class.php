@@ -235,52 +235,62 @@
 		function getData($key)
 		{
 			$data = $this->_getData($key);
-			
+
 			if (!is_array($data))
 			{
+				// make sure data becomes string
+				$data .= "";
 				$len = strlen($data);
 				$pos = 0;
+				$source = $data;
+				$data = "";
 				
 				while ($pos < $len)
 				{
-					if ($data{$pos} == '$')
+					if ($source{$pos} == '\\')
 					{
-						$kpos = $pos;
+						$pos++;
+						$data .= $source{$pos++};
+					}
+					else if ($source{$pos} == '$')
+					{
 						$key = "";
 						
-						if ($data{$kpos+1} == '$')
+						if ($source{$pos+1} == '{')
 						{
-							$data = substr($data, 0, $pos) . substr($data, $pos+1);
-							$pos++;
-						}
-						else if ($data{$kpos+1} == '{')
-						{
-							$kpos+=2;
+							$pos+=2;
 							
-							while ($data{$kpos} != '}')
+							while (($c = $source{$pos}) != '}')
 							{
-								$key .= $data{$kpos};
-								$kpos++;
+								$key .= $source{$pos};
+								$pos++;
 							}
 							
-							$data = str_replace("\${$key}", $this->getData("\$$key"), $data);
+							$key = "\${$key}";
+							$data .= $this->getData("\${$key}");
 						}
 						else
 						{
-							$kpos++;
+							$pos++;
 							
-							while ($data{$kpos} != ' ' && $kpos < $len)
+							while (
+								$pos < $len &&
+								($c = $source{$pos}) != ' ' &&
+								$c != '$')
 							{
-								$key .= $data{$kpos};
-								$kpos++;
+								$key .= $c;
+								$pos++;
 							}
 							
-							$data = str_replace("\$$key", $this->getData("\$$key"), $data);
+							$key = "\$$key";
 						}
+
+						//print "key=[$key]=" . $this->getData($key) . "<br>\n";
+						$data .= $this->getData($key);
 					}
 					else
 					{
-						$pos++;
+						$data .= $source{$pos++};
 					}
 				}
 			}

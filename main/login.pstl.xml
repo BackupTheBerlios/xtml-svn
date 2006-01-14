@@ -11,13 +11,14 @@
  -->
 
 <html
-	xmlns:pstl = "http://www.dublinux.net/pstl"
+	xmlns:pstl = "http://www.dublinux.net/pstl/core"
+	xmlns:i18n = "http://www.dublinux.net/pstl/i18n"
 	xmlns:entity = "http://www.dublinux.net/pstl/entity">
 	<head>
 		<link href="/pstl.css" rel="stylesheet" type="text/css"/>
 	</head>
 	<body>
-	<title><pstl:i18n en="PTL Login Example"/></title>
+	<title><i18n:message en="PTL Login Example"/></title>
 	<pstl:out name="$id"/>
 	</body>
 </html>

@@ -12,18 +12,19 @@
  -->
 
 <html
-	xmlns:pstl = "http://www.dublinux.net/pstl"
+	xmlns:pstl = "http://www.dublinux.net/pstl/core"
+	xmlns:i18n = "http://www.dublinux.net/pstl/i18n"
 	xmlns:entity = "http://www.dublinux.net/pstl/entity">
 	<head>
 		<link href="/pstl.css" rel="stylesheet" type="text/css"/>
 	</head>
 	<body>
-	<title><pstl:i18n en="PTL Index Example"/></title>
+	<title><i18n:message en="PTL Index Example"/></title>
 	<!-- <pstl:redirect to="http://www.bbc.co.uk"/> -->
 	
 	<!-- An example of a loop over static data defined in the xml file -->
 	<!--
-	<h1><pstl:i18n en="Towns"/></h1>
+	<h1><i18n:message en="Towns"/></h1>
 	<pstl:table row-classes="light,dark">
 	<pstl:loop data="('Stillorgan','Blackrock','Killiney')" var="town">
 	<pstl:tr><td><b><pstl:out name="$town"/></b></td></pstl:tr>
@@ -33,22 +34,22 @@
 	
 	<!-- Include path: [<pstl:out var="$include_path"/>]<br/> -->
 	
-	<h1><pstl:i18n en="Cities"/>(<pstl:getlang/>)</h1>
+	<h1><i18n:message en="Cities"/>(<i18n:getlang/>)</h1>
 	<pstl:table row-classes="light-red,light-green,light-blue">
-	<tr><th><pstl:i18n en="Code"/></th><th><pstl:i18n en="Name"/></th></tr>
+	<tr><th><i18n:message en="Code"/></th><th><i18n:message en="Name"/></th></tr>
 	<pstl:loop data="$countries" var="country">
 	<pstl:tr col-classes="*,text">
-		<pstl:td><pstl:i18n en="$country.code"/></pstl:td><pstl:td><b><pstl:i18n en="$country.name" maxlen="13" ellipsis="true"/></b></pstl:td>
+		<pstl:td><i18n:message en="$country.code"/></pstl:td><pstl:td><b><i18n:message en="$country.name" maxlen="13" ellipsis="true"/></b></pstl:td>
 	</pstl:tr>
 	</pstl:loop>
 	</pstl:table>
 	
 	<br/>
-	<pstl:i18n en="Booking cost: $$$booking.charge"/>
+	<i18n:message en="Booking cost: \$$booking.charge"/>
 	<br/>
-	<pstl:i18n en="Booking fee: $$$booking.fee"/>
+	<i18n:message en="Booking fee: \$$booking.fee"/>
 	<br/>
-	<pstl:i18n en="Total charge: $$$booking.total"/>
+	<i18n:message en="Total charge: \$$booking.total"/>
 	
 	</body>
 </html>
