@@ -18,9 +18,20 @@
 	{
 		var $pstl;
 		
+		/**
+		 * 
+		 */
 		function tagBase($pstl)
 		{
 			$this->pstl = $pstl;
+		}
+		
+		/**
+		 * 
+		 */
+		function copyright()
+		{
+			return "";
 		}
 	}
 ?>

@@ -157,6 +157,16 @@
 		/**
 		 * 
 		 */
+		function copyright()
+		{
+			return "PSTL Core - The Core PHP Standard Tag Library\n" .
+				"Copyright 2005, 2006, the dublinux.net group.\n" .
+				"Released under the GNU GPL v2";
+		}
+
+		/**
+		 * 
+		 */
 		function getTable()
 		{
 			return $this->tables[$this->tablesIndex-1];
@@ -186,6 +196,7 @@
 		 */
 		function tag_table($element)
 		{
+			$output = "";
 			$this->tables[$this->tablesIndex++] = new ptlTable();
 			$table = $this->getTable();
 			
@@ -197,11 +208,13 @@
 				$table->setRowClasses(explode(",", $rowClasses));
 			}
 			
-			$this->pstl->append($element);
-			$this->pstl->process($element->firstChild);
-			$this->pstl->append("</table>");
+			$output .= $this->pstl->_totext($element);
+			$output .= $this->pstl->process($element->firstChild);
+			$output .= "</table>";
 			
 			unset($this->tables[--$this->tablesIndex]);
+			
+			return $output;
 		}
 		
 		/**
@@ -209,6 +222,7 @@
 		 */
 		function tag_tr($element)
 		{
+			$output = "";
 			$table = $this->getTable();
 			
 			if ($table)
@@ -231,14 +245,16 @@
 				}
 			}
 			
-			$this->pstl->append($element);
-			$this->pstl->process($element->firstChild);
-			$this->pstl->append("</tr>");
+			$output .= $this->pstl->_totext($element);
+			$output .= $this->pstl->process($element->firstChild);
+			$output .= "</tr>";
 			
 			if ($table)
 			{
 				$table->incrementRowCount();
 			}
+
+			return $output;
 		}
 		
 		/**
@@ -246,6 +262,7 @@
 		 */
 		function tag_td($element)
 		{
+			$output = "";
 			$table = $this->getTable();
 			$row = null;
 			
@@ -261,14 +278,16 @@
 				}
 			}
 			
-			$this->pstl->append($element);
-			$this->pstl->process($element->firstChild);
-			$this->pstl->append("</td>");
+			$output .= $this->pstl->_totext($element);
+			$output .= $this->pstl->process($element->firstChild);
+			$output .= "</td>";
 			
 			if ($row)
 			{
 				$row->incrementColCount();
 			}
+			
+			return $output;
 		}
 		
 		/**
@@ -276,6 +295,7 @@
 		 */
 		function tag_loop($element)
 		{
+			$output = "";
 			$data = $element->getAttribute("data");
 			$var = $element->getAttribute("var");
 
@@ -294,10 +314,12 @@
 				foreach ($data as $tmp)
 				{
 					$this->pstl->setData($var, $tmp);
-					$this->pstl->process($element->firstChild);
+					$output .= $this->pstl->process($element->firstChild);
 					$this->pstl->unsetData($var);
 				}
 			}
+			
+			return $output;
 		}
 
 		/**
@@ -318,11 +340,11 @@
 		
 			if ($value{0} == '$')
 			{
-				$this->pstl->append($this->pstl->getData($value));
+				return $this->pstl->getData($value);
 			}
 			else
 			{
-				$this->pstl->append("$value");
+				return $value;
 			}
 		}
 	}

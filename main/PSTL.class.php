@@ -22,6 +22,7 @@
 		var $task;
 		var $script;
 		var $classCache;
+		var $copyrights;
 		var $data;
 		var $doc;
 
@@ -41,7 +42,6 @@
 				$this->script = $script;
 			}
 			
-			$this->output = "";
 			$this->classCache = array();
 			$this->data = array();
 			$this->doc = new DOMDocument();
@@ -121,22 +121,6 @@
 		/**
 		 * 
 		 */
-		function prepend($s)
-		{
-			$this->output = $this->_totext($s) . $this->output;
-		}
-		
-		/**
-		 * 
-		 */
-		function append($s)
-		{
-			$this->output .= $this->_totext($s);
-		}
-		
-		/**
-		 * 
-		 */
 		function render()
 		{
 			$started = microtime(true);
@@ -150,14 +134,20 @@
 			
 			if ($this->doc->load($this->task . ".pstl.xml"))
 			{
-				$this->process($this->doc->documentElement);
+				$output = $this->process($this->doc->documentElement);
 			}
 			
 			$finished = microtime(true);
-			$this->prepend("<!-- Generated using PSTL, the PHP Standard Tag Library -->\n");
-			$this->prepend("<!-- Rendering took " . ($finished - $started) . " seconds -->\n");
+			$renderTime = ($finished - $started);
 			
-			print $this->output;
+			$output = "<!--\nGenerated using PSTL, the PHP Standard Tag Library\n\n"
+				. "The following tag libraries were used to render this document\n"
+				. $this->copyrights
+				. "\nRendering took " . ($finished - $started) . " seconds\n"
+				. "-->\n\n"
+				. $output;
+			
+			print $output;
 		}
 		
 		/**
@@ -325,6 +315,8 @@
 		 */
 		function process($child)
 		{
+			$output = "";
+			
 			while ($child)
 			{
 				//print "<pre>";
@@ -347,6 +339,16 @@
 						if (!isset($this->classCache[$tagClass]))
 						{
 							$this->classCache[$tagClass] = new $tagClass($this);
+							$copyright = $this->classCache[$tagClass]->copyright();
+							
+							if ($copyright)
+							{
+								$this->copyrights .= "\n" .$this->classCache[$tagClass]->copyright() . "\n";
+							}
+							else
+							{
+								$this->copyrights .= "\n" . $tag[0] . " tag library, no copyright found" . "\n";
+							} 
 						}
 	
 						$_class = $this->classCache[$tagClass];
@@ -360,11 +362,11 @@
 							die();
 						}
 						
-						$_class->$_method($child);
+						$output .= $_class->$_method($child);
 					}
 					else
 					{
-						$this->append("<" . $child->tagName);
+						$output .= "<" . $child->tagName;
 						
 						if ($child->hasAttributes())
 						{
@@ -373,26 +375,28 @@
 							
 							while ($attr = $attributes->item($i++))
 							{
-								$this->append(" " . $attr->nodeName . "=\"" . $attr->nodeValue . "\"");
+								$output .= " " . $attr->nodeName . "=\"" . $attr->nodeValue . "\"";
 							}
 						}
 						 
-						$this->append(">");
-						$this->process($child->firstChild);
-						$this->append("</" . $child->tagName . ">");
+						$output .= ">";
+						$output .= $this->process($child->firstChild);
+						$output .= "</" . $child->tagName . ">";
 					}
 				}
 				else if ($child->nodeType == XML_TEXT_NODE)
 				{
-					$this->append($child->nodeValue);
+					$output .= $child->nodeValue;
 				}
 				else
 				{
-					$this->process($child->firstChild);
+					$output .= $this->process($child->firstChild);
 				}
 					
 				$child = $child->nextSibling;
 			}
+			
+			return $output;
 		}
 
 	}

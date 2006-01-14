@@ -35,6 +35,16 @@
 		/**
 		 * 
 		 */
+		function copyright()
+		{
+			return "i18n - The i18n PHP Standard Tag Library\n" .
+				"Copyright 2005, 2006, the dublinux.net group.\n" .
+				"Released under the GNU GPL v2";
+		}
+
+		/**
+		 * 
+		 */
 		function getlang()
 		{
 			return $this->lang;
@@ -62,7 +72,7 @@
 		 */
 		function tag_getlang($element)
 		{
-			$this->pstl->append($this->getlang());
+			return $this->getlang();
 		}
 		
 		/**
@@ -89,7 +99,7 @@
 				}
 			}
 
-			$this->pstl->append($text);
+			return $text;
 		}
 	}
 ?>
