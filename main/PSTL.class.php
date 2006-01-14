@@ -260,10 +260,17 @@
 						{
 							$pos+=2;
 							
-							while (($c = $source{$pos}) != '}')
+							while ($pos < $len &&
+								($c = $source{$pos}) != '}')
 							{
 								$key .= $source{$pos};
 								$pos++;
+							}
+							
+							if ($c != '}')
+							{
+								// missing close }
+								// XML file is probably faulty
 							}
 							
 							$key = "\${$key}";
@@ -273,8 +280,7 @@
 						{
 							$pos++;
 							
-							while (
-								$pos < $len &&
+							while ($pos < $len &&
 								($c = $source{$pos}) != ' ' &&
 								$c != '$')
 							{
