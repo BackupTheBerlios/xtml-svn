@@ -19,7 +19,7 @@
  	
 	class PSTL
 	{
-		var $task;
+		var $document;
 		var $script;
 		var $classCache;
 		var $copyrights;
@@ -29,16 +29,16 @@
 		/**
 		 * 
 		 */
-		function PSTL($task = null, $script = null)
+		function PSTL($document = null, $script = null)
 		{
-			if ($task == null)
+			if ($document == null)
 			{
-				$this->task = PSTL::getPageLocation();
+				$this->document = PSTL::getPageLocation();
 				$this->script = PSTL::getPageLocation();
 			}
 			else
 			{
-				$this->task = $task;
+				$this->document = $document;
 				$this->script = $script;
 			}
 			
@@ -47,7 +47,7 @@
 			$this->doc = new DOMDocument();
 			$this->doc->preserveWhiteSpace = true;
 
-			$this->setData("include_path", ini_get('include_path'));
+			$this->setVar("include_path", ini_get('include_path'));
 		}
 
 		/**
@@ -132,20 +132,24 @@
 				pstlScript($this); 
 			}
 			
-			if ($this->doc->load($this->task . ".pstl.xml"))
+			if ($this->doc->load($this->document . ".pstl.xml"))
 			{
 				$output = $this->process($this->doc->documentElement);
 			}
 			
 			$finished = microtime(true);
 			$renderTime = ($finished - $started);
-			
-			$output = "<!--\nGenerated using PSTL, the PHP Standard Tag Library\n\n"
-				. "The following tag libraries were used to render this document\n"
-				. $this->copyrights
-				. "\nRendering took " . ($finished - $started) . " seconds\n"
-				. "-->\n\n"
-				. $output;
+
+			$output = 
+				"<!DOCTYPE html\n" .
+				"    PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"\n" .
+				"    \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n\n" .
+				"<!--\nGenerated using PSTL, the PHP Standard Tag Library\n\n" .
+				"The following tag libraries were used to render this document\n" .
+				$this->copyrights .
+				"\nRendering took " . ($finished - $started) . " seconds\n" .
+				"-->\n\n" .
+				$output;
 			
 			print $output;
 		}
@@ -193,7 +197,7 @@
 		/**
 		 * 
 		 */
-		function _getData($key)
+		function _getVar($key)
 		{
 			if ($key{0} == '$')
 			{
@@ -203,11 +207,11 @@
 				{
 					if (count($key) > 1)
 					{
-						return $this->getData($this->getObjectData($key));
+						return $this->getVar($this->getObjectData($key));
 					}
 					else
 					{
-						return $this->getData($this->data[$key[0]]);
+						return $this->getVar($this->data[$key[0]]);
 					}
 				}
 	
@@ -222,9 +226,9 @@
 		/**
 		 * 
 		 */
-		function getData($key)
+		function getVar($key)
 		{
-			$data = $this->_getData($key);
+			$data = $this->_getVar($key);
 
 			if (!is_array($data))
 			{
@@ -264,7 +268,7 @@
 							}
 							
 							$key = "\${$key}";
-							$data .= $this->getData("\${$key}");
+							$data .= $this->getVar("\${$key}");
 						}
 						else
 						{
@@ -281,8 +285,8 @@
 							$key = "\$$key";
 						}
 
-						//print "key=[$key]=" . $this->getData($key) . "<br>\n";
-						$data .= $this->getData($key);
+						//print "key=[$key]=" . $this->getVar($key) . "<br>\n";
+						$data .= $this->getVar($key);
 					}
 					else
 					{
@@ -297,7 +301,7 @@
 		/**
 		 * 
 		 */
-		function setData($key, $data)
+		function setVar($key, $data)
 		{
 			$this->data["\$$key"] = $data;
 		}
@@ -305,7 +309,7 @@
 		/**
 		 * 
 		 */
-		function unsetData($key)
+		function unsetVar($key)
 		{
 			unset($this->data["\$$key"]);
 		}
@@ -366,22 +370,30 @@
 					}
 					else
 					{
-						$output .= "<" . $child->tagName;
-						
-						if ($child->hasAttributes())
+						// check for crappy HTML tags, but maintain XHTML output compatibility
+						if ($child->tagName == "br")
 						{
-							$attributes = $child->attributes; 
-							$i = 0;
-							
-							while ($attr = $attributes->item($i++))
-							{
-								$output .= " " . $attr->nodeName . "=\"" . $attr->nodeValue . "\"";
-							}
+							$output .= "<" . $child->tagName . "/>";
 						}
-						 
-						$output .= ">";
-						$output .= $this->process($child->firstChild);
-						$output .= "</" . $child->tagName . ">";
+						else
+						{
+							$output .= "<" . $child->tagName;
+							
+							if ($child->hasAttributes())
+							{
+								$attributes = $child->attributes; 
+								$i = 0;
+								
+								while ($attr = $attributes->item($i++))
+								{
+									$output .= " " . $attr->nodeName . "=\"" . $attr->nodeValue . "\"";
+								}
+							}
+							 
+							$output .= ">";
+							$output .= $this->process($child->firstChild);
+							$output .= "</" . $child->tagName . ">";
+						}
 					}
 				}
 				else if ($child->nodeType == XML_TEXT_NODE)

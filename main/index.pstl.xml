@@ -44,11 +44,16 @@
 	</pstl:table>
 	
 	<br/>
-	<i18n:message en="Booking cost: \$$booking.charge"/>
-	<br/>
-	<i18n:message en="Booking fee: \$$booking.fee"/>
-	<br/>
-	<i18n:message en="Total charge: \$$booking.total"/>
-	
+	<table>
+		<tr>
+			<td><i18n:message en="Booking cost"/>:</td><td>$<pstl:out var="$booking.charge"/></td>
+		</tr>
+		<tr>
+			<td><i18n:message en="Booking fee"/>:</td><td>$<pstl:out var="$booking.charge"/></td>
+		</tr>
+		<tr>
+			<td><i18n:message en="Total charge"/>:</td><td>$<pstl:out var="$booking.charge"/></td>
+		</tr>
+	</table>
 	</body>
 </html>

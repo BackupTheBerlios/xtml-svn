@@ -22,7 +22,7 @@
 		
 		function go()
 		{
-			$this->pstl->setData("id", "jallen");
+			$this->pstl->setVar("id", "jallen");
 		}
 	}
 	

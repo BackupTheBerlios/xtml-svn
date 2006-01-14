@@ -63,7 +63,7 @@
 		 */
 		function tag_setlang($element)
 		{
-			$lang = $this->pstl->getData($element->getAttribute("en"));
+			$lang = $this->pstl->getVar($element->getAttribute("en"));
 			$this->setLang($lang);
 		}
 		
@@ -85,7 +85,7 @@
 			$maxlen = $element->getAttribute("maxlen");
 			$ellipsis = $element->getAttribute("ellipsis") == "true" ? true:false;
 			
-			$text = $this->pstl->getData($englishText);
+			$text = $this->pstl->getVar($englishText);
 			
 			if ($maxlen && strlen($text) > $maxlen)
 			{

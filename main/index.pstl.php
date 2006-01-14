@@ -39,14 +39,14 @@
 	
 	function pstlScript($pstl)
 	{
-		$pstl->setData("language", "en");
+		$pstl->setVar("language", "en");
 		 
-		$pstl->setData("countries", 
+		$pstl->setVar("countries", 
 			array(
 				new Country("US", "United States"), 
 				new Country("IE", "Ireland"), 
 				new Country("UK", "United Kingdom")));
 
-		$pstl->setData("booking", new Booking(275, 20));
+		$pstl->setVar("booking", new Booking(275, 20));
 	}
 ?>

@@ -161,7 +161,9 @@
 		{
 			return "PSTL Core - The Core PHP Standard Tag Library\n" .
 				"Copyright 2005, 2006, the dublinux.net group.\n" .
-				"Released under the GNU GPL v2";
+				"Released under the GNU GPL v2\n" .
+				"http://pstl.dublinux.net/"
+				;
 		}
 
 		/**
@@ -181,11 +183,11 @@
 			$eq = $element->getAttribute("eq");
 			$neq = $element->getAttribute("neq");
 
-			if (isset($eq) && $this->pstl->getData($var) == $var)
+			if (isset($eq) && $this->pstl->getVar($var) == $var)
 			{
 				$this->pstl->process($element->firstChild);
 			}
-			else if (isset($neq) && $this->pstl->getData($var) != $var)
+			else if (isset($neq) && $this->pstl->getVar($var) != $var)
 			{
 				$this->pstl->process($element->firstChild);
 			}
@@ -306,16 +308,16 @@
 			}
 			else if ($data{0} == '$' && $this->pstl->hasData($data))
 			{
-				$data = $this->pstl->getData($data);
+				$data = $this->pstl->getVar($data);
 			}
 
 			if (is_array($data))
 			{
 				foreach ($data as $tmp)
 				{
-					$this->pstl->setData($var, $tmp);
+					$this->pstl->setVar($var, $tmp);
 					$output .= $this->pstl->process($element->firstChild);
-					$this->pstl->unsetData($var);
+					$this->pstl->unsetVar($var);
 				}
 			}
 			
@@ -340,7 +342,7 @@
 		
 			if ($value{0} == '$')
 			{
-				return $this->pstl->getData($value);
+				return $this->pstl->getVar($value);
 			}
 			else
 			{
