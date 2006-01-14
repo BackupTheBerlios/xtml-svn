@@ -304,6 +304,38 @@
 		/**
 		 * 
 		 */
+		function tag_th($element)
+		{
+			$output = "";
+			$table = $this->getTable();
+			$row = null;
+			
+			if ($table && $row = $table->getRow())
+			{
+				if ($row && $colClasses = $row->getColClasses())
+				{
+					$index = ($row->getColCount() % count($colClasses));
+					if ($colClasses[$index] != "*")
+					{
+						$element->setAttribute("class", $colClasses[$index]);
+					}
+				}
+			}
+			
+			$output .= $this->pstl->_totext($element);
+			$output .= $this->pstl->process($element->firstChild);
+			
+			if ($row)
+			{
+				$row->incrementColCount();
+			}
+			
+			return $output;
+		}
+		
+		/**
+		 * 
+		 */
 		function tag_loop($element)
 		{
 			$output = "";
