@@ -243,7 +243,11 @@
 				if ($rowClasses = $table->getRowClasses())
 				{
 					$index = ($table->getRowCount() % count($rowClasses));
-					$element->setAttribute("class", $rowClasses[$index]);
+					
+					if ($element->getAttribute("class") == "")
+					{
+						$element->setAttribute("class", $rowClasses[$index]);
+					}
 				}
 			}
 			
