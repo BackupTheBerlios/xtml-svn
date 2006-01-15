@@ -145,6 +145,7 @@
 	{
 		var $tables;
 		var $tablesIndex;
+		var $iftable;
 		
 		function pstlTag($pstl)
 		{
@@ -152,6 +153,14 @@
 			
 			$this->tables = array();
 			$this->tablesIndex = 0;
+			
+			$this->iftable = array(
+				"!=" => "ifneq",
+				"==" => "ifneq",
+				">" => "ifneq",
+				">=" => "ifneq",
+				"!<" => "ifneq",
+				"<=" => "ifneq");
 		}
 
 		/**
@@ -174,41 +183,23 @@
 			return $this->tables[$this->tablesIndex-1];
 		}
 		
+		function ifneq($lvalue, $rvalue)
+		{
+			return $lvalue != $rvalue;
+		}
+		
 		/**
 		 * 
 		 */
 		function tag_if($element)
 		{
-			$lvalue = $this->pstl->getVar($element->getAttribute("lvalue"));
-			$op = $element->getAttribute("op");
-			$rvalue = $this->pstl->getVar($element->getAttribute("rvalue"));
+			$method = $this->iftable[$element->getAttribute("op")];
 
-			if (isset($lvalue) && isset($op) && isset($rvalue))
+			if ($this->$method(
+				$this->pstl->getVar($element->getAttribute("lvalue")), 
+				$this->pstl->getVar($element->getAttribute("rvalue"))))
 			{
-				if ($op == "==" && $lvalue == $rvalue)
-				{
-					return $this->pstl->process($element->firstChild);
-				}
-				else if ($op == "!=" && $lvalue != $rvalue)
-				{
-					return $this->pstl->process($element->firstChild);
-				}
-				else if ($op == ">" && $lvalue > $rvalue)
-				{
-					return $this->pstl->process($element->firstChild);
-				}
-				else if ($op == ">=" && $lvalue >= $rvalue)
-				{
-					return $this->pstl->process($element->firstChild);
-				}
-				else if ($op == "<" && $lvalue < $rvalue)
-				{
-					return $this->pstl->process($element->firstChild);
-				}
-				else if ($op == "<=" && $lvalue <= $rvalue)
-				{
-					return $this->pstl->process($element->firstChild);
-				}
+				return $this->pstl->process($element->firstChild);
 			}
 			
 			return "";

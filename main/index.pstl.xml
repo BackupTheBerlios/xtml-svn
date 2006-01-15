@@ -41,11 +41,11 @@
 		</tr>
 		<tr>
 			<td><i18n:message en="Booking fee"/>:</td>
-			<td>$<pstl:out var="$booking.charge"/></td>
+			<td>$<pstl:out var="$booking.fee"/></td>
 		</tr>
 		<tr>
 			<td><i18n:message en="Total charge"/>:</td>
-			<td>$<pstl:out var="$booking.charge"/></td>
+			<td>$<pstl:out var="$booking.total"/></td>
 		</tr>
 	</table>
 	</body>
