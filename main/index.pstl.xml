@@ -25,7 +25,9 @@
 	<tr><th><i18n:message en="Code"/></th><th><i18n:message en="Name"/></th></tr>
 	<pstl:loop data="$countries" var="country">
 	<pstl:tr col-classes="*,text">
-		<pstl:td><i18n:message en="$country.code"/></pstl:td><pstl:td><b><i18n:message en="$country.name" maxlen="13" ellipsis="true"/></b></pstl:td>
+		<pstl:if lvalue="$country.code" op="!=" rvalue="IT">
+			<pstl:td><pstl:out var="$country.code"/></pstl:td><pstl:td><b><i18n:message en="$country.name" maxlen="13" ellipsis="true"/></b></pstl:td>
+		</pstl:if>
 	</pstl:tr>
 	</pstl:loop>
 	</pstl:table>

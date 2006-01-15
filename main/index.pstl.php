@@ -46,6 +46,7 @@
 				new Country("US", "United States"), 
 				new Country("IE", "Ireland"), 
 				new Country("DE", "Germany"), 
+				new Country("IT", "Italy"), 
 				new Country("UK", "United Kingdom")));
 
 		$pstl->setVar("booking", new Booking(275, 20));

@@ -179,18 +179,39 @@
 		 */
 		function tag_if($element)
 		{
-			$var = $element->getAttribute("var");
-			$eq = $element->getAttribute("eq");
-			$neq = $element->getAttribute("neq");
+			$lvalue = $this->pstl->getVar($element->getAttribute("lvalue"));
+			$op = $element->getAttribute("op");
+			$rvalue = $this->pstl->getVar($element->getAttribute("rvalue"));
 
-			if (isset($eq) && $this->pstl->getVar($var) == $var)
+			if (isset($lvalue) && isset($op) && isset($rvalue))
 			{
-				$this->pstl->process($element->firstChild);
+				if ($op == "==" && $lvalue == $rvalue)
+				{
+					return $this->pstl->process($element->firstChild);
+				}
+				else if ($op == "!=" && $lvalue != $rvalue)
+				{
+					return $this->pstl->process($element->firstChild);
+				}
+				else if ($op == ">" && $lvalue > $rvalue)
+				{
+					return $this->pstl->process($element->firstChild);
+				}
+				else if ($op == ">=" && $lvalue >= $rvalue)
+				{
+					return $this->pstl->process($element->firstChild);
+				}
+				else if ($op == "<" && $lvalue < $rvalue)
+				{
+					return $this->pstl->process($element->firstChild);
+				}
+				else if ($op == "<=" && $lvalue <= $rvalue)
+				{
+					return $this->pstl->process($element->firstChild);
+				}
 			}
-			else if (isset($neq) && $this->pstl->getVar($var) != $var)
-			{
-				$this->pstl->process($element->firstChild);
-			}
+			
+			return "";
 		}
 
 		/**
