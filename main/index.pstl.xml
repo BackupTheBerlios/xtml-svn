@@ -22,26 +22,30 @@
 	<title><i18n:message en="PTL Index Example"/></title>
 	<h1><i18n:message en="Cities"/>(<i18n:getlang/>)</h1>
 	<pstl:table row-classes="light-red,light-green,light-blue">
-	<tr><th><i18n:message en="Code"/></th><th><i18n:message en="Name"/></th></tr>
-	<pstl:loop data="$countries" var="country">
-	<pstl:tr col-classes="*,text">
-		<pstl:if lvalue="$country.code" op="!=" rvalue="IT">
-			<pstl:td><pstl:out var="$country.code"/></pstl:td><pstl:td><b><i18n:message en="$country.name" maxlen="13" ellipsis="true"/></b></pstl:td>
-		</pstl:if>
-	</pstl:tr>
-	</pstl:loop>
+		<tr><th><i18n:message en="Code"/></th><th><i18n:message en="Name"/></th></tr>
+		<pstl:loop data="$countries" var="country">
+			<pstl:tr col-classes="*,text">
+				<pstl:if lvalue="$country.code" op="!=" rvalue="IT">
+					<pstl:td><pstl:out var="$country.code"/></pstl:td>
+					<pstl:td><b><i18n:message en="$country.name" maxlen="13" ellipsis="true"/></b></pstl:td>
+				</pstl:if>
+			</pstl:tr>
+		</pstl:loop>
 	</pstl:table>
 	
 	<br/>
 	<table>
 		<tr>
-			<td><i18n:message en="Booking cost"/>:</td><td>$<pstl:out var="$booking.charge"/></td>
+			<td><i18n:message en="Booking cost"/>:</td>
+			<td>$<pstl:out var="$booking.charge"/></td>
 		</tr>
 		<tr>
-			<td><i18n:message en="Booking fee"/>:</td><td>$<pstl:out var="$booking.charge"/></td>
+			<td><i18n:message en="Booking fee"/>:</td>
+			<td>$<pstl:out var="$booking.charge"/></td>
 		</tr>
 		<tr>
-			<td><i18n:message en="Total charge"/>:</td><td>$<pstl:out var="$booking.charge"/></td>
+			<td><i18n:message en="Total charge"/>:</td>
+			<td>$<pstl:out var="$booking.charge"/></td>
 		</tr>
 	</table>
 	</body>
