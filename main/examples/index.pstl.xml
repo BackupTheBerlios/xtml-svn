@@ -16,7 +16,7 @@
 	xmlns:i18n = "http://www.dublinux.net/pstl/i18n"
 	xmlns:entity = "http://www.dublinux.net/pstl/entity">
 	<head>
-		<link href="pstl.css" rel="stylesheet" type="text/css"/>
+		<link href="/style/pstl.css" rel="stylesheet" type="text/css"/>
 	</head>
 	<body>
 	<title><i18n:message en="PTL Index Example"/></title>

@@ -126,7 +126,7 @@
 		{
 			if (file_exists($this->document))
 			{
-				print file_get_contents($this->document);
+				echo file_get_contents($this->document);
 			}
 			else
 			{
