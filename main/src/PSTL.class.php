@@ -123,35 +123,46 @@
 		 */
 		function render()
 		{
-			$started = microtime(true);
+			if (file_exists($this->document))
+			{
+				print file_get_contents($this->document);
+			}
+			else
+			{
+				$started = microtime(true);
 		
-			if ($this->script)
-			{
-				$script = $this->script . ".pstl.php";
-				require_once "$script";
-				pstlScript($this); 
+				if ($this->script)
+				{
+					$script = $this->script . ".pstl.php";
+					
+					if (file_exists($script))
+					{
+						require_once "$script";
+						pstlScript($this);
+					} 
+				}
+				
+				if ($this->doc->load($this->document . ".pstl.xml"))
+				{
+					$output = $this->process($this->doc->documentElement);
+				}
+				
+				$finished = microtime(true);
+				$renderTime = ($finished - $started);
+	
+				$output = 
+					"<!DOCTYPE html\n" .
+					"    PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"\n" .
+					"    \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n\n" .
+					"<!--\nGenerated using PSTL, the PHP Standard Tag Library\n\n" .
+					"The following tag libraries were used to render this document\n" .
+					$this->copyrights .
+					"\nRendering took " . ($finished - $started) . " seconds\n" .
+					"-->\n\n" .
+					$output;
+				
+				print $output;
 			}
-			
-			if ($this->doc->load($this->document . ".pstl.xml"))
-			{
-				$output = $this->process($this->doc->documentElement);
-			}
-			
-			$finished = microtime(true);
-			$renderTime = ($finished - $started);
-
-			$output = 
-				"<!DOCTYPE html\n" .
-				"    PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"\n" .
-				"    \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n\n" .
-				"<!--\nGenerated using PSTL, the PHP Standard Tag Library\n\n" .
-				"The following tag libraries were used to render this document\n" .
-				$this->copyrights .
-				"\nRendering took " . ($finished - $started) . " seconds\n" .
-				"-->\n\n" .
-				$output;
-			
-			print $output;
 		}
 		
 		/**
