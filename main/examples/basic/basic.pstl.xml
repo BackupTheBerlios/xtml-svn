@@ -16,7 +16,7 @@
 	xmlns:i18n = "http://www.dublinux.net/pstl/i18n"
 	xmlns:entity = "http://www.dublinux.net/pstl/entity">
 	<head>
-		<link href="/style/pstl.css" rel="stylesheet" type="text/css"/>
+		<link href="/examples/examples.css" rel="stylesheet" type="text/css"/>
 	</head>
 	<!-- set a variable "title" to the the translate message title -->
 	<pstl:set var="title"><i18n:message>Basic PSTL Example</i18n:message></pstl:set>
