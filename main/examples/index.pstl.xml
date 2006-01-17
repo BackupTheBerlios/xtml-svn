@@ -18,16 +18,16 @@
 	<head>
 		<link href="/style/pstl.css" rel="stylesheet" type="text/css"/>
 	</head>
+	<title><i18n:message value="PSTL Index Example"/></title>
 	<body>
-	<title><i18n:message en="PTL Index Example"/></title>
-	<h1><i18n:message en="Cities"/>(<i18n:getlang/>)</h1>
+	<h1><i18n:message value="Cities"/>(<i18n:getlang/>)</h1>
 	<pstl:table row-classes="light-red,light-green,light-blue">
-		<tr><th><i18n:message en="Code"/></th><th><i18n:message en="Name"/></th></tr>
+		<tr><th><i18n:message value="Code"/></th><th><i18n:message value="Name"/></th></tr>
 		<pstl:loop data="$countries" var="country">
 			<pstl:tr col-classes="*,text">
 				<pstl:if lvalue="$country.code" op="!=" rvalue="IT">
-					<pstl:td><pstl:out var="$country.code"/></pstl:td>
-					<pstl:td><b><i18n:message en="$country.name" maxlen="13" ellipsis="true"/></b></pstl:td>
+					<pstl:td><pstl:out value="$country.code"/></pstl:td>
+					<pstl:td><b><i18n:message value="$country.name" maxlvalue="13" ellipsis="true"/></b></pstl:td>
 				</pstl:if>
 			</pstl:tr>
 		</pstl:loop>
@@ -36,16 +36,16 @@
 	<br/>
 	<table>
 		<tr>
-			<td><i18n:message en="Booking cost"/>:</td>
-			<td>$<pstl:out var="$booking.charge"/></td>
+			<td><i18n:message value="Booking cost"/>:</td>
+			<td>$<pstl:out value="$booking.charge"/></td>
 		</tr>
 		<tr>
-			<td><i18n:message en="Booking fee"/>:</td>
-			<td>$<pstl:out var="$booking.fee"/></td>
+			<td><i18n:message value="Booking fee"/>:</td>
+			<td>$<pstl:out value="$booking.fee"/></td>
 		</tr>
 		<tr>
-			<td><i18n:message en="Total charge"/>:</td>
-			<td>$<pstl:out var="$booking.total"/></td>
+			<td><i18n:message value="Total charge"/>:</td>
+			<td>$<pstl:out value="$booking.total"/></td>
 		</tr>
 	</table>
 	</body>

@@ -1,0 +1,27 @@
+tr.light {
+    background-color: #EEEEEE;
+}
+
+tr.dark {
+    background-color: #CCCCCC;
+}
+
+tr.light-green {
+    background-color: #BBFFBB;
+}
+
+tr.light-blue {
+    background-color: #BBBBFF;
+}
+
+tr.light-red {
+    background-color: #FFBBBB;
+}
+
+td.prompt {
+    background-color: #CCCCCC;
+}
+
+td.text {
+    background-color: #CCCC00;
+}

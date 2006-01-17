@@ -14,7 +14,7 @@
 	/**
 	 * 
 	 */
-	class ptlTable
+	class pstlTable
 	{
 		var $rowClasses;
 		var $rowCount;
@@ -23,11 +23,11 @@
 		/**
 		 * 
 		 */
-		function ptlTable()
+		function pstlTable()
 		{
 			$this->rowClasses = null;
 			$this->rowCount = 0;
-			$this->row = new ptlRow();
+			$this->row = new pstlRow();
 		}
 		
 		/**
@@ -82,7 +82,7 @@
 	/**
 	 * 
 	 */
-	class ptlRow
+	class pstlRow
 	{
 		var $colClasses;
 		var $colCount;
@@ -90,7 +90,7 @@
 		/**
 		 * 
 		 */
-		function ptlRow()
+		function pstlRow()
 		{
 			$this->colClasses = null;
 			$this->colCount = 0;
@@ -191,6 +191,19 @@
 		/**
 		 * 
 		 */
+		function tag_set($element)
+		{
+			$var = $element->getAttribute("var");
+			$value = $this->pstl->_getvalue($element);
+
+			$this->pstl->setVar($var, $value);						
+			
+			return "";
+		}
+
+		/**
+		 * 
+		 */
 		function tag_if($element)
 		{
 			$method = $this->iftable[$element->getAttribute("op")];
@@ -211,7 +224,7 @@
 		function tag_table($element)
 		{
 			$output = "";
-			$this->tables[$this->tablesIndex++] = new ptlTable();
+			$this->tables[$this->tablesIndex++] = new pstlTable();
 			$table = $this->getTable();
 			
 			$rowClasses = $element->getAttribute("row-classes");
@@ -365,7 +378,7 @@
 		 */
 		function tag_redirect($element)
 		{
-			$to = $element->getAttribute("to");
+			$to = $value = $this->pstl->_getvalue($element, "to");
 			header("Location: $to");
 		}
 		
@@ -374,7 +387,7 @@
 		 */
 		function tag_out($element)
 		{
-			$value = $element->getAttribute("var");
+			$value = $this->pstl->_getvalue($element);
 		
 			if ($value{0} == '$')
 			{

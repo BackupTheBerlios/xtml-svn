@@ -26,7 +26,7 @@
 			parent::tagBase($pstl);
 			
 			// Set language, default to en (English)
-			$this->lang = isset($_REQUEST['lang']) ? $_REQUEST['lang']:"en";
+			$this->lang = isset($_REQUEST['lang']) ? $_REQUEST['lang']:"value";
 			
 			$this->tables = array();
 			$this->tablesIndex = 0;
@@ -63,7 +63,8 @@
 		 */
 		function tag_setlang($element)
 		{
-			$lang = $this->pstl->getVar($element->getAttribute("en"));
+			$value = $this->pstl->_getvalue($element);
+			$lang = $this->pstl->getVar($value);
 			$this->setLang($lang);
 		}
 		
@@ -81,11 +82,10 @@
 		function tag_message($element)
 		{
 			// TODO: implement translate logic
-			$englishText = $element->getAttribute("en");
 			$maxlen = $element->getAttribute("maxlen");
 			$ellipsis = $element->getAttribute("ellipsis") == "true" ? true:false;
-			
-			$text = $this->pstl->getVar($englishText);
+			$value = $this->pstl->_getvalue($element);
+			$text = $this->pstl->getVar($value);
 			
 			if ($maxlen && strlen($text) > $maxlen)
 			{

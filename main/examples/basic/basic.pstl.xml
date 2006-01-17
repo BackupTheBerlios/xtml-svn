@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+ $Author: jallen $
+ $LastChangedDate: 2006-01-16 21:04:52Z $
+ $LastChangedRevision: 68 $
+ $LastChangedBy: jallen $
+ $HeadURL: svn+ssh://svn.dublinux.net/var/svn/pstl/main/examples/index.pstl.xml $
+ 
+ PSTL - The PHP Standard Tag Library
+ Copyright 2005, 2006, the dublinux.net group.
+ Released under the GNU GPL v2
+ -->
+
+<html
+	xmlns:pstl = "http://www.dublinux.net/pstl/core"
+	xmlns:i18n = "http://www.dublinux.net/pstl/i18n"
+	xmlns:entity = "http://www.dublinux.net/pstl/entity">
+	<head>
+		<link href="/style/pstl.css" rel="stylesheet" type="text/css"/>
+	</head>
+	<!-- set a variable "title" to the the translate message title -->
+	<pstl:set var="title"><i18n:message>Basic PSTL Example</i18n:message></pstl:set>
+	<title><pstl:out value="$title"/></title>
+	<body>
+	<h1><pstl:out value="$title"/></h1>
+	</body>
+</html>
