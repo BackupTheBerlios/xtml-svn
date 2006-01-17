@@ -16,6 +16,27 @@
 	
 	require_once "PSTL.class.php";
 	 
+	class Country
+	{
+		var $code;
+		var $name;
+		
+		function Country($code, $name)
+		{
+			$this->code = $code;
+			$this->name = $name;
+		}
+	}
+	
 	$pstl = new PSTL("basic");
+	
+	$pstl->setVar("countries", 
+		array(
+			new Country("US", "United States"), 
+			new Country("IE", "Ireland"), 
+			new Country("DE", "Germany"), 
+			new Country("IT", "Italy"), 
+			new Country("UK", "United Kingdom")));
+
 	$pstl->render();
 ?>
