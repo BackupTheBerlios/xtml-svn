@@ -70,7 +70,7 @@
 		function tag_set($element)
 		{
 			$var = $element->getAttribute("var");
-			$value = $this->pstl->_getvalue($element);
+			$value = $this->pstl->_getValueOrAttribute($element);
 
 			$this->pstl->setVar($var, $value);						
 			
@@ -254,7 +254,7 @@
 		 */
 		function tag_redirect($element)
 		{
-			$to = $value = $this->pstl->_getvalue($element, "to");
+			$to = $value = $this->pstl->_getValueOrAttribute($element, "to");
 			header("Location: $to");
 		}
 		
@@ -263,7 +263,7 @@
 		 */
 		function tag_out($element)
 		{
-			$value = $this->pstl->_getvalue($element);
+			$value = $this->pstl->_getValueOrAttribute($element);
 		
 			if ($value{0} == '$')
 			{
