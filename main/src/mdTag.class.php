@@ -10,7 +10,9 @@
 	 * Copyright 2005, 2006, the dublinux.net group.
 	 * Released under the GNU GPL v2
 	 */
-	
+
+	require_once("php-markdown.php");
+		
 	/**
 	 *
 	 */
@@ -41,11 +43,11 @@
 		
 			if ($value{0} == '$')
 			{
-				return $this->pstl->getVar($value);
+				return Markdown(trim($this->pstl->getVar($value)));
 			}
 			else
 			{
-				return $value;
+				return Markdown(trim($value));
 			}
 		}
 	}
