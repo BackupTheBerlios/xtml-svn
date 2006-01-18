@@ -11,143 +11,20 @@
 	 * Released under the GNU GPL v2
 	 */
 
-	/**
-	 * 
-	 */
-	class pstlTable
-	{
-		var $rowClasses;
-		var $rowCount;
-		var $row;
-		
-		/**
-		 * 
-		 */
-		function pstlTable()
-		{
-			$this->rowClasses = null;
-			$this->rowCount = 0;
-			$this->row = new pstlRow();
-		}
-		
-		/**
-		 * 
-		 */
-		function getRow()
-		{
-			return $this->row;
-		}
-		
-		/**
-		 * 
-		 */
-		function setColumnCount($count = 0)
-		{
-			$this->row->setColumnCount($count);
-		}
-		
-		/**
-		 * 
-		 */
-		function setRowClasses($classes)
-		{
-			$this->rowClasses = $classes;
-		}
-		
-		/**
-		 * 
-		 */
-		function getRowClasses()
-		{
-			return $this->rowClasses; 
-		}
-		
-		/**
-		 * 
-		 */
-		function incrementRowCount()
-		{
-			$this->rowCount++;
-		}
-
-		/**
-		 * 
-		 */
-		function getRowCount()
-		{
-			return $this->rowCount;
-		}
-	}
-	
-	/**
-	 * 
-	 */
-	class pstlRow
-	{
-		var $colClasses;
-		var $colCount;
-		
-		/**
-		 * 
-		 */
-		function pstlRow()
-		{
-			$this->colClasses = null;
-			$this->colCount = 0;
-		}
-		
-		/**
-		 * 
-		 */
-		function setColumnCount($count = 0)
-		{
-			$this->colCount = 0;
-		}
-		
-		/**
-		 * 
-		 */
-		function setColClasses($classes)
-		{
-			$this->colClasses = $classes;
-		}
-		
-		/**
-		 * 
-		 */
-		function getColClasses()
-		{
-			return $this->colClasses; 
-		}
-		
-		/**
-		 * 
-		 */
-		function incrementColCount()
-		{
-			$this->colCount++;
-		}
-
-		/**
-		 * 
-		 */
-		function getColCount()
-		{
-			return $this->colCount;
-		}
-	}
+	require_once("TableSupport.class.php");
+	require_once("RowSupport.class.php");
 	
 	/**
 	 *
 	 */
-	class pstlTag
+	class cTag
 		extends tagBase
 	{
 		var $tables;
 		var $tablesIndex;
 		var $iftable;
 		
-		function pstlTag($pstl)
+		function cTag($pstl)
 		{
 			parent::tagBase($pstl);
 			
@@ -156,11 +33,11 @@
 			
 			$this->iftable = array(
 				"!=" => "ifneq",
-				"==" => "ifneq",
-				">" => "ifneq",
-				">=" => "ifneq",
-				"!<" => "ifneq",
-				"<=" => "ifneq");
+				"==" => "ifeq",
+				">" => "ifgt",
+				">=" => "ifgte",
+				"<" => "iflt",
+				"<=" => "iflte");
 		}
 
 		/**
@@ -224,7 +101,7 @@
 		function tag_table($element)
 		{
 			$output = "";
-			$this->tables[$this->tablesIndex++] = new pstlTable();
+			$this->tables[$this->tablesIndex++] = new TableSupport();
 			$table = $this->getTable();
 			
 			$rowClasses = $element->getAttribute("row-classes");
