@@ -30,7 +30,7 @@
 
 	/*
 	 * Create a new PSTL instance. The template we want to use is called "basic"
-	 * The PSTL will load the template from a filenamed basic.pstl.xml
+	 * The PSTL will load the template from a file named basic.pstl.xml
 	 * located in the same directory as the script	
 	 * 
 	 */
