@@ -11,14 +11,13 @@
 	 * Released under the GNU GPL v2
 	 */
 
-	require_once("TableSupport.class.php");
-	require_once("RowSupport.class.php");
+	require_once("PSTLTableSupport.class.php");
 	
 	/**
 	 *
 	 */
 	class cTag
-		extends tagBase
+		extends PSTLTag
 	{
 		var $tables;
 		var $tablesIndex;
@@ -26,7 +25,7 @@
 		
 		function cTag($pstl)
 		{
-			parent::tagBase($pstl);
+			parent::PSTLTag($pstl);
 			
 			$this->tables = array();
 			$this->tablesIndex = 0;
@@ -101,7 +100,7 @@
 		function tag_table($element)
 		{
 			$output = "";
-			$this->tables[$this->tablesIndex++] = new TableSupport();
+			$this->tables[$this->tablesIndex++] = new PSTLTableSupport();
 			$table = $this->getTable();
 			
 			$rowClasses = $element->getAttribute("row-classes");

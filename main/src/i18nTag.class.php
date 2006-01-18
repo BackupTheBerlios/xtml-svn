@@ -15,7 +15,7 @@
 	 *
 	 */
 	class i18nTag
-		extends tagBase
+		extends PSTLTag
 	{
 		var $lang;
 		var $tables;
@@ -23,7 +23,7 @@
 		
 		function i18nTag($pstl)
 		{
-			parent::tagBase($pstl);
+			parent::PSTLTag($pstl);
 			
 			// Set language, default to en (English)
 			$this->lang = isset($_REQUEST['lang']) ? $_REQUEST['lang']:"value";

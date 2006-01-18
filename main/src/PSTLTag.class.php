@@ -14,14 +14,14 @@
 	/**
 	 *
 	 */
-	class tagBase
+	class PSTLTag
 	{
 		var $pstl;
 		
 		/**
 		 * 
 		 */
-		function tagBase($pstl)
+		function PSTLTag($pstl)
 		{
 			$this->pstl = $pstl;
 		}

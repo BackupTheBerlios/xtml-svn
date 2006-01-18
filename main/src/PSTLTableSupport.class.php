@@ -11,21 +11,33 @@
 	 * Released under the GNU GPL v2
 	 */
 
+	require_once("PSTLRowSupport.class.php");
+
 	/**
 	 * 
 	 */
-	class RowSupport
+	class PSTLTableSupport
 	{
-		var $colClasses;
-		var $colCount;
+		var $rowClasses;
+		var $rowCount;
+		var $row;
 		
 		/**
 		 * 
 		 */
-		function RowSupport()
+		function PSTLTableSupport()
 		{
-			$this->colClasses = null;
-			$this->colCount = 0;
+			$this->rowClasses = null;
+			$this->rowCount = 0;
+			$this->row = new PSTLRowSupport();
+		}
+		
+		/**
+		 * 
+		 */
+		function getRow()
+		{
+			return $this->row;
 		}
 		
 		/**
@@ -33,39 +45,39 @@
 		 */
 		function setColumnCount($count = 0)
 		{
-			$this->colCount = 0;
+			$this->row->setColumnCount($count);
 		}
 		
 		/**
 		 * 
 		 */
-		function setColClasses($classes)
+		function setRowClasses($classes)
 		{
-			$this->colClasses = $classes;
+			$this->rowClasses = $classes;
 		}
 		
 		/**
 		 * 
 		 */
-		function getColClasses()
+		function getRowClasses()
 		{
-			return $this->colClasses; 
+			return $this->rowClasses; 
 		}
 		
 		/**
 		 * 
 		 */
-		function incrementColCount()
+		function incrementRowCount()
 		{
-			$this->colCount++;
+			$this->rowCount++;
 		}
 
 		/**
 		 * 
 		 */
-		function getColCount()
+		function getRowCount()
 		{
-			return $this->colCount;
+			return $this->rowCount;
 		}
 	}
 	

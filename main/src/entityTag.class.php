@@ -15,11 +15,11 @@
 	 *
 	 */
 	class entityTag
-		extends tagBase
+		extends PSTLTag
 	{
 		function entityTag($pstl)
 		{
-			parent::tagBase($pstl);
+			parent::PSTLTag($pstl);
 		}
 		
 		/**
