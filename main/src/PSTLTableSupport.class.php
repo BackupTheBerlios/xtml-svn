@@ -1,10 +1,10 @@
 <?
 	/**
-	 * $Author: jallen $
-	 * $LastChangedDate: 2006-01-17 21:38:57Z $
-	 * $LastChangedRevision: 69 $
-	 * $LastChangedBy: jallen $
-	 * $HeadURL: svn+ssh://svn.classesarecode.net/var/svn/pstl/main/src/cTag.class.php $
+	 * $Author$
+	 * $LastChangedDate$
+	 * $LastChangedRevision$
+	 * $LastChangedBy$
+	 * $HeadURL$
 	 * 
 	 * PSTL - The PHP Standard Tag Library
 	 * Copyright 2005, 2006, the dublinux.net group.

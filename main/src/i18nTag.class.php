@@ -1,9 +1,9 @@
 <?
 	/**
-	 * $Author: jallen $
-	 * $LastChangedDate: 2006-01-13 18:37:04Z $
-	 * $LastChangedRevision: 51 $
-	 * $LastChangedBy: jallen $
+	 * $Author$
+	 * $LastChangedDate$
+	 * $LastChangedRevision$
+	 * $LastChangedBy$
 	 * $HeadURL$
 	 * 
 	 * PSTL - The PHP Standard Tag Library
