@@ -14,7 +14,7 @@
 	// set the include path for PiSToL relative to this script
 	ini_set('include_path', "../../src:" . ini_get('include_path'));
 	
-	require_once "PiSToL.class.php";
+	require_once "Pistol.class.php";
 	 
 	class Country
 	{
@@ -29,12 +29,12 @@
 	}
 
 	/*
-	 * Create a new PiSToL instance. The template we want to use is called "basic"
-	 * The PiSToL will load the template from a file named basic.pistol.xml
+	 * Create a new Pistol instance. The template we want to use is called "basic"
+	 * Pistol will load the template from the file basic.pistol.xml
 	 * located in the same directory as the script	
 	 * 
 	 */
-	$pistol = new PiSToL("basic");
+	$pistol = new Pistol("basic");
 	
 	$pistol->setVar("countries", 
 		array(
