@@ -173,9 +173,8 @@
 				$renderTime = ($finished - $started);
 	
 				$output = 
-					"<!DOCTYPE html\n" .
-					"    PUBLIC \"-//W3C//DTD XHTML 1.1 Strict//EN\"\n" .
-					"    \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n\n" .
+					"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\"\n" . 
+					"	\"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n\n" .
 					"<!--\nGenerated using PSTL, the PHP Standard Tag Library\n\n" .
 					"The following tag libraries were used to render this document\n" .
 					$this->copyrights .
@@ -421,6 +420,11 @@
 							else
 							{
 								$output .= "<" . $child->tagName;
+								
+								if ($child->tagName == 'html')
+								{
+									$output .= " xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\"";
+								} 
 								
 								if ($child->hasAttributes())
 								{
