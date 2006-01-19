@@ -37,7 +37,7 @@
 		 */
 		function copyright()
 		{
-			return "i18n - The i18n PHP Standard Tag Library\n" .
+			return "i18n - The PiSToL i18n Tag Library\n" .
 				"Copyright 2005, 2006, by Classes Are Code.\n" .
 				"Released under the GNU GPL v2";
 		}

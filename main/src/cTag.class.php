@@ -44,7 +44,7 @@
 		 */
 		function copyright()
 		{
-			return "PiSToL Core - The Core PHP Standard Tag Library\n" .
+			return "PiSToL Core - The PiSToL Core Tag Library\n" .
 				"Copyright 2005, 2006, by Classes Are Code.\n" .
 				"Released under the GNU GPL v2\n" .
 				"http://pistol.classesarecode.net/"

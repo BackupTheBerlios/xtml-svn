@@ -27,7 +27,7 @@
 		 */
 		function copyright()
 		{
-			return "entity - The entity PHP Standard Tag Library\n" .
+			return "entity - The PiSToL entity Tag Library\n" .
 				"Copyright 2005, 2006, by Classes Are Code.\n" .
 				"Released under the GNU GPL v2";
 		}
