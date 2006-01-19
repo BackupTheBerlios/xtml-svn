@@ -15,12 +15,12 @@
 	xmlns:c = "http://www.classesarecode.net/pstl/core"
 	xmlns:i18n = "http://www.classesarecode.net/pstl/i18n"
 	xmlns:md = "http://www.classesarecode.net/pstl/md">
-	<head>
-		<link href="/examples/examples.css" rel="stylesheet" type="text/css"/>
-	</head>
 	<!-- set a variable "title" to the the translate message title -->
 	<c:set var="title"><i18n:message>Basic PSTL Example</i18n:message></c:set>
+	<head>
+		<link href="/examples/examples.css" rel="stylesheet" type="text/css"/>
 	<title><c:out value="$title"/></title>
+	</head>
 	<body>
 		<md:text>Hello **guys**</md:text>
 		<a href="/examples/basic/basic.phps">PHP source</a><br/><br/>
