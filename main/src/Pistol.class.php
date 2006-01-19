@@ -6,7 +6,7 @@
 	 * $LastChangedBy$
 	 * $HeadURL$
 	 * 
-	 * PSTL - The PHP Standard Tag Library
+	 * PiSToL - The PHP Standard Tag Library
 	 * Copyright 2005, 2006, by Classes Are Code.
 	 * Released under the GNU GPL v2
 	 * Testing
@@ -18,7 +18,7 @@
 		require_once $file;
  	}
  	
-	class PSTL
+	class Pistol
 	{
 		var $document;
 		var $script;
@@ -31,12 +31,12 @@
 		/**
 		 * 
 		 */
-		function PSTL($document = null, $script = null)
+		function Pistol($document = null, $script = null)
 		{
 			if ($document == null)
 			{
-				$this->document = PSTL::getPageLocation();
-				$this->script = PSTL::getPageLocation();
+				$this->document = Pistol::getPageLocation();
+				$this->script = Pistol::getPageLocation();
 			}
 			else
 			{
@@ -155,16 +155,16 @@
 		
 				if ($this->script)
 				{
-					$script = $this->script . ".pstl.php";
+					$script = $this->script . ".pistol.php";
 					
 					if (file_exists($script))
 					{
 						require_once "$script";
-						pstlScript($this);
+						pistolScript($this);
 					} 
 				}
 				
-				if ($this->doc->load($this->document . ".pstl.xml"))
+				if ($this->doc->load($this->document . ".pistol.xml"))
 				{
 					$output = $this->process($this->doc->documentElement);
 				}
@@ -175,7 +175,7 @@
 				$output = 
 					"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\"\n" . 
 					"	\"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n\n" .
-					"<!--\nGenerated using PSTL, the PHP Standard Tag Library\n\n" .
+					"<!--\nGenerated using PiSToL, the PHP Standard Tag Library\n\n" .
 					"The following tag libraries were used to render this document\n" .
 					$this->copyrights .
 					"\nRendering took " . ($finished - $started) . " seconds\n" .

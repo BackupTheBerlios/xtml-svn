@@ -6,7 +6,7 @@
 	 * $LastChangedBy$
 	 * $HeadURL$
 	 * 
-	 * PSTL - The PHP Standard Tag Library
+	 * PiSToL - The PHP Standard Tag Library
 	 * Copyright 2005, 2006, by Classes Are Code.
 	 * Released under the GNU GPL v2
 	 */
@@ -15,15 +15,15 @@
 	 *
 	 */
 	class i18nTag
-		extends PSTLTag
+		extends PistolTag
 	{
 		var $lang;
 		var $tables;
 		var $tablesIndex;
 		
-		function i18nTag($pstl)
+		function i18nTag($pistol)
 		{
-			parent::PSTLTag($pstl);
+			parent::PistolTag($pistol);
 			
 			// Set language, default to en (English)
 			$this->lang = isset($_REQUEST['lang']) ? $_REQUEST['lang']:"value";
@@ -63,8 +63,8 @@
 		 */
 		function tag_setlang($element)
 		{
-			$value = $this->pstl->_getValueOrAttribute($element);
-			$lang = $this->pstl->getVar($value);
+			$value = $this->pistol->_getValueOrAttribute($element);
+			$lang = $this->pistol->getVar($value);
 			$this->setLang($lang);
 		}
 		
@@ -84,8 +84,8 @@
 			// TODO: implement translate logic
 			$maxlen = $element->getAttribute("maxlen");
 			$ellipses = $element->getAttribute("ellipses") == "true" ? true:false;
-			$value = $this->pstl->_getValueOrAttribute($element);
-			$text = $this->pstl->getVar($value);
+			$value = $this->pistol->_getValueOrAttribute($element);
+			$text = $this->pistol->getVar($value);
 			
 			if ($maxlen && strlen($text) > $maxlen)
 			{

@@ -6,7 +6,7 @@
 	 * $LastChangedBy$
 	 * $HeadURL$
 	 * 
-	 * PSTL - The PHP Standard Tag Library
+	 * PiSToL - The PHP Standard Tag Library
 	 * Copyright 2005, 2006, by Classes Are Code.
 	 * Released under the GNU GPL v2
 	 */
@@ -29,8 +29,8 @@
         }
 	}
 
-	require_once "PSTL.class.php";
+	require_once "PiSToL.class.php";
 	 
-	$pstl = new PSTL();
-	$pstl->render();
+	$pistol = new PiSToL();
+	$pistol->render();
 ?>

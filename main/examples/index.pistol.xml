@@ -6,19 +6,19 @@
  $LastChangedBy$
  $HeadURL$
  
- PSTL - The PHP Standard Tag Library
+ PiSToL - The PHP Standard Tag Library
  Copyright 2005, 2006, the dublinux.net group.
  Released under the GNU GPL v2
  -->
 
 <html
-	xmlns:c = "http://www.dublinux.net/pstl/core"
-	xmlns:i18n = "http://www.dublinux.net/pstl/i18n"
-	xmlns:entity = "http://www.dublinux.net/pstl/entity">
+	xmlns:c = "http://www.dublinux.net/pistol/core"
+	xmlns:i18n = "http://www.dublinux.net/pistol/i18n"
+	xmlns:entity = "http://www.dublinux.net/pistol/entity">
 	<head>
-		<link href="/style/pstl.css" rel="stylesheet" type="text/css"/>
+		<link href="/style/pistol.css" rel="stylesheet" type="text/css"/>
 	</head>
-	<title><i18n:message value="PSTL Index Example"/></title>
+	<title><i18n:message value="PiSToL Index Example"/></title>
 	<body>
 	<h1><i18n:message value="Cities"/>(<i18n:getlang/>)</h1>
 	<c:table row-classes="light-red,light-green,light-blue">

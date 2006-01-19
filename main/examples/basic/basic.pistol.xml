@@ -6,17 +6,17 @@
  $LastChangedBy$
  $HeadURL$
  
- PSTL - The PHP Standard Tag Library
+ PiSToL - The PHP Standard Tag Library
  Copyright 2005, 2006, by Classes Are Code.
  Released under the GNU GPL v2
  -->
 
 <html
-	xmlns:c = "http://www.classesarecode.net/pstl/core"
-	xmlns:i18n = "http://www.classesarecode.net/pstl/i18n"
-	xmlns:md = "http://www.classesarecode.net/pstl/md">
+	xmlns:c = "http://www.classesarecode.net/pistol/core"
+	xmlns:i18n = "http://www.classesarecode.net/pistol/i18n"
+	xmlns:md = "http://www.classesarecode.net/pistol/md">
 	<!-- set a variable "title" to the the translate message title -->
-	<c:set var="title"><i18n:message>Basic PSTL Example</i18n:message></c:set>
+	<c:set var="title"><i18n:message>Basic PiSToL Example</i18n:message></c:set>
 	<head>
 		<link href="/examples/examples.css" rel="stylesheet" type="text/css"/>
 		<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=iso-8859-1"/>
@@ -25,7 +25,7 @@
 	<body>
 		<md:text>Hello **guys**</md:text>
 		<p><a href="/examples/basic/basic.phps">PHP source</a><br/><br/>
-		<a href="/examples/basic/basic.pstl.xml">XML tags</a></p>
+		<a href="/examples/basic/basic.pistol.xml">XML tags</a></p>
 		<c:table row-classes="light-red,light-green,light-blue">
 			<tr class="dark"><th><i18n:message value="Code"/></th><th><i18n:message value="Name"/></th></tr>
 			<c:loop data="$countries" var="country">

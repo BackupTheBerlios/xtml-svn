@@ -4,9 +4,9 @@
 	 * $LastChangedDate: 2006-01-18 08:10:24Z $
 	 * $LastChangedRevision: 74 $
 	 * $LastChangedBy: jallen $
-	 * $HeadURL: svn+ssh://svn.classesarecode.net/var/svn/pstl/main/src/mdTag.class.php $
+	 * $HeadURL: svn+ssh://svn.classesarecode.net/var/svn/pistol/main/src/mdTag.class.php $
 	 * 
-	 * PSTL - The PHP Standard Tag Library
+	 * PiSToL - The PHP Standard Tag Library
 	 * Copyright 2005, 2006, by Classes Are Code.
 	 * Released under the GNU GPL v2
 	 */
@@ -17,11 +17,11 @@
 	 *
 	 */
 	class mdTag
-		extends PSTLTag
+		extends PistolTag
 	{
-		function mdTag($pstl)
+		function mdTag($pistol)
 		{
-			parent::PSTLTag($pstl);
+			parent::PistolTag($pistol);
 		}
 		
 		/**
@@ -40,11 +40,11 @@
 		 */
 		function tag_text($element)
 		{
-			$value = $this->pstl->_getValueOrAttribute($element);
+			$value = $this->pistol->_getValueOrAttribute($element);
 		
 			if ($value{0} == '$')
 			{
-				return Markdown(trim($this->pstl->getVar($value)));
+				return Markdown(trim($this->pistol->getVar($value)));
 			}
 			else
 			{

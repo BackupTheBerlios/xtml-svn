@@ -6,7 +6,7 @@
 	 * $LastChangedBy$
 	 * $HeadURL$
 	 * 
-	 * PSTL - The PHP Standard Tag Library
+	 * PiSToL - The PHP Standard Tag Library
 	 * Copyright 2005, 2006, the dublinux.net group.
 	 * Released under the GNU GPL v2
 	 */
@@ -37,11 +37,11 @@
 		}
 	}
 	
-	function pstlScript($pstl)
+	function pistolScript($pistol)
 	{
-		$pstl->setVar("language", "en");
+		$pistol->setVar("language", "en");
 		 
-		$pstl->setVar("countries", 
+		$pistol->setVar("countries", 
 			array(
 				new Country("US", "United States"), 
 				new Country("IE", "Ireland"), 
@@ -49,6 +49,6 @@
 				new Country("IT", "Italy"), 
 				new Country("UK", "United Kingdom")));
 
-		$pstl->setVar("booking", new Booking(275, 20));
+		$pistol->setVar("booking", new Booking(275, 20));
 	}
 ?>

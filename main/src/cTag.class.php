@@ -6,26 +6,26 @@
 	 * $LastChangedBy$
 	 * $HeadURL$
 	 * 
-	 * PSTL - The PHP Standard Tag Library
+	 * PiSToL - The PHP Standard Tag Library
 	 * Copyright 2005, 2006, by Classes Are Code.
 	 * Released under the GNU GPL v2
 	 */
 
-	require_once("PSTLTableSupport.class.php");
+	require_once("PistolTableSupport.class.php");
 	
 	/**
 	 *
 	 */
 	class cTag
-		extends PSTLTag
+		extends PistolTag
 	{
 		var $tables;
 		var $tablesIndex;
 		var $iftable;
 		
-		function cTag($pstl)
+		function cTag($pistol)
 		{
-			parent::PSTLTag($pstl);
+			parent::PistolTag($pistol);
 			
 			$this->tables = array();
 			$this->tablesIndex = 0;
@@ -44,10 +44,10 @@
 		 */
 		function copyright()
 		{
-			return "PSTL Core - The Core PHP Standard Tag Library\n" .
+			return "PiSToL Core - The Core PHP Standard Tag Library\n" .
 				"Copyright 2005, 2006, by Classes Are Code.\n" .
 				"Released under the GNU GPL v2\n" .
-				"http://pstl.classesarecode.net/"
+				"http://pistol.classesarecode.net/"
 				;
 		}
 
@@ -70,9 +70,9 @@
 		function tag_set($element)
 		{
 			$var = $element->getAttribute("var");
-			$value = $this->pstl->_getValueOrAttribute($element);
+			$value = $this->pistol->_getValueOrAttribute($element);
 
-			$this->pstl->setVar($var, $value);
+			$this->pistol->setVar($var, $value);
 			
 			return "";
 		}
@@ -85,10 +85,10 @@
 			$method = $this->iftable[$element->getAttribute("op")];
 
 			if ($this->$method(
-				$this->pstl->getVar($element->getAttribute("lvalue")), 
-				$this->pstl->getVar($element->getAttribute("rvalue"))))
+				$this->pistol->getVar($element->getAttribute("lvalue")), 
+				$this->pistol->getVar($element->getAttribute("rvalue"))))
 			{
-				return $this->pstl->process($element->firstChild);
+				return $this->pistol->process($element->firstChild);
 			}
 			
 			return "";
@@ -100,7 +100,7 @@
 		function tag_table($element)
 		{
 			$output = "";
-			$this->tables[$this->tablesIndex++] = new PSTLTableSupport();
+			$this->tables[$this->tablesIndex++] = new PistolTableSupport();
 			$table = $this->getTable();
 			
 			$rowClasses = $element->getAttribute("row-classes");
@@ -111,8 +111,8 @@
 				$table->setRowClasses(explode(",", $rowClasses));
 			}
 			
-			$output .= $this->pstl->_totext($element);
-			$output .= $this->pstl->process($element->firstChild);
+			$output .= $this->pistol->_totext($element);
+			$output .= $this->pistol->process($element->firstChild);
 			$output .= "</table>";
 			
 			unset($this->tables[--$this->tablesIndex]);
@@ -157,8 +157,8 @@
 				}
 			}
 			
-			$output .= $this->pstl->_totext($element);
-			$output .= $this->pstl->process($element->firstChild);
+			$output .= $this->pistol->_totext($element);
+			$output .= $this->pistol->process($element->firstChild);
 			$output .= "</tr>";
 			
 			if ($colClasses)
@@ -200,8 +200,8 @@
 				}
 			}
 			
-			$output .= $this->pstl->_totext($element);
-			$output .= $this->pstl->process($element->firstChild);
+			$output .= $this->pistol->_totext($element);
+			$output .= $this->pistol->process($element->firstChild);
 			$output .= "</td>";
 			
 			if ($row)
@@ -226,24 +226,24 @@
 				$_code = "\$data = array" . $data . ";";
 				eval($_code);
 			}
-			else if ($data{0} == '$' && $this->pstl->hasData($data))
+			else if ($data{0} == '$' && $this->pistol->hasData($data))
 			{
-				$data = $this->pstl->getVar($data);
+				$data = $this->pistol->getVar($data);
 			}
 
 			if (is_array($data))
 			{
 				$firstChild = $element->firstChild;
-				$previousValue = $this->pstl->getVar($var);
+				$previousValue = $this->pistol->getVar($var);
 				
 				foreach ($data as $tmp)
 				{
-					$this->pstl->setVar($var, $tmp);
+					$this->pistol->setVar($var, $tmp);
 
-					$output .= $this->pstl->process($firstChild);
+					$output .= $this->pistol->process($firstChild);
 				}
 
-				$this->pstl->setVar($var, $previousValue);
+				$this->pistol->setVar($var, $previousValue);
 			}
 			
 			return $output;
@@ -254,7 +254,7 @@
 		 */
 		function tag_redirect($element)
 		{
-			$to = $value = $this->pstl->_getValueOrAttribute($element, "to");
+			$to = $value = $this->pistol->_getValueOrAttribute($element, "to");
 			header("Location: $to");
 		}
 		
@@ -263,11 +263,11 @@
 		 */
 		function tag_out($element)
 		{
-			$value = $this->pstl->_getValueOrAttribute($element);
+			$value = $this->pistol->_getValueOrAttribute($element);
 		
 			if ($value{0} == '$')
 			{
-				return $this->pstl->getVar($value);
+				return $this->pistol->getVar($value);
 			}
 			else
 			{

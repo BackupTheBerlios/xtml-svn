@@ -6,17 +6,17 @@
 	 * $LastChangedBy$
 	 * $HeadURL$
 	 * 
-	 * PSTL - The PHP Standard Tag Library
+	 * PiSToL - The PHP Standard Tag Library
 	 * Copyright 2005, 2006, by Classes Are Code.
 	 * Released under the GNU GPL v2
 	 */
 
-	require_once("PSTLRowSupport.class.php");
+	require_once("PistolRowSupport.class.php");
 
 	/**
 	 * 
 	 */
-	class PSTLTableSupport
+	class PistolTableSupport
 	{
 		var $rowClasses;
 		var $rowCount;
@@ -25,11 +25,11 @@
 		/**
 		 * 
 		 */
-		function PSTLTableSupport()
+		function PistolTableSupport()
 		{
 			$this->rowClasses = null;
 			$this->rowCount = 0;
-			$this->row = new PSTLRowSupport();
+			$this->row = new PistolRowSupport();
 		}
 		
 		/**

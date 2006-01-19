@@ -6,15 +6,15 @@
 	 * $LastChangedBy$
 	 * $HeadURL$
 	 * 
-	 * PSTL - The PHP Standard Tag Library
+	 * PiSToL - The PHP Standard Tag Library
 	 * Copyright 2005, 2006, the dublinux.net group.
 	 * Released under the GNU GPL v2
 	 */
 
-	// set the include path for PSTL relative to this script
+	// set the include path for PiSToL relative to this script
 	ini_set('include_path', "../../src:" . ini_get('include_path'));
 	
-	require_once "PSTL.class.php";
+	require_once "PiSToL.class.php";
 	 
 	class Country
 	{
@@ -29,14 +29,14 @@
 	}
 
 	/*
-	 * Create a new PSTL instance. The template we want to use is called "basic"
-	 * The PSTL will load the template from a file named basic.pstl.xml
+	 * Create a new PiSToL instance. The template we want to use is called "basic"
+	 * The PiSToL will load the template from a file named basic.pistol.xml
 	 * located in the same directory as the script	
 	 * 
 	 */
-	$pstl = new PSTL("basic");
+	$pistol = new PiSToL("basic");
 	
-	$pstl->setVar("countries", 
+	$pistol->setVar("countries", 
 		array(
 			new Country("US", "United States"), 
 			new Country("IE", "Ireland"), 
@@ -44,5 +44,5 @@
 			new Country("IT", "Italy"), 
 			new Country("UK", "United Kingdom")));
 
-	$pstl->render();
+	$pistol->render();
 ?>
