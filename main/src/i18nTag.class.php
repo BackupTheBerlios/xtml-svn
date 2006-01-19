@@ -7,7 +7,7 @@
 	 * $HeadURL$
 	 * 
 	 * PSTL - The PHP Standard Tag Library
-	 * Copyright 2005, 2006, the dublinux.net group.
+	 * Copyright 2005, 2006, by Classes Are Code.
 	 * Released under the GNU GPL v2
 	 */
 
@@ -38,7 +38,7 @@
 		function copyright()
 		{
 			return "i18n - The i18n PHP Standard Tag Library\n" .
-				"Copyright 2005, 2006, the dublinux.net group.\n" .
+				"Copyright 2005, 2006, by Classes Are Code.\n" .
 				"Released under the GNU GPL v2";
 		}
 
@@ -83,15 +83,15 @@
 		{
 			// TODO: implement translate logic
 			$maxlen = $element->getAttribute("maxlen");
-			$ellipsis = $element->getAttribute("ellipsis") == "true" ? true:false;
+			$ellipses = $element->getAttribute("ellipses") == "true" ? true:false;
 			$value = $this->pstl->_getValueOrAttribute($element);
 			$text = $this->pstl->getVar($value);
 			
 			if ($maxlen && strlen($text) > $maxlen)
 			{
-				if ($ellipsis)
+				if ($ellipses)
 				{
-					$text = substr($text, 0, $maxlen-3) . "...";
+					$text = substr($text, 0, $maxlen-3) . "&hellip;";
 				}
 				else
 				{

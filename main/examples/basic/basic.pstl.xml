@@ -7,14 +7,14 @@
  $HeadURL$
  
  PSTL - The PHP Standard Tag Library
- Copyright 2005, 2006, the dublinux.net group.
+ Copyright 2005, 2006, by Classes Are Code.
  Released under the GNU GPL v2
  -->
 
 <html
-	xmlns:c = "http://www.dublinux.net/pstl/core"
-	xmlns:i18n = "http://www.dublinux.net/pstl/i18n"
-	xmlns:md = "http://www.dublinux.net/pstl/md">
+	xmlns:c = "http://www.classesarecode.net/pstl/core"
+	xmlns:i18n = "http://www.classesarecode.net/pstl/i18n"
+	xmlns:md = "http://www.classesarecode.net/pstl/md">
 	<head>
 		<link href="/examples/examples.css" rel="stylesheet" type="text/css"/>
 	</head>
@@ -22,6 +22,7 @@
 	<c:set var="title"><i18n:message>Basic PSTL Example</i18n:message></c:set>
 	<title><c:out value="$title"/></title>
 	<body>
+		<!-- <md:text>Hello **guys**</md:text> -->
 		<a href="/examples/basic/basic.phps">PHP source</a><br/><br/>
 		<a href="/examples/basic/basic.pstl.xml">XML tags</a><br/><br/>
 		<c:table row-classes="light-red,light-green,light-blue">
@@ -29,7 +30,7 @@
 			<c:loop data="$countries" var="country">
 				<c:tr>
 					<c:td><c:out value="$country.code"/></c:td>
-					<c:td><b><i18n:message value="$country.name" maxlvalue="13" ellipsis="true"/></b></c:td>
+					<c:td><b><i18n:message value="$country.name" maxlen="12" ellipses="true"/></b></c:td>
 				</c:tr>
 			</c:loop>
 		</c:table>

@@ -7,7 +7,7 @@
 	 * $HeadURL: svn+ssh://svn.classesarecode.net/var/svn/pstl/main/src/mdTag.class.php $
 	 * 
 	 * PSTL - The PHP Standard Tag Library
-	 * Copyright 2005, 2006, the dublinux.net group.
+	 * Copyright 2005, 2006, by Classes Are Code.
 	 * Released under the GNU GPL v2
 	 */
 
@@ -29,9 +29,10 @@
 		 */
 		function copyright()
 		{
-			return "md - Markdown(http://www.michelf.com/projects/php-markdown/) tag support for the PHP Standard Tag Library\n" .
-				"Copyright 2005, 2006, the dublinux.net group.\n" .
-				"Released under the GNU GPL v2";
+			return "md - Markdown tag support for the PHP Standard Tag Library\n" .
+				"Copyright 2005, 2006, by Classes Are Code.\n" .
+				"Released under the GNU GPL v2\n\n" .
+				"PHP Markdown by Michel Fortin http://www.michelf.com/projects/php-markdown";
 		}
 
 		/**

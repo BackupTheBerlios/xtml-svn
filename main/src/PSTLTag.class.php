@@ -7,7 +7,7 @@
 	 * $HeadURL$
 	 * 
 	 * PSTL - The PHP Standard Tag Library
-	 * Copyright 2005, 2006, the dublinux.net group.
+	 * Copyright 2005, 2006, by Classes Are Code.
 	 * Released under the GNU GPL v2
 	 */
 

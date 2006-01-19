@@ -7,7 +7,7 @@
 	 * $HeadURL$
 	 * 
 	 * PSTL - The PHP Standard Tag Library
-	 * Copyright 2005, 2006, the dublinux.net group.
+	 * Copyright 2005, 2006, by Classes Are Code.
 	 * Released under the GNU GPL v2
 	 * Testing
 	 */
@@ -355,83 +355,103 @@
 				//print "<pre>";
 				//print $child->tagName . ":" . $child->nodeType . "\n";
 	
-				if ($child->nodeType == XML_ELEMENT_NODE)
+				switch ($child->nodeType)
 				{
-					if (($tag = explode(":", $child->tagName)) && count($tag) == 2)
+					case XML_ELEMENT_NODE:
 					{
-						$tagClass = $tag[0] . "Tag";
-						
-						// create the class, if necessary
-						
-						if (!class_exists($tagClass))
+						if (($tag = explode(":", $child->tagName)) && count($tag) == 2)
 						{
-							print "<b>$tag[0]</b>: supporting class ($tagClass) not found<br>";
-							die();
-						}
-						
-						if (!isset($this->classCache[$tagClass]))
-						{
-							$this->classCache[$tagClass] = new $tagClass($this);
-							$copyright = $this->classCache[$tagClass]->copyright();
+							$tagClass = $tag[0] . "Tag";
 							
-							if ($copyright)
+							// create the class, if necessary
+							
+							if (!class_exists($tagClass))
 							{
-								$this->copyrights .= "\n" .$this->classCache[$tagClass]->copyright() . "\n";
+								print "<b>$tag[0]</b>: supporting class ($tagClass) not found<br>";
+								die();
 							}
-							else
+							
+							if (!isset($this->classCache[$tagClass]))
 							{
-								$this->copyrights .= "\n" . $tag[0] . " tag library, no copyright found" . "\n";
-							} 
-						}
-	
-						$_class = $this->classCache[$tagClass];
-						$_method = "tag_" . $tag[1];
-	
-						//print $tag[0] . "->" . "$_method\n";
-						
-						if (!method_exists($_class, $_method))
-						{
-							print "<b>$tag[0]:$tag[1]</b>: supporting method ($tagClass:$_method) not found<br>";
-							die();
-						}
-						
-						$output .= $_class->$_method($child);
-					}
-					else
-					{
-						// check for crappy HTML tags, but maintain XHTML output compatibility
-						if ($child->tagName == "br")
-						{
-							$output .= "<" . $child->tagName . "/>";
+								$this->classCache[$tagClass] = new $tagClass($this);
+								$copyright = $this->classCache[$tagClass]->copyright();
+								
+								if ($copyright)
+								{
+									$this->copyrights .= "\n" .$this->classCache[$tagClass]->copyright() . "\n";
+								}
+								else
+								{
+									$this->copyrights .= "\n" . $tag[0] . " tag library, no copyright found" . "\n";
+								} 
+							}
+		
+							$_class = $this->classCache[$tagClass];
+							$_method = "tag_" . $tag[1];
+		
+							//print $tag[0] . "->" . "$_method\n";
+							
+							if (!method_exists($_class, $_method))
+							{
+								print "<b>$tag[0]:$tag[1]</b>: supporting method ($tagClass:$_method) not found<br>";
+								die();
+							}
+							
+							$output .= $_class->$_method($child);
 						}
 						else
 						{
-							$output .= "<" . $child->tagName;
-							
-							if ($child->hasAttributes())
+							// check for crappy HTML tags, but maintain XHTML output compatibility
+							if ($child->tagName == "br")
 							{
-								$attributes = $child->attributes; 
-								$i = 0;
-								
-								while ($attr = $attributes->item($i++))
-								{
-									$output .= " " . $attr->nodeName . "=\"" . $attr->nodeValue . "\"";
-								}
+								$output .= "<" . $child->tagName . "/>";
 							}
-							 
-							$output .= ">";
-							$output .= $this->process($child->firstChild);
-							$output .= "</" . $child->tagName . ">";
+							else
+							{
+								$output .= "<" . $child->tagName;
+								
+								if ($child->hasAttributes())
+								{
+									$attributes = $child->attributes; 
+									$i = 0;
+									
+									while ($attr = $attributes->item($i++))
+									{
+										$output .= " " . $attr->nodeName . "=\"" . $attr->nodeValue . "\"";
+									}
+								}
+								 
+								$output .= ">";
+								$output .= $this->process($child->firstChild);
+								$output .= "</" . $child->tagName . ">";
+							}
 						}
 					}
-				}
-				else if ($child->nodeType == XML_TEXT_NODE)
-				{
-					$output .= $child->nodeValue;
-				}
-				else
-				{
-					$output .= $this->process($child->firstChild);
+					break;
+					
+					case XML_TEXT_NODE:
+					{
+						if ($child->nodeValue{0} == '$')
+						{
+							$output .= $this->getVar($child->nodeValue);
+						}
+						else
+						{
+							$output .= $child->nodeValue;
+						}
+					}
+					break;
+				
+					case XML_COMMENT_NODE:
+					{
+						// do nothing
+					}
+					break;
+						
+					default:
+					{
+						// do nothing
+					}
 				}
 					
 				$child = $child->nextSibling;

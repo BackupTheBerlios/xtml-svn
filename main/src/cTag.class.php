@@ -7,7 +7,7 @@
 	 * $HeadURL$
 	 * 
 	 * PSTL - The PHP Standard Tag Library
-	 * Copyright 2005, 2006, the dublinux.net group.
+	 * Copyright 2005, 2006, by Classes Are Code.
 	 * Released under the GNU GPL v2
 	 */
 
@@ -45,9 +45,9 @@
 		function copyright()
 		{
 			return "PSTL Core - The Core PHP Standard Tag Library\n" .
-				"Copyright 2005, 2006, the dublinux.net group.\n" .
+				"Copyright 2005, 2006, by Classes Are Code.\n" .
 				"Released under the GNU GPL v2\n" .
-				"http://pstl.dublinux.net/"
+				"http://pstl.classesarecode.net/"
 				;
 		}
 
@@ -72,7 +72,7 @@
 			$var = $element->getAttribute("var");
 			$value = $this->pstl->_getValueOrAttribute($element);
 
-			$this->pstl->setVar($var, $value);						
+			$this->pstl->setVar($var, $value);
 			
 			return "";
 		}
