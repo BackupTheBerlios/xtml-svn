@@ -22,6 +22,7 @@
 	{
 		var $document;
 		var $script;
+		var $noBodyTags;
 		var $classCache;
 		var $copyrights;
 		var $data;
@@ -45,6 +46,9 @@
 			
 			$this->classCache = array();
 			$this->data = array();
+			$this->noBodyTags = array(
+				"link" => true
+				);
 			$this->doc = new DOMDocument();
 			$this->doc->preserveWhiteSpace = true;
 
@@ -170,7 +174,7 @@
 	
 				$output = 
 					"<!DOCTYPE html\n" .
-					"    PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"\n" .
+					"    PUBLIC \"-//W3C//DTD XHTML 1.1 Strict//EN\"\n" .
 					"    \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n\n" .
 					"<!--\nGenerated using PSTL, the PHP Standard Tag Library\n\n" .
 					"The following tag libraries were used to render this document\n" .
@@ -342,7 +346,15 @@
 		{
 			unset($this->data["\$$key"]);
 		}
-		
+
+		/**
+		 * 
+		 */
+		function isNoBodyTag($tag)
+		{
+			return isset($this->noBodyTags[$tag]) ? true:false;
+		}
+				
 		/**
 		 *
 		 */
@@ -421,9 +433,16 @@
 									}
 								}
 								 
-								$output .= ">";
-								$output .= $this->process($child->firstChild);
-								$output .= "</" . $child->tagName . ">";
+								if ($this->isNoBodyTag($child->tagName))
+								{
+									$output .= ">";
+								}
+								else
+								{
+									$output .= ">";
+									$output .= $this->process($child->firstChild);
+									$output .= "</" . $child->tagName . ">";
+								}
 							}
 						}
 					}
