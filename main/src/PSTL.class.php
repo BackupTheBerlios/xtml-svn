@@ -439,7 +439,7 @@
 								 
 								if ($this->isNoBodyTag($child->tagName))
 								{
-									$output .= ">";
+									$output .= "/>";
 								}
 								else
 								{
