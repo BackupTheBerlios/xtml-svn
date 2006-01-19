@@ -23,8 +23,8 @@
 	</head>
 	<body>
 		<md:text>Hello **guys**</md:text>
-		<a href="/examples/basic/basic.phps">PHP source</a><br/><br/>
-		<a href="/examples/basic/basic.pstl.xml">XML tags</a><br/><br/>
+		<p><a href="/examples/basic/basic.phps">PHP source</a><br/><br/>
+		<a href="/examples/basic/basic.pstl.xml">XML tags</a></p>
 		<c:table row-classes="light-red,light-green,light-blue">
 			<tr class="dark"><th><i18n:message value="Code"/></th><th><i18n:message value="Name"/></th></tr>
 			<c:loop data="$countries" var="country">
