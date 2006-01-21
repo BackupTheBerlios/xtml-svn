@@ -54,7 +54,7 @@
 		<e:lt/>c:normalmode<e:gt/> get excluded.</p>
 		</c:normalmode>
 		<c:testmode>
-		<p>View this page using it's <a href="/examples/simple/simple.php">own</a> specific script.</p>
+		<p>View this page using the <a href="/examples/simple/simple.php">script</a> that would normally drive this page.</p>
 		</c:testmode>
 		
 		<c:ifset var="$languages">
