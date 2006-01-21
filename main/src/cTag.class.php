@@ -160,6 +160,19 @@
 		/**
 		 * 
 		 */
+		function tag_normalmode($element)
+		{
+			if (!$this->testmode)
+			{
+				return $this->pistol->process($element->firstChild);
+			}
+			
+			return "";
+		}
+
+		/**
+		 * 
+		 */
 		function tag_ifset($element)
 		{
 			$var = $element->getAttribute("var");
