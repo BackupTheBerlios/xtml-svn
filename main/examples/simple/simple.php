@@ -16,15 +16,15 @@
 	
 	require_once "Pistol.class.php";
 	 
-	class Country
+	class Language
 	{
-		var $code;
 		var $name;
+		var $description;
 		
-		function Country($code, $name)
+		function Language($name, $description)
 		{
-			$this->code = $code;
 			$this->name = $name;
+			$this->description = $description;
 		}
 	}
 
@@ -37,13 +37,12 @@
 	$pistol = new Pistol("simple");
 
 	$a = array(
-			new Country("US", "United States"), 
-			new Country("IE", "Ireland"), 
-			new Country("DE", "Germany"), 
-			new Country("IT", "Italy"), 
-			new Country("UK", "United Kingdom"));	
+		new Language("C", "A high level procedural language, that can still be used for programming the bare metal"),
+		new Language("C++", "An extension of the original C language, adding object oriented features"),
+		new Language("Java", "A modern object pure oriented language"),
+		new Language("PHP", "A procedural web site scripting language , with object oriented features"));
 
-	$pistol->setVar("countries", $a);
+	$pistol->setVar("languages", $a);
 
 	$pistol->render();
 ?>

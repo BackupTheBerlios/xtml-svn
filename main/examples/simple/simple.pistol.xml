@@ -23,8 +23,8 @@
 			<c:array>
 				<c:object name="C" description="A high level procedural language, that can still be used for programming the bare metal"/>
 				<c:object name="C++" description="An extension of the original C language, adding object oriented features"/>
-				<c:object name="Java" description="A modern object pure oriented language"/>
-				<c:object name="PHP" description="A procedural web site scripting language , with object oriented features"/>
+				<c:object name="Perl" description="A sophisticated scripting language, used mostly on Unix systems"/>
+				<c:object name="Python" description="An interpreted typeless object oriented language"/>
 			</c:array>
 		</c:set>
 	</c:testmode>
@@ -42,31 +42,18 @@
 		<p><a href="/examples/basic/basic.phps">PHP source</a><br/><br/>
 		<a href="/examples/basic/basic.pistol.xml">XML tags</a></p>
 		
-		<hr/>
-		Programming languages<br/>
-		<c:table row-classes="light,dark">
-			<tr class="green"><th><i18n:message>Name</i18n:message></th><th><i18n:message>Description</i18n:message></th></tr>
-			<c:loop value="$languages" var="language">
-				<c:tr>
-					<c:td><c:out value="$language.name"/></c:td>
-					<c:td><b><c:out value="$language.description"/></b></c:td>
-				</c:tr>
-			</c:loop>
-		</c:table>
-
-		<c:ifset var="$countries">		
+		<c:ifset var="$languages">
 			<hr/>
-			Countries<br/>
-			<c:table row-classes="light-red,light-green,light-blue">
-				<tr class="dark"><th><i18n:message value="Code"/></th><th><i18n:message value="Name"/></th></tr>
-				<c:loop value="$countries" var="country">
+			Programming languages<br/>
+			<c:table row-classes="light,dark">
+				<tr class="green"><th><i18n:message>Name</i18n:message></th><th><i18n:message>Description</i18n:message></th></tr>
+				<c:loop value="$languages" var="language">
 					<c:tr>
-						<c:td><c:out value="$country.code"/></c:td>
-						<c:td><b><i18n:message value="$country.name" maxlen="12" ellipses="true"/></b></c:td>
+						<c:td><c:out value="$language.name"/></c:td>
+						<c:td><b><c:out value="$language.description"/></b></c:td>
 					</c:tr>
 				</c:loop>
 			</c:table>
 		</c:ifset>
-		
 	</body>
 </html>
