@@ -35,14 +35,15 @@
 	 * 
 	 */
 	$pistol = new Pistol("simple");
-	
-	$pistol->setVar("countries", 
-		array(
+
+	$a = array(
 			new Country("US", "United States"), 
 			new Country("IE", "Ireland"), 
 			new Country("DE", "Germany"), 
 			new Country("IT", "Italy"), 
-			new Country("UK", "United Kingdom")));
+			new Country("UK", "United Kingdom"));	
+
+	$pistol->setVar("countries", $a);
 
 	$pistol->render();
 ?>

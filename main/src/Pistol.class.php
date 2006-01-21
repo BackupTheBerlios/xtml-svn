@@ -40,8 +40,16 @@
 			}
 			else
 			{
-				$this->document = $document;
-				$this->script = $script;
+				if ($document{0} == '/')
+				{
+					$this->document = $_SERVER['DOCUMENT_ROOT'] . $document;
+					$this->script = $_SERVER['DOCUMENT_ROOT'] . $script;
+				}
+				else
+				{
+					$this->document = $document;
+					$this->script = $script;
+				}
 			}
 			
 			$this->classCache = array();
@@ -53,6 +61,16 @@
 			$this->doc->preserveWhiteSpace = true;
 
 			$this->setVar("include_path", ini_get('include_path'));
+			$this->createTagClass("c");
+		}
+
+		/**
+		 * 
+		 */
+		function enableTestMode()
+		{
+			$cTag = $this->createTagClass("c");
+			$cTag->enableTestMode();
 		}
 
 		/**
@@ -88,9 +106,9 @@
 			
 			if ($value == "")
 			{
-				$value = $this->process($element->firstChild);
+				$value = $this->process($element->firstChild, true);
 			}
-
+	
 			return $value;
 		}
 				
@@ -142,12 +160,16 @@
 		/**
 		 * 
 		 */
-		function render()
+		function generate()
 		{
 			if (file_exists($this->document))
 			{
-				header("Content-type: " + mime_content_type($this->document));
-				echo file_get_contents($this->document);
+				if (function_exists("mime_content_type"))
+				{
+					header("Content-type: " + mime_content_type($this->document));
+				}
+				
+				return file_get_contents($this->document);
 			}
 			else
 			{
@@ -182,8 +204,16 @@
 					"-->\n\n" .
 					$output;
 				
-				print $output;
+				return $output;
 			}
+		}
+		
+		/**
+		 * 
+		 */
+		function render()
+		{
+			print $this->generate();
 		}
 		
 		/**
@@ -353,11 +383,156 @@
 		{
 			return isset($this->noBodyTags[$tag]) ? true:false;
 		}
+		
+		/**
+		 * 
+		 */
+		function createTagClass($tag)
+		{
+			$tagClass = $tag . "Tag";
+			if (!class_exists($tagClass))
+			{
+				print "<b>$tag[0]</b>: supporting class ($tagClass) not found<br>";
+				die();
+			}
+			
+			if (!isset($this->classCache[$tagClass]))
+			{
+				$this->classCache[$tagClass] = new $tagClass($this);
+				$copyright = $this->classCache[$tagClass]->copyright();
 				
+				if ($copyright)
+				{
+					$this->copyrights .= "\n" .$this->classCache[$tagClass]->copyright() . "\n";
+				}
+				else
+				{
+					$this->copyrights .= "\n" . $tag[0] . " tag library, no copyright found" . "\n";
+				} 
+			}
+	
+			return $this->classCache[$tagClass];
+		}
+		
 		/**
 		 *
 		 */
-		function process($child)
+		function processElement($element, $skipws = false)
+		{
+			switch ($element->nodeType)
+			{
+				case XML_ELEMENT_NODE:
+				{
+					if (($tag = explode(":", $element->tagName)) && count($tag) == 2)
+					{
+						$_class = $this->createTagClass($tag[0]);
+						$_method = "tag_" . $tag[1];
+	
+						//print $tag[0] . "->" . "$_method\n";
+						
+						if (!method_exists($_class, $_method))
+						{
+							print "<b>$tag[0]:$tag[1]</b>: supporting method ($tagClass:$_method) not found<br>";
+							die();
+						}
+						
+						$data = $_class->$_method($element);
+						
+						if (is_object($data) || is_array($data))
+						{
+							$output = $data;
+						}
+						else
+						{
+							$output .= $data;
+						}
+					}
+					else
+					{
+						// check for crappy HTML tags, but maintain XHTML output compatibility
+						if ($element->tagName == "br")
+						{
+							$output .= "<" . $element->tagName . "/>";
+						}
+						else
+						{
+							$output .= "<" . $element->tagName;
+							
+							if ($element->tagName == 'html')
+							{
+								$output .= " xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\"";
+							} 
+							
+							if ($element->hasAttributes())
+							{
+								$attributes = $element->attributes; 
+								$i = 0;
+								
+								while ($attr = $attributes->item($i++))
+								{
+									$output .= " " . $attr->nodeName . "=\"" . $attr->nodeValue . "\"";
+								}
+							}
+							 
+							if ($this->isNoBodyTag($element->tagName))
+							{
+								$output .= "/>";
+							}
+							else
+							{
+								$output .= ">";
+								$output .= $this->process($element->firstChild);
+								$output .= "</" . $element->tagName . ">";
+							}
+						}
+					}
+				}
+				break;
+				
+				case XML_TEXT_NODE:
+				{
+					if ($element->nodeValue{0} == '$')
+					{
+						$output .= $this->getVar($element->nodeValue);
+					}
+					else
+					{
+						if ($skipws)
+						{
+							$text = trim($element->nodeValue);
+							
+							if ($text)
+							{
+								$output .= $element->nodeValue;
+							}
+						}
+						else
+						{
+							$output .= $element->nodeValue;
+						}
+					}
+				}
+				break;
+			
+				case XML_COMMENT_NODE:
+				{
+					// do nothing
+				}
+				break;
+					
+				default:
+				{
+					// do nothing
+				}
+			}
+			
+			return $output;
+		}
+		
+		/**
+		 *
+		 */
+		function process($child, $skipws = false)
 		{
 			$output = "";
 			
@@ -366,114 +541,17 @@
 				//print "<pre>";
 				//print $child->tagName . ":" . $child->nodeType . "\n";
 	
-				switch ($child->nodeType)
+				$data = $this->processElement($child, $skipws);
+			
+				if (is_object($data) || is_array($data))
 				{
-					case XML_ELEMENT_NODE:
+					$output = $data;
+				}
+				else
+				{
+					if ($data)
 					{
-						if (($tag = explode(":", $child->tagName)) && count($tag) == 2)
-						{
-							$tagClass = $tag[0] . "Tag";
-							
-							// create the class, if necessary
-							
-							if (!class_exists($tagClass))
-							{
-								print "<b>$tag[0]</b>: supporting class ($tagClass) not found<br>";
-								die();
-							}
-							
-							if (!isset($this->classCache[$tagClass]))
-							{
-								$this->classCache[$tagClass] = new $tagClass($this);
-								$copyright = $this->classCache[$tagClass]->copyright();
-								
-								if ($copyright)
-								{
-									$this->copyrights .= "\n" .$this->classCache[$tagClass]->copyright() . "\n";
-								}
-								else
-								{
-									$this->copyrights .= "\n" . $tag[0] . " tag library, no copyright found" . "\n";
-								} 
-							}
-		
-							$_class = $this->classCache[$tagClass];
-							$_method = "tag_" . $tag[1];
-		
-							//print $tag[0] . "->" . "$_method\n";
-							
-							if (!method_exists($_class, $_method))
-							{
-								print "<b>$tag[0]:$tag[1]</b>: supporting method ($tagClass:$_method) not found<br>";
-								die();
-							}
-							
-							$output .= $_class->$_method($child);
-						}
-						else
-						{
-							// check for crappy HTML tags, but maintain XHTML output compatibility
-							if ($child->tagName == "br")
-							{
-								$output .= "<" . $child->tagName . "/>";
-							}
-							else
-							{
-								$output .= "<" . $child->tagName;
-								
-								if ($child->tagName == 'html')
-								{
-									$output .= " xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\"";
-								} 
-								
-								if ($child->hasAttributes())
-								{
-									$attributes = $child->attributes; 
-									$i = 0;
-									
-									while ($attr = $attributes->item($i++))
-									{
-										$output .= " " . $attr->nodeName . "=\"" . $attr->nodeValue . "\"";
-									}
-								}
-								 
-								if ($this->isNoBodyTag($child->tagName))
-								{
-									$output .= "/>";
-								}
-								else
-								{
-									$output .= ">";
-									$output .= $this->process($child->firstChild);
-									$output .= "</" . $child->tagName . ">";
-								}
-							}
-						}
-					}
-					break;
-					
-					case XML_TEXT_NODE:
-					{
-						if ($child->nodeValue{0} == '$')
-						{
-							$output .= $this->getVar($child->nodeValue);
-						}
-						else
-						{
-							$output .= $child->nodeValue;
-						}
-					}
-					break;
-				
-					case XML_COMMENT_NODE:
-					{
-						// do nothing
-					}
-					break;
-						
-					default:
-					{
-						// do nothing
+						$output .= $data;
 					}
 				}
 					

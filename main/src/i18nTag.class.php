@@ -17,9 +17,7 @@
 	class i18nTag
 		extends PistolTag
 	{
-		var $lang;
-		var $tables;
-		var $tablesIndex;
+		private $lang;
 		
 		function i18nTag($pistol)
 		{
@@ -27,9 +25,6 @@
 			
 			// Set language, default to en (English)
 			$this->lang = isset($_REQUEST['lang']) ? $_REQUEST['lang']:"value";
-			
-			$this->tables = array();
-			$this->tablesIndex = 0;
 		}
 
 		/**

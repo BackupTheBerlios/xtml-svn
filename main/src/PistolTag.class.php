@@ -16,7 +16,7 @@
 	 */
 	class PistolTag
 	{
-		var $pistol;
+		protected $pistol;
 		
 		/**
 		 * 

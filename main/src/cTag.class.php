@@ -19,9 +19,10 @@
 	class cTag
 		extends PistolTag
 	{
-		var $tables;
-		var $tablesIndex;
-		var $iftable;
+		private $tables;
+		private $tablesIndex;
+		private $iftable;
+		private $testmode;
 		
 		function cTag($pistol)
 		{
@@ -29,6 +30,7 @@
 			
 			$this->tables = array();
 			$this->tablesIndex = 0;
+			$this->testmode = false;
 			
 			$this->iftable = array(
 				"!=" => "ifneq",
@@ -54,14 +56,33 @@
 		/**
 		 * 
 		 */
+		function enableTestMode()
+		{
+			$this->testmode = true;
+		}
+		
+		/**
+		 * 
+		 */
 		function getTable()
 		{
 			return $this->tables[$this->tablesIndex-1];
 		}
 		
+		/**
+		 * 
+		 */
 		function ifneq($lvalue, $rvalue)
 		{
 			return $lvalue != $rvalue;
+		}
+		
+		/**
+		 * 
+		 */
+		function ifeq($lvalue, $rvalue)
+		{
+			return $lvalue == $rvalue;
 		}
 		
 		/**
@@ -73,6 +94,65 @@
 			$value = $this->pistol->_getValueOrAttribute($element);
 
 			$this->pistol->setVar($var, $value);
+			
+			return "";
+		}
+
+		/**
+		 * 
+		 */
+		function tag_array($element)
+		{
+			$a = array();
+			$child = $element->firstChild;
+						
+			while ($child)
+			{
+				switch ($child->nodeType)
+				{
+					case XML_ELEMENT_NODE:
+					{
+						$a[] = $this->pistol->processElement($child, true);
+					}
+					
+					default:
+					{
+						// ignore all other node types
+					}
+				}
+
+				$child = $child->nextSibling;
+			}
+			
+			return $a;
+		}
+
+		/**
+		 * 
+		 */
+		function tag_object($element)
+		{
+			$object = new stdClass();
+			$i = 0;
+			
+			while ($attr = $element->attributes->item($i++))
+			{
+				$member = $attr->nodeName;
+				$object->$member = $attr->nodeValue;
+			}
+			
+			return $object;
+		}
+
+		/**
+		 * 
+		 */
+		function tag_testmode($element)
+		{
+			if ($this->testmode)
+			{
+				return $this->pistol->process($element->firstChild);
+			}
 			
 			return "";
 		}
