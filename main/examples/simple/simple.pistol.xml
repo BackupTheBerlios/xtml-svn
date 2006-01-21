@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <!--
- $Author$
- $LastChangedDate$
- $LastChangedRevision$
- $LastChangedBy$
- $HeadURL$
+ $Author:jallen $
+ $LastChangedDate:2006-01-21 19:19:13Z $
+ $LastChangedRevision:92 $
+ $LastChangedBy:jallen $
+ $HeadURL:svn+ssh://svn.classesarecode.net/var/svn/pstl/main/examples/simple/basic.pistol.xml $
  
  PiSToL - The PHP Standard Tag Library
  Copyright 2005, 2006, by Classes Are Code.
@@ -15,6 +15,9 @@
 	xmlns:c = "http://www.classesarecode.net/pistol/core"
 	xmlns:i18n = "http://www.classesarecode.net/pistol/i18n"
 	xmlns:md = "http://www.classesarecode.net/pistol/md">
+	<c:set var="starship">
+		<c:object designation="NCC-1801" name="Enterprise"/>
+	</c:set>
 	<!-- set a variable "title" to the the translate message title -->
 	<c:set var="title"><i18n:message>Basic PiSToL Example</i18n:message></c:set>
 	<head>
@@ -24,6 +27,7 @@
 	</head>
 	<body>
 		<md:text>Hello **guys**</md:text>
+		<c:out value="$starship.designation"/> <c:out value="$starship.name"/><br/>
 		<p><a href="/examples/basic/basic.phps">PHP source</a><br/><br/>
 		<a href="/examples/basic/basic.pistol.xml">XML tags</a></p>
 		<c:table row-classes="light-red,light-green,light-blue">

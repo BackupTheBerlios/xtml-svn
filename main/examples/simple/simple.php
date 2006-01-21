@@ -1,10 +1,10 @@
 <?
 	/**
-	 * $Author$
-	 * $LastChangedDate$
-	 * $LastChangedRevision$
-	 * $LastChangedBy$
-	 * $HeadURL$
+	 * $Author:jallen $
+	 * $LastChangedDate:2006-01-21 19:19:13Z $
+	 * $LastChangedRevision:92 $
+	 * $LastChangedBy:jallen $
+	 * $HeadURL:svn+ssh://svn.classesarecode.net/var/svn/pstl/main/examples/simple/basic.php $
 	 * 
 	 * PiSToL - The PHP Standard Tag Library
 	 * Copyright 2005, 2006, the dublinux.net group.
@@ -29,12 +29,12 @@
 	}
 
 	/*
-	 * Create a new Pistol instance. The template we want to use is called "basic"
-	 * Pistol will load the template from the file basic.pistol.xml
+	 * Create a new Pistol instance. The template we want to use is called "simple"
+	 * Pistol will load the template from the file simple.pistol.xml
 	 * located in the same directory as the script	
 	 * 
 	 */
-	$pistol = new Pistol("basic");
+	$pistol = new Pistol("simple");
 	
 	$pistol->setVar("countries", 
 		array(
