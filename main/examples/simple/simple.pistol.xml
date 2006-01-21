@@ -34,7 +34,12 @@
 	<c:set var="title"><i18n:message>simple PiSToL Example</i18n:message></c:set>
 	
 	<head>
+		<c:testmode>
+		<link href="../examples/examples.css" rel="stylesheet" type="text/css"/>
+		</c:testmode>
+		<c:normalmode>
 		<link href="../examples.css" rel="stylesheet" type="text/css"/>
+		</c:normalmode>
 		<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=iso-8859-1"/>
 	<title><c:out value="$title"/></title>
 	</head>
