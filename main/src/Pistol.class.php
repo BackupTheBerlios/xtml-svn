@@ -40,16 +40,8 @@
 			}
 			else
 			{
-				if ($document{0} == '/')
-				{
-					$this->document = $_SERVER['DOCUMENT_ROOT'] . $document;
-					$this->script = $_SERVER['DOCUMENT_ROOT'] . $script;
-				}
-				else
-				{
-					$this->document = $document;
-					$this->script = $script;
-				}
+				$this->document = $document;
+				$this->script = $script;
 			}
 			
 			$this->classCache = array();

@@ -43,7 +43,7 @@
 		<a href="/examples/simple/simple.pistol.xml">XML tags</a></p>
 
 		<c:normalmode>
-		<p>You can also view this page using the <a href="/src/testmode.php?script=/examples/simple/simple">testmode</a> script.
+		<p>You can also view this page using the <a href="/src/testmode.php?script=../examples/simple/simple">testmode</a> script.
 		When you use the testmode driver all the data for the page is embedded in the page inside &lt;c:set&gt; tags.</p>
 		</c:normalmode>
 		<c:testmode>
