@@ -411,6 +411,8 @@
 		 */
 		function processElement($element, $skipws = false)
 		{
+			$output = "";
+			
 			switch ($element->nodeType)
 			{
 				case XML_ELEMENT_NODE:
