@@ -1,13 +1,13 @@
-th.dark {
-    background-color: #CCCCCC;
-}
-
 tr.light {
     background-color: #EEEEEE;
 }
 
 tr.dark {
     background-color: #CCCCCC;
+}
+
+tr.green {
+    background-color: #99DD99;
 }
 
 tr.light-green {

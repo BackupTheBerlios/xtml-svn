@@ -19,16 +19,19 @@
 	<c:testmode>
 		<!-- create a data set so we can display this page using a generic
 			director script -->
-		<c:set var="starships">
+		<c:set var="languages">
 			<c:array>
-				<c:object designation="NCC-1801" name="Enterprise"/>
-				<c:object designation="ACC-1701" name="Defiant"/>
+				<c:object name="C" description="A high level procedural language, that can still be used for programming the bare metal"/>
+				<c:object name="C++" description="An extension of the original C language, adding object oriented features"/>
+				<c:object name="Java" description="A modern object pure oriented language"/>
+				<c:object name="PHP" description="A procedural web site scripting language , with object oriented features"/>
 			</c:array>
 		</c:set>
 	</c:testmode>
 	
-	<!-- set a variable "title" to the the translate message title -->
+	<!-- set a variable "title" to the translated message title -->
 	<c:set var="title"><i18n:message>Basic PiSToL Example</i18n:message></c:set>
+	
 	<head>
 		<link href="/examples/examples.css" rel="stylesheet" type="text/css"/>
 		<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=iso-8859-1"/>
@@ -40,28 +43,30 @@
 		<a href="/examples/basic/basic.pistol.xml">XML tags</a></p>
 		
 		<hr/>
-		Starships<br/>
-		<c:table row-classes="light-red,light-green,light-blue">
-			<tr class="dark"><th><i18n:message value="Designation"/></th><th><i18n:message value="Name"/></th></tr>
-			<c:loop data="$starships" var="starship">
+		Programming languages<br/>
+		<c:table row-classes="light,dark">
+			<tr class="green"><th><i18n:message>Name</i18n:message></th><th><i18n:message>Description</i18n:message></th></tr>
+			<c:loop value="$languages" var="language">
 				<c:tr>
-					<c:td><c:out value="$starship.designation"/></c:td>
-					<c:td><b><c:out value="$starship.name"/></b></c:td>
+					<c:td><c:out value="$language.name"/></c:td>
+					<c:td><b><c:out value="$language.description"/></b></c:td>
 				</c:tr>
 			</c:loop>
 		</c:table>
-		
-		<hr/>
-		Countries<br/>
-		<c:table row-classes="light-red,light-green,light-blue">
-			<tr class="dark"><th><i18n:message value="Code"/></th><th><i18n:message value="Name"/></th></tr>
-			<c:loop data="$countries" var="country">
-				<c:tr>
-					<c:td><c:out value="$country.code"/></c:td>
-					<c:td><b><i18n:message value="$country.name" maxlen="12" ellipses="true"/></b></c:td>
-				</c:tr>
-			</c:loop>
-		</c:table>
+
+		<c:ifset var="$countries">		
+			<hr/>
+			Countries<br/>
+			<c:table row-classes="light-red,light-green,light-blue">
+				<tr class="dark"><th><i18n:message value="Code"/></th><th><i18n:message value="Name"/></th></tr>
+				<c:loop value="$countries" var="country">
+					<c:tr>
+						<c:td><c:out value="$country.code"/></c:td>
+						<c:td><b><i18n:message value="$country.name" maxlen="12" ellipses="true"/></b></c:td>
+					</c:tr>
+				</c:loop>
+			</c:table>
+		</c:ifset>
 		
 	</body>
 </html>

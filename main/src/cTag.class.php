@@ -46,7 +46,7 @@
 		 */
 		function copyright()
 		{
-			return "PiSToL Core - The PiSToL Core Tag Library\n" .
+			return "Core - The PiSToL Core Tag Library\n" .
 				"Copyright 2005, 2006, by Classes Are Code.\n" .
 				"Released under the GNU GPL v2\n" .
 				"http://pistol.classesarecode.net/"
@@ -150,6 +150,21 @@
 		function tag_testmode($element)
 		{
 			if ($this->testmode)
+			{
+				return $this->pistol->process($element->firstChild);
+			}
+			
+			return "";
+		}
+
+		/**
+		 * 
+		 */
+		function tag_ifset($element)
+		{
+			$var = $element->getAttribute("var");
+			
+			if ($this->pistol->hasData($var))
 			{
 				return $this->pistol->process($element->firstChild);
 			}
@@ -298,7 +313,7 @@
 		function tag_loop($element)
 		{
 			$output = "";
-			$data = $element->getAttribute("data");
+			$data = $element->getAttribute("value");
 			$var = $element->getAttribute("var");
 
 			if ($data{0} == '(')
