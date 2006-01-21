@@ -13,6 +13,7 @@
 
 <html
 	xmlns:c = "http://www.classesarecode.net/pistol/core"
+	xmlns:e = "http://www.classesarecode.net/pistol/entity"
 	xmlns:i18n = "http://www.classesarecode.net/pistol/i18n"
 	xmlns:md = "http://www.classesarecode.net/pistol/md">
 	
@@ -44,10 +45,11 @@
 
 		<c:normalmode>
 		<p>You can also view this page using the <a href="/src/testmode.php?script=../examples/simple/simple">testmode</a> script.
-		When you use the testmode driver all the data for the page is embedded in the page inside &lt;c:set&gt; tags.</p>
+		When you use the testmode script tags inside <e:lt/>c:testmode<e:gt/> get included, and tags inside
+		<e:lt/>c:normalmode<e:gt/> get excluded.</p>
 		</c:normalmode>
 		<c:testmode>
-		<p>View this page using the <a href="/examples/simple/simple.php">normal</a> script.</p>
+		<p>View this page using it's <a href="/examples/simple/simple.php">own</a> specific script.</p>
 		</c:testmode>
 		
 		<c:ifset var="$languages">

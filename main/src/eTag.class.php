@@ -14,10 +14,10 @@
 	/**
 	 *
 	 */
-	class entityTag
+	class eTag
 		extends PistolTag
 	{
-		function entityTag($pistol)
+		function eTag($pistol)
 		{
 			parent::PistolTag($pistol);
 		}
@@ -27,9 +27,25 @@
 		 */
 		function copyright()
 		{
-			return "entity - The PiSToL entity Tag Library\n" .
+			return "e - The PiSToL entity Tag Library\n" .
 				"Copyright 2005, 2006, by Classes Are Code.\n" .
 				"Released under the GNU GPL v2";
+		}
+
+		/**
+		 * 
+		 */
+		function tag_lt($element)
+		{
+			return "&lt;";
+		}
+
+		/**
+		 * 
+		 */
+		function tag_gt($element)
+		{
+			return "&gt;";
 		}
 
 		/**
