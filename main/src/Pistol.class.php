@@ -20,13 +20,13 @@
  	
 	class Pistol
 	{
-		var $document;
-		var $script;
-		var $noBodyTags;
-		var $classCache;
-		var $copyrights;
-		var $data;
-		var $doc;
+		private $document;
+		private $script;
+		private $noBodyTags;
+		private $classCache;
+		private $copyrights;
+		private $data;
+		private $doc;
 
 		/**
 		 * 
