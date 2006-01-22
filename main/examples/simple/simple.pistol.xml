@@ -79,10 +79,11 @@
 		</c:ifset>
 		
 		<hr/>
+		<p>View the sources</p>
 		<p>
-			<a href="/examples/simple/simple.phps">Simple source</a><br/>
-			<a href="/src/preview.phps">Preview source</a><br/>
-			<a href="/examples/simple/simple.pistol.xml">XML tags</a><br/>
+			<a href="/examples/simple/simple.phps">simple.php</a><br/>
+			<a href="/src/preview.phps">preview.php</a><br/>
+			<a href="/examples/simple/simple.pistol.xml">simple.pistol.xml</a><br/>
 		</p>
 	</body>
 </html>
