@@ -23,9 +23,33 @@ class htmlTag
 		 */
 		function copyright()
 		{
-			return "e - The PiSToL entity Tag Library\n" .
+			return "html - The PiSToL html Tag Library\n" .
 				"Copyright 2005, 2006 by John Allen and others (see AUTHORS file for additional info).\n" .
 				"Released under the GNU GPL v2";
+		}
+		
+		/**
+		 * 
+		 */
+		function tag_select($element)
+		{
+			$var = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
+			$name = $element->getAttribute("name");
+			$default = $element->getAttribute("default");
+			$output = "<select name='$name'>";
+			
+			foreach ($var as $item)
+			{
+				$output .= "<option ";
+				if ($item == $default)
+				{
+					$output .= "SELECTED";
+				}
+				$output .= ">$item</option>";
+			}
+			
+			$output .= "</select>";
+			return $output;
 		}
 
 		/**

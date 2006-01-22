@@ -35,9 +35,24 @@
 		/**
 		 * 
 		 */
+		function _stringRepeat($element, $str)
+		{
+			$num = $this->pistol->getVar($element->getAttribute("repeat"));
+			if ($num > 0)
+			{
+				return str_repeat($str, $num);
+			}
+			else
+			{
+				return $str;
+			}
+		}
+		/**
+		 * 
+		 */
 		function tag_lt($element)
 		{
-			return "&lt;";
+			return $this->_stringRepeat($element, "&lt;");
 		}
 
 		/**
@@ -45,7 +60,7 @@
 		 */
 		function tag_gt($element)
 		{
-			return "&gt;";
+			return $this->_stringRepeat($element, "&gt;");
 		}
 
 		/**
@@ -53,7 +68,15 @@
 		 */
 		function tag_nbsp($element)
 		{
-			return "&nbsp;";
+			return $this->_stringRepeat($element, "&nbsp;");
+		}
+		
+		/**
+		 * 
+		 */
+		function tag_spc($element)
+		{
+			return $this->_stringRepeat($element, " ");
 		}
 	}
 ?>

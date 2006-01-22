@@ -16,6 +16,7 @@
 	xmlns:e = "http://www.classesarecode.net/pistol/entity"
 	xmlns:i18n = "http://www.classesarecode.net/pistol/i18n"
 	xmlns:md = "http://www.classesarecode.net/pistol/md"
+	xmlns:string = "http://www.classesarecode.net/pistol/string"
 	xmlns:html = "http://www.classesarecode.net/pistol/html">
 	
 	<style>
@@ -108,6 +109,10 @@
 		</c:set>
 		<html:ul value="$myArray"/>
 		<html:ol member="name">$languages</html:ol>
+		<html:select value="$myArray" name="myNumberSelect" default="two"/>
+		<string:truncate length="20">How much is that doggy in the window? How much is that doggy in the window? How much is that doggy in the window? </string:truncate>
+		<string:mask mask="*">foobar</string:mask>
+		<string:mask mask="****">12345678</string:mask>
 		<hr/>
 		<p>View the sources</p>
 		<p>
