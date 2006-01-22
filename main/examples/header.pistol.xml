@@ -17,9 +17,9 @@
 	xmlns:md = "http://www.classesarecode.net/pistol/md">
 	<div id="logo">
 		<c:preview>
-			<img src="../../images/ClassesAreCodeLogo-1.png" width="100%"/>
-		<c:else/>
 			<img src="../images/ClassesAreCodeLogo-1.png" width="100%"/>
+		<c:else/>
+			<img src="../../images/ClassesAreCodeLogo-1.png" width="100%"/>
 		</c:preview>
 	</div>
 </xml>
