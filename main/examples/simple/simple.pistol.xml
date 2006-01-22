@@ -56,7 +56,7 @@
 
 		<c:preview>
 			<p>View this page using the <a href="/examples/simple/simple.php">simple.php</a>
-			script that initialises the data in the PHP script.</p>
+			script that initialises the data in the script code.</p>
 		<c:else/>
 			<p>View this page using the <a href="/src/preview.php?script=../examples/simple/simple">preview</a> script.
 			The preview script enables the display of data embedded in the XML.
