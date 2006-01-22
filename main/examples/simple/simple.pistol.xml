@@ -87,7 +87,7 @@
 		
 		<c:ifset var="$languages">
 			<hr/>
-			Programming languages<br/>
+			<h1><i18n:message>Programming languages</i18n:message></h1>
 			<c:table row-classes="light,dark">
 				<tr class="green"><th><i18n:message>Name</i18n:message></th><th><i18n:message>Description</i18n:message></th></tr>
 				<c:loop value="$languages" var="language" limit="3">
@@ -113,31 +113,28 @@
 		</c:set>
 		
 		<hr/>
-		An unordered list<br/>
-		<b><html:ul value="$days"/></b>
+		<h1>An unordered list</h1>
+		<html:ul value="$days"/>
 
 		<hr/>
-		An ordered list<br/>
-		<b><html:ol member="name">$languages</html:ol></b>
+		<h1>An ordered list</h1>
+		<html:ol member="name">$languages</html:ol>
 
 		<hr/>
-		A selection<br/>
-		<b><html:select value="$days" name="day" default="Friday"/></b>
-		<br/>
+		<h1>A selection</h1>
+		<html:select value="$days" name="day" default="Friday"/>
 
 		<hr/>
-		A truncated string<br/>
-		<b><string:truncate length="20">How much is that doggy in the window?</string:truncate></b>
-		<br/>
+		<h1>A truncated string</h1>
+		<string:truncate length="20">How much is that doggy in the window?</string:truncate>
 
 		<hr/>
-		A hidden string<br/>
-		<b><string:hide char="*">foobar</string:hide></b>
-		<br/>
+		<h1>A hidden string</h1>
+		<string:hide char="*">foobar</string:hide>
 
 		<hr/>
-		A masked string<br/>
-		<b><string:mask mask="************">4921071541900055</string:mask></b>
+		<h1>A masked string</h1>
+		<string:mask mask="************">4921071541900055</string:mask>
 
 		<hr/>
 		<p>View the sources</p>
