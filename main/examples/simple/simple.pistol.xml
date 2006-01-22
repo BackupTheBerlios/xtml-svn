@@ -111,15 +111,34 @@
 				<c:string>Sunday</c:string>
 			</c:array>
 		</c:set>
-		<html:ul value="$days"/>
-		<html:ol member="name">$languages</html:ol>
-		<html:select value="$days" name="day" default="Friday"/>
+		
+		<hr/>
+		An unordered list<br/>
+		<b><html:ul value="$days"/></b>
+
+		<hr/>
+		An ordered list<br/>
+		<b><html:ol member="name">$languages</html:ol></b>
+
+		<hr/>
+		A selection<br/>
+		<b><html:select value="$days" name="day" default="Friday"/></b>
 		<br/>
-		<string:truncate length="20">How much is that doggy in the window? How much is that doggy in the window? How much is that doggy in the window? </string:truncate>
+
+		<hr/>
+		A truncated string<br/>
+		<b><string:truncate length="20">How much is that doggy in the window?</string:truncate></b>
 		<br/>
-		<string:mask mask="*">foobar</string:mask>
+
+		<hr/>
+		A hidden string<br/>
+		<b><string:hide char="*">foobar</string:hide></b>
 		<br/>
-		<string:mask mask="************">4921071541900055</string:mask>
+
+		<hr/>
+		A masked string<br/>
+		<b><string:mask mask="************">4921071541900055</string:mask></b>
+
 		<hr/>
 		<p>View the sources</p>
 		<p>

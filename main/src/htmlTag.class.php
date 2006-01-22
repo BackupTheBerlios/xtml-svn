@@ -10,7 +10,8 @@
 	 * Copyright 2005, 2006 by John Allen and others (see AUTHORS file for additional info).
 	 * Released under the GNU GPL v2
 	 */
-class htmlTag
+
+	class htmlTag
 		extends PistolTag
 	{
 		function htmlTag($pistol)
@@ -55,27 +56,12 @@ class htmlTag
 		/**
 		 * 
 		 */
-		function tag_ul($element)
-		{
-			return "<ul>". $this->_list($element) . "</ul>";
-		}
-		
-		/**
-		 * 
-		 */
-		function tag_ol($element)
-		{
-			return "<ol>". $this->_list($element) . "</ol>";
-		}
-		
-		/**
-		 * 
-		 */
 		function _list($element)
 		{
 			$output = "";
 			$var = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
 			$member = $element->getAttribute("member");
+
 			if (is_array($var))
 			{
 				foreach($var as $item)
@@ -93,6 +79,23 @@ class htmlTag
 			
 			return $output;
 		}
-}	
+		
+		/**
+		 * 
+		 */
+		function tag_ul($element)
+		{
+			return "<ul>". $this->_list($element) . "</ul>";
+		}
+		
+		/**
+		 * 
+		 */
+		function tag_ol($element)
+		{
+			return "<ol>". $this->_list($element) . "</ol>";
+		}
+		
+	}	
 
 ?>

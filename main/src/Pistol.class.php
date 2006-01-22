@@ -521,7 +521,16 @@
 				{
 					if ($element->nodeValue{0} == '$')
 					{
-						$output .= $this->getVar($element->nodeValue);
+						$data = $this->getVar($element->nodeValue);
+						
+						if (is_object($data) || is_array($data))
+						{
+							$output = $data;
+						}
+						else
+						{
+							$output .= $data;
+						}
 					}
 					else
 					{
