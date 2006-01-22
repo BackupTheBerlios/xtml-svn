@@ -29,7 +29,7 @@
         }
 	}
 
-	require_once "PiSToL.class.php";
+	require_once "Pistol.class.php";
 	 
 	$pistol = new Pistol();
 	$pistol->render();
