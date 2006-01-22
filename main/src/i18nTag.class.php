@@ -1,10 +1,10 @@
 <?
 	/**
-	 * $Author$
-	 * $LastChangedDate$
-	 * $LastChangedRevision$
-	 * $LastChangedBy$
-	 * $HeadURL$
+	 * $Author: $
+	 * $LastChangedDate: $
+	 * $LastChangedRevision: $
+	 * $LastChangedBy: $
+	 * $HeadURL: $
 	 * 
 	 * PiSToL - The PHP Standard Tag Library
 	 * Copyright 2005, 2006 by John Allen and others (see AUTHORS file for additional info).
