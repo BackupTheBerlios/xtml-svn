@@ -7,7 +7,7 @@
 	 * $HeadURL: svn+ssh://svn.classesarecode.net/var/svn/pistol/main/src/mdTag.class.php $
 	 * 
 	 * PiSToL - The PHP Standard Tag Library
-	 * Copyright 2005, 2006, by Classes Are Code.
+	 * Copyright 2005, 2006 by John Allen and others (see AUTHORS file for additional info).
 	 * Released under the GNU GPL v2
 	 */
 
@@ -30,7 +30,7 @@
 		function copyright()
 		{
 			return "md - The PiSToL Markdown Tag Library\n" .
-				"Copyright 2005, 2006, by Classes Are Code.\n" .
+				"Copyright 2005, 2006 by John Allen and others (see AUTHORS file for additional info).\n" .
 				"Released under the GNU GPL v2\n\n" .
 				"PHP Markdown by Michel Fortin http://www.michelf.com/projects/php-markdown";
 		}

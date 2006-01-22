@@ -7,7 +7,7 @@
 	 * $HeadURL$
 	 * 
 	 * PiSToL - The PHP Standard Tag Library
-	 * Copyright 2005, 2006, by Classes Are Code.
+	 * Copyright 2005, 2006 by John Allen and others (see AUTHORS file for additional info).
 	 * Released under the GNU GPL v2
 	 */
 
@@ -33,7 +33,7 @@
 		function copyright()
 		{
 			return "i18n - The PiSToL i18n Tag Library\n" .
-				"Copyright 2005, 2006, by Classes Are Code.\n" .
+				"Copyright 2005, 2006 by John Allen and others (see AUTHORS file for additional info).\n" .
 				"Released under the GNU GPL v2";
 		}
 
