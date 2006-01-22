@@ -1,4 +1,15 @@
 <?xml version="1.0"?>
+<!--
+ $Author$
+ $LastChangedDate$
+ $LastChangedRevision$
+ $LastChangedBy$
+ $HeadURL$
+ 
+ PiSToL - PHP Standard Tag Library
+ Copyright 2005, 2006 by John Allen and others (see AUTHORS file for additional info).
+ Released under the GNU GPL v2
+ -->
 <xml
 	xmlns:c = "http://www.classesarecode.net/pistol/core"
 	xmlns:e = "http://www.classesarecode.net/pistol/entity"

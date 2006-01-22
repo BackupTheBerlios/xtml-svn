@@ -357,7 +357,7 @@
 				}
 				else
 				{
-					$output = "<!-- " . $this->document . ".pistol.xml not found -->\n";
+					$output = "<!-- include " . $this->document . " not found -->\n";
 				}
 				
 				return $output;
