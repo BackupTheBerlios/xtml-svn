@@ -55,11 +55,13 @@
 		<md:text>This is a simple example of using the *PiSToL* tag library</md:text>
 
 		<c:preview>
-			<p>View this page using the <a href="/examples/simple/simple.php">script</a> that would normally drive this page.</p>
+			<p>View this page using the <a href="/examples/simple/simple.php">simple.php</a>
+			script that initialises the data in the PHP script.</p>
 		<c:else/>
-			<p>You can also view this page using the <a href="/src/preview.php?script=../examples/simple/simple">preview</a> script.
+			<p>View this page using the <a href="/src/preview.php?script=../examples/simple/simple">preview</a> script.
+			The preview script enables the display of data embedded in the XML.
 			When you use the preview script, tags between <e:lt/>c:preview<e:gt/> and <e:lt/>c:else/<e:gt/> get included, 
-			otherwise the tags between <e:lt/>c:else/<e:gt/> and <e:lt/>/c:preview<e:gt/> get included.</p>
+			and the tags between <e:lt/>c:else/<e:gt/> and <e:lt/>/c:preview<e:gt/> get excluded.</p>
 		</c:preview>
 		
 		<c:ifset var="$languages">
