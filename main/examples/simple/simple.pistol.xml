@@ -47,22 +47,28 @@
 			if you want to include a PiSToL tag file, then just leave out the
 			.pistol.xml extension -->
 		<c:preview>
-			<c:include file="../examples/header"/>
+			<c:include file="../examples/logo"/>
 		<c:else/>
-			<c:include file="../header"/>
+			<c:include file="../logo"/>
 		</c:preview>
 		<br/>
-		<md:text>This is a simple example of using the *PiSToL* tag library</md:text>
+		<table>
+			<tr>
+				<td><md:text>This is a simple example of using the *PiSToL* tag library</md:text></td>
+			</tr>
 
-		<c:preview>
-			<p>View this page using the <a href="/examples/simple/simple.php">simple.php</a>
-			script that initialises the data in the script code.</p>
-		<c:else/>
-			<p>View this page using the <a href="/src/preview.php?script=../examples/simple/simple">preview</a> script.
-			The preview script enables the display of data embedded in the XML.
-			When you use the preview script, tags between <e:lt/>c:preview<e:gt/> and <e:lt/>c:else/<e:gt/> get included, 
-			and the tags between <e:lt/>c:else/<e:gt/> and <e:lt/>/c:preview<e:gt/> get excluded.</p>
-		</c:preview>
+			<tr>
+				<td><c:preview>
+					<p>View this page using the <a href="/examples/simple/simple.php">simple.php</a>
+					script that initialises the data in the script code.</p>
+				<c:else/>
+					<p>View this page using the <a href="/src/preview.php?script=../examples/simple/simple">preview</a> script.
+					The preview script enables the display of data embedded in the XML.
+					When you use the preview script, tags between <e:lt/>c:preview<e:gt/> and <e:lt/>c:else/<e:gt/> get included, 
+					and the tags between <e:lt/>c:else/<e:gt/> and <e:lt/>/c:preview<e:gt/> get excluded.</p>
+				</c:preview></td>
+			</tr>
+		</table>
 		
 		<c:ifset var="$languages">
 			<hr/>

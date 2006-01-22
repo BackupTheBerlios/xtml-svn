@@ -558,13 +558,21 @@
 		}
 		
 		/**
+		 * 
+		 */
+		function isElse($element)
+		{
+			return $element->nodeType == XML_ELEMENT_NODE && $element->tagName == "c:else";
+		}
+
+		/**
 		 *
 		 */
 		function process($child, $skipws = false)
 		{
 			$output = "";
 			
-			while ($child && $child->tagName != "c:else")
+			while ($child && !$this->isElse($child))
 			{
 				//print "<pre>";
 				//print $child->tagName . ":" . $child->nodeType . "\n";
@@ -596,7 +604,7 @@
 		{
 			$output = "";
 			
-			while ($child && $child->tagName != "c:else")
+			while ($child && !$this->isElse($child))
 			{
 				$child = $child->nextSibling;
 			}
@@ -607,7 +615,7 @@
 				$child = $child->nextSibling;
 			}
 						
-			while ($child && $child->tagName != "c:else")
+			while ($child)
 			{
 				//print "<pre>";
 				//print $child->tagName . ":" . $child->nodeType . "\n";

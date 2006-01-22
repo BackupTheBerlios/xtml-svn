@@ -79,8 +79,9 @@
 			// TODO: implement translate logic
 			$maxlen = $element->getAttribute("maxlen");
 			$ellipses = $element->getAttribute("ellipses") == "true" ? true:false;
-			$value = $this->pistol->_getValueOrAttribute($element);
-			$text = $this->pistol->getVar($value);
+			$text = gettext($this->pistol->_getValueOrAttribute($element));
+			
+			// TODO: handle variables in the text
 			
 			if ($maxlen && strlen($text) > $maxlen)
 			{
