@@ -399,5 +399,13 @@
 				return $value;
 			}
 		}
+
+		/**
+		 * 
+		 */
+		function tag_string($element)
+		{
+			return $this->tag_out($element);
+		}
 	}
 ?>

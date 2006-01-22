@@ -398,7 +398,7 @@
 				}
 				
 				$finished = microtime(true);
-				$renderTime = ($finished - $started);
+				$renderTime = ($finished - $started) * 1000;
 	
 				$output = 
 					"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\"\n" . 
@@ -406,7 +406,7 @@
 					"<!--\nGenerated using PiSToL, the PHP Standard Tag Library\n\n" .
 					"The following tag libraries were used to render this document\n" .
 					$this->copyrights .
-					"\nRendering took " . ($finished - $started) . " seconds\n" .
+					"\nRendering took ${renderTime}ms\n" .
 					"-->\n\n" .
 					$output;
 				
