@@ -28,22 +28,73 @@
 				"Copyright 2005, 2006 by John Allen and others (see AUTHORS file for additional info).\n" .
 				"Released under the GNU GPL v2";
 		}
+
+		/**
+		 * 
+		 */		
+		function tag_ucase($element)
+		{
+			$str = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
+
+			return strtoupper($str);	
+		}
 		
+		/**
+		 * 
+		 */		
+		function tag_ucfirst($element)
+		{
+			$str = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
+
+			return ucfirst($str);	
+		}
+		
+		/**
+		 * 
+		 */		
+		function tag_ucwords($element)
+		{
+			$str = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
+
+			return ucwords($str);	
+		}
+		
+		/**
+		 * 
+		 */		
+		function tag_lcase($element)
+		{
+			$str = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
+
+			return strtolower($str);	
+		}
+		
+		/**
+		 * 
+		 */		
 		function tag_truncate($element)
 		{
 			$str = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
 			$length = $this->pistol->getVar($element->getAttribute("length"));
+
 			return substr($str, 0, $length);	
 		}
 		
+		/**
+		 * 
+		 */		
 		function tag_pad($element)
 		{
 			$str = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
 			$strlen = strlen($str);
 			$length = $this->pistol->getVar($element->getAttribute("length"));
+
 			return $str . str_repeat(" ", $strlen - $length);
 		}
 		
+		/**
+		 * 
+		 */		
 		function tag_size($element)
 		{
 			$str = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
@@ -58,22 +109,32 @@
 			{
 				return $str . str_repeat(" ", $strlen - $length);	
 			}
+			else
+			{
+				return $str;
+			}
 		}
 		
+		/**
+		 * 
+		 */		
+		function tag_hide($element)
+		{
+			$str = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
+			$char = $this->pistol->getVar($element->getAttribute("char"));
+			
+			return str_repeat($char, strlen($str));
+		}
+		
+		/**
+		 * 
+		 */		
 		function tag_mask($element)
 		{
 			$str = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
 			$mask = $this->pistol->getVar($element->getAttribute("mask"));
-			$maskLen = strlen($mask);
-			if ($maskLen > 1)
-			{
-				return $mask . substr($str, $maskLen);	
-			}
-			else
-			{
-				return str_repeat($mask, strlen($str));
-			}
+
+			return $mask . substr($str, strlen($mask));	
 		}
-		
 	}
 ?>
