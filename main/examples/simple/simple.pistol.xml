@@ -36,9 +36,9 @@
 		<!-- create a data set so we can display this page using the preview script -->
 		<c:set var="languages">
 			<c:array>
-				<c:object name="C" description="A high level procedural language, that can still be used for programming the bare metal"/>
-				<c:object name="C++" description="An extension of the original C language, adding object oriented features"/>
-				<c:object name="Perl" description="A sophisticated scripting language, used mostly on Unix systems"/>
+				<c:object name="Basic" description="A high level procedural language, that has sunk into disuse"/>
+				<c:object name="Pascal" description="A high level procedural language, that has sunk into disuse"/>
+				<c:object name="Eiffel" description="A sophisticated object oriented language, that hardly anybody uses"/>
 				<c:object name="Python" description="An interpreted typeless object oriented language"/>
 			</c:array>
 		</c:set>
