@@ -17,7 +17,7 @@
 	xmlns:i18n = "http://www.classesarecode.net/pistol/i18n"
 	xmlns:md = "http://www.classesarecode.net/pistol/md">
 	
-	<c:testmode>
+	<c:preview>
 		<!-- create a data set so we can display this page using a generic
 			director script -->
 		<c:set var="languages">
@@ -28,18 +28,17 @@
 				<c:object name="Python" description="An interpreted typeless object oriented language"/>
 			</c:array>
 		</c:set>
-	</c:testmode>
+	</c:preview>
 	
 	<!-- set a variable "title" to the translated message title -->
 	<c:set var="title"><i18n:message>simple PiSToL Example</i18n:message></c:set>
 	
 	<head>
-		<c:testmode>
-		<link href="../examples/examples.css" rel="stylesheet" type="text/css"/>
-		</c:testmode>
-		<c:normalmode>
-		<link href="../examples.css" rel="stylesheet" type="text/css"/>
-		</c:normalmode>
+		<c:preview>
+			<link href="../examples/examples.css" rel="stylesheet" type="text/css"/>
+		<c:else/>
+			<link href="../examples.css" rel="stylesheet" type="text/css"/>
+		</c:preview>
 		<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=iso-8859-1"/>
 	<title><c:out value="$title"/></title>
 	</head>
@@ -48,14 +47,13 @@
 		<p><a href="/examples/simple/simple.phps">PHP source</a><br/><br/>
 		<a href="/examples/simple/simple.pistol.xml">XML tags</a></p>
 
-		<c:normalmode>
-		<p>You can also view this page using the <a href="/src/testmode.php?script=../examples/simple/simple">testmode</a> script.
-		When you use the testmode script tags inside <e:lt/>c:testmode<e:gt/> get included, and tags inside
-		<e:lt/>c:normalmode<e:gt/> get excluded.</p>
-		</c:normalmode>
-		<c:testmode>
-		<p>View this page using the <a href="/examples/simple/simple.php">script</a> that would normally drive this page.</p>
-		</c:testmode>
+		<c:preview>
+			<p>View this page using the <a href="/examples/simple/simple.php">script</a> that would normally drive this page.</p>
+		<c:else/>
+			<p>You can also view this page using the <a href="/src/preview.php?script=../examples/simple/simple">preview</a> script.
+			When you use the preview script, tags inside <e:lt/>c:preview<e:gt/> before the <e:lt/>c:else/<e:gt/> get included, 
+			and tags inside after the <e:lt/>c:else/<e:gt/> are excluded.</p>
+		</c:preview>
 		
 		<c:ifset var="$languages">
 			<hr/>
@@ -69,6 +67,8 @@
 					</c:tr>
 				</c:loop>
 			</c:table>
+		<c:else/>
+			<md:text>The $languages variable is *not* set</md:text>
 		</c:ifset>
 	</body>
 </html>

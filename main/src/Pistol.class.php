@@ -27,6 +27,7 @@
 		private $copyrights;
 		private $data;
 		private $doc;
+		private $previewMode;
 
 		/**
 		 * 
@@ -44,6 +45,7 @@
 				$this->script = $script;
 			}
 			
+			$this->previewMode = false;
 			$this->classCache = array();
 			$this->data = array();
 			$this->noBodyTags = array(
@@ -53,16 +55,6 @@
 			$this->doc->preserveWhiteSpace = true;
 
 			$this->setVar("include_path", ini_get('include_path'));
-			$this->createTagClass("c");
-		}
-
-		/**
-		 * 
-		 */
-		function enableTestMode()
-		{
-			$cTag = $this->createTagClass("c");
-			$cTag->enableTestMode();
 		}
 
 		/**
@@ -198,6 +190,23 @@
 				
 				return $output;
 			}
+		}
+		
+		/**
+		 * 
+		 */
+		function isPreviewModeEnabled()
+		{
+			return $this->previewMode;
+		}
+		
+		/**
+		 * 
+		 */
+		function preview()
+		{
+			$this->previewMode = true;
+			print $this->generate();
 		}
 		
 		/**
@@ -530,7 +539,50 @@
 		{
 			$output = "";
 			
-			while ($child)
+			while ($child && $child->tagName != "c:else")
+			{
+				//print "<pre>";
+				//print $child->tagName . ":" . $child->nodeType . "\n";
+	
+				$data = $this->processElement($child, $skipws);
+			
+				if (is_object($data) || is_array($data))
+				{
+					$output = $data;
+				}
+				else
+				{
+					if ($data)
+					{
+						$output .= $data;
+					}
+				}
+					
+				$child = $child->nextSibling;
+			}
+			
+			return $output;
+		}
+
+		/**
+		 *
+		 */
+		function processElse($child, $skipws = false)
+		{
+			$output = "";
+			
+			while ($child && $child->tagName != "c:else")
+			{
+				$child = $child->nextSibling;
+			}
+
+			if ($child)
+			{
+				// we found the <c:else> tag, skip over it
+				$child = $child->nextSibling;
+			}
+						
+			while ($child && $child->tagName != "c:else")
 			{
 				//print "<pre>";
 				//print $child->tagName . ":" . $child->nodeType . "\n";

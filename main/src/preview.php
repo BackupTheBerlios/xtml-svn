@@ -18,6 +18,5 @@
 	 * 
 	 */
 	$pistol = new Pistol($_REQUEST['script']);
-	$pistol->enableTestMode();
-	$pistol->render();
+	$pistol->preview();
 ?>

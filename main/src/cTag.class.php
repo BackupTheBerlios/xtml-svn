@@ -22,7 +22,6 @@
 		private $tables;
 		private $tablesIndex;
 		private $iftable;
-		private $testmode;
 		
 		function cTag($pistol)
 		{
@@ -30,7 +29,6 @@
 			
 			$this->tables = array();
 			$this->tablesIndex = 0;
-			$this->testmode = false;
 			
 			$this->iftable = array(
 				"!=" => "ifneq",
@@ -53,14 +51,6 @@
 				;
 		}
 
-		/**
-		 * 
-		 */
-		function enableTestMode()
-		{
-			$this->testmode = true;
-		}
-		
 		/**
 		 * 
 		 */
@@ -147,27 +137,16 @@
 		/**
 		 * 
 		 */
-		function tag_testmode($element)
+		function tag_preview($element)
 		{
-			if ($this->testmode)
+			if ($this->pistol->isPreviewModeEnabled())
 			{
 				return $this->pistol->process($element->firstChild);
 			}
-			
-			return "";
-		}
-
-		/**
-		 * 
-		 */
-		function tag_normalmode($element)
-		{
-			if (!$this->testmode)
+			else
 			{
-				return $this->pistol->process($element->firstChild);
+				return $this->pistol->processElse($element->firstChild);
 			}
-			
-			return "";
 		}
 
 		/**
@@ -181,8 +160,10 @@
 			{
 				return $this->pistol->process($element->firstChild);
 			}
-			
-			return "";
+			else
+			{
+				return $this->pistol->processElse($element->firstChild);
+			}
 		}
 
 		/**
@@ -198,8 +179,10 @@
 			{
 				return $this->pistol->process($element->firstChild);
 			}
-			
-			return "";
+			else
+			{
+				return $this->pistol->processElse($element->firstChild);
+			}
 		}
 
 		/**
