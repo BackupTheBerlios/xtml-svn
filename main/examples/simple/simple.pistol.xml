@@ -47,6 +47,7 @@
 			if you want to include a PiSToL tag file, then just leave out the
 			.pistol.xml extension -->
 		<c:include file="../header"/>
+		<br/>
 		<md:text>This is a simple example of using the *PiSToL* tag library</md:text>
 
 		<c:preview>
