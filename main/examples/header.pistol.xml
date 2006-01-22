@@ -16,6 +16,10 @@
 	xmlns:i18n = "http://www.classesarecode.net/pistol/i18n"
 	xmlns:md = "http://www.classesarecode.net/pistol/md">
 	<div id="logo">
-		<img src="../../images/ClassesAreCodeLogo-1.png" width="100%"/>
+		<c:preview>
+			<img src="../../images/ClassesAreCodeLogo-1.png" width="100%"/>
+		<c:else/>
+			<img src="../images/ClassesAreCodeLogo-1.png" width="100%"/>
+		</c:preview>
 	</div>
 </xml>
