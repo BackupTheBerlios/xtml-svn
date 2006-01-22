@@ -31,6 +31,6 @@
 
 	require_once "PiSToL.class.php";
 	 
-	$pistol = new PiSToL();
+	$pistol = new Pistol();
 	$pistol->render();
 ?>
