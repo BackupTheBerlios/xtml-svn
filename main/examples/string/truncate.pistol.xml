@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+ $Author$
+ $LastChangedDate$
+ $LastChangedRevision$
+ $LastChangedBy$
+ $HeadURL$
+ 
+ PiSToL - PHP Standard Tag Library
+ Copyright 2005, 2006 by John Allen and others (see AUTHORS file for additional info).
+ Released under the GNU GPL v2
+ -->
+
+<html
+	xmlns:c = "http://www.classesarecode.net/pistol/core"
+	xmlns:e = "http://www.classesarecode.net/pistol/entity"
+	xmlns:i18n = "http://www.classesarecode.net/pistol/i18n"
+	xmlns:md = "http://www.classesarecode.net/pistol/md"
+	xmlns:string = "http://www.classesarecode.net/pistol/string"
+	xmlns:html = "http://www.classesarecode.net/pistol/html">
+	<head>
+		<title>Pistol Documentation - string:truncate</title>
+	</head>
+	<body>
+		<h1>string:truncate</h1>
+		<p>This tag will truncate a string to your desired length.</p>
+		<p><e:lt/>string:truncate value="Shorten this string to 16 characters" length="16" /<e:gt/> will result in</p>
+		<p><string:truncate value="Shorten this string to 16 characters" length="16" /></p>
+		<p><e:lt/>string:truncate length="16"<e:gt/>Shorten this string to 16 characters<e:lt/>/string:truncate<e:gt/> will result in</p>
+		<p><string:truncate length="16">Shorten this string to 16 characters</string:truncate></p>
+	</body>	
+</html>

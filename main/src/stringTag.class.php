@@ -89,7 +89,7 @@
 			$strlen = strlen($str);
 			$length = $this->pistol->getVar($element->getAttribute("length"));
 
-			return $str . str_repeat(" ", $strlen - $length);
+			return $str . str_repeat(" ", $length - $strlen);
 		}
 		
 		/**
@@ -107,7 +107,7 @@
 			}
 			elseif ($strlen < $length)
 			{
-				return $str . str_repeat(" ", $strlen - $length);	
+				return $str . str_repeat(" ", $length - $strlen);	
 			}
 			else
 			{
