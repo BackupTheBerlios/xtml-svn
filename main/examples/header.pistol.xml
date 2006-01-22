@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<xml
+	xmlns:c = "http://www.classesarecode.net/pistol/core"
+	xmlns:e = "http://www.classesarecode.net/pistol/entity"
+	xmlns:i18n = "http://www.classesarecode.net/pistol/i18n"
+	xmlns:md = "http://www.classesarecode.net/pistol/md">
+	<div id="logo">
+		<img src="../../images/ClassesAreCodeLogo-1.png" width="100%"/>
+	</div>
+</xml>
