@@ -322,21 +322,44 @@
 				$data = $this->pistol->getVar($data);
 			}
 
+			$firstChild = $element->firstChild;
+			$previousValue = $this->pistol->getVar($var);
+
 			if (is_array($data))
 			{
-				$firstChild = $element->firstChild;
-				$previousValue = $this->pistol->getVar($var);
-				
+				// array support for loops			
 				foreach ($data as $tmp)
 				{
 					$this->pistol->setVar($var, $tmp);
-
 					$output .= $this->pistol->process($firstChild);
 				}
-
-				$this->pistol->setVar($var, $previousValue);
 			}
-			
+			else if (gettype($data) == "resource")
+			{
+				$type = get_resource_type($data);
+				
+				if ($type == "mysql result")
+				{
+					// MySQL result resource support for loops			
+					while ($tmp = mysql_fetch_object($data))
+					{
+						$this->pistol->setVar($var, $tmp);
+						$output .= $this->pistol->process($firstChild);
+					}
+				}
+				else if ($type == "pgsql result")
+				{
+					// PostgreSQL result resource support for loops			
+					while ($tmp = pg_fetch_object($data))
+					{
+						$this->pistol->setVar($var, $tmp);
+						$output .= $this->pistol->process($firstChild);
+					}
+				}
+			}
+
+			$this->pistol->setVar($var, $previousValue);
+			 			
 			return $output;
 		}
 
