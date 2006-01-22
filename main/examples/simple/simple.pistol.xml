@@ -42,6 +42,11 @@
 	<title><c:out value="$title"/></title>
 	</head>
 	<body>
+		<!-- include the header.pistol.xml 
+			NOTE: If the file specified exists it will be inserted verbatim,
+			if you want to include a PiSToL tag file, then just leave out the
+			.pistol.xml extension -->
+		<c:include file="../header"/>
 		<md:text>This is a simple example of using the *PiSToL* tag library</md:text>
 
 		<c:preview>

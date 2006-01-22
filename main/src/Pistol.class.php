@@ -48,7 +48,8 @@
 			$this->classCache = array();
 			$this->data = array();
 			$this->noBodyTags = array(
-				"link" => true
+				"link" => true,
+				"img" => true
 				);
 			$this->doc = new DOMDocument();
 			$this->doc->preserveWhiteSpace = true;
@@ -138,82 +139,6 @@
 			{
 				return $s;
 			}
-		}
-		
-		/**
-		 * 
-		 */
-		function generate()
-		{
-			if (file_exists($this->document))
-			{
-				if (function_exists("mime_content_type"))
-				{
-					header("Content-type: " + mime_content_type($this->document));
-				}
-				
-				return file_get_contents($this->document);
-			}
-			else
-			{
-				$started = microtime(true);
-		
-				if ($this->script)
-				{
-					$script = $this->script . ".pistol.php";
-					
-					if (file_exists($script))
-					{
-						require_once "$script";
-						pistolScript($this);
-					} 
-				}
-				
-				if ($this->doc->load($this->document . ".pistol.xml"))
-				{
-					$output = $this->process($this->doc->documentElement);
-				}
-				
-				$finished = microtime(true);
-				$renderTime = ($finished - $started);
-	
-				$output = 
-					"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\"\n" . 
-					"	\"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n\n" .
-					"<!--\nGenerated using PiSToL, the PHP Standard Tag Library\n\n" .
-					"The following tag libraries were used to render this document\n" .
-					$this->copyrights .
-					"\nRendering took " . ($finished - $started) . " seconds\n" .
-					"-->\n\n" .
-					$output;
-				
-				return $output;
-			}
-		}
-		
-		/**
-		 * 
-		 */
-		function isPreviewModeEnabled()
-		{
-			return $this->previewMode;
-		}
-		
-		/**
-		 * 
-		 */
-		function preview()
-		{
-			$this->previewMode = true;
-			print $this->generate();
-		}
-		
-		/**
-		 * 
-		 */
-		function render()
-		{
-			print $this->generate();
 		}
 		
 		/**
@@ -392,7 +317,7 @@
 			$tagClass = $tag . "Tag";
 			if (!class_exists($tagClass))
 			{
-				print "<b>$tag[0]</b>: supporting class ($tagClass) not found<br>";
+				print "<b>$tag[0]</b>: required class '$tagClass' not found<br>";
 				die();
 			}
 			
@@ -415,6 +340,102 @@
 		}
 		
 		/**
+		 * 
+		 */
+		function doinclude()
+		{
+			if (file_exists($this->document))
+			{
+				return file_get_contents($this->document);
+			}
+			else
+			{
+				if ($this->doc->load($this->document . ".pistol.xml"))
+				{
+					$child = $this->doc->documentElement->firstChild;
+					$output = $this->process($child);
+				}
+				
+				return $output;
+			}
+		}
+		/**
+		 * 
+		 */
+		function generate()
+		{
+			if (file_exists($this->document))
+			{
+				if (function_exists("mime_content_type"))
+				{
+					header("Content-type: " + mime_content_type($this->document));
+				}
+				
+				return file_get_contents($this->document);
+			}
+			else
+			{
+				$started = microtime(true);
+		
+				if ($this->script)
+				{
+					$script = $this->script . ".pistol.php";
+					
+					if (file_exists($script))
+					{
+						require_once "$script";
+						pistolScript($this);
+					} 
+				}
+				
+				if ($this->doc->load($this->document . ".pistol.xml"))
+				{
+					$output = $this->process($this->doc->documentElement);
+				}
+				
+				$finished = microtime(true);
+				$renderTime = ($finished - $started);
+	
+				$output = 
+					"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\"\n" . 
+					"	\"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n\n" .
+					"<!--\nGenerated using PiSToL, the PHP Standard Tag Library\n\n" .
+					"The following tag libraries were used to render this document\n" .
+					$this->copyrights .
+					"\nRendering took " . ($finished - $started) . " seconds\n" .
+					"-->\n\n" .
+					$output;
+				
+				return $output;
+			}
+		}
+		
+		/**
+		 * 
+		 */
+		function isPreviewModeEnabled()
+		{
+			return $this->previewMode;
+		}
+		
+		/**
+		 * 
+		 */
+		function preview()
+		{
+			$this->previewMode = true;
+			print $this->generate();
+		}
+		
+		/**
+		 * 
+		 */
+		function render()
+		{
+			print $this->generate();
+		}
+		
+		/**
 		 *
 		 */
 		function processElement($element, $skipws = false)
@@ -434,7 +455,7 @@
 						
 						if (!method_exists($_class, $_method))
 						{
-							print "<b>$tag[0]:$tag[1]</b>: supporting method ($tagClass:$_method) not found<br>";
+							print "<b>$tag[0]:$tag[1]</b>: required method $_method() not found<br>";
 							die();
 						}
 						

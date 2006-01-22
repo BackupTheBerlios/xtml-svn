@@ -78,6 +78,17 @@
 		/**
 		 * 
 		 */
+		function tag_include($element)
+		{
+			$file = $element->getAttribute("file");
+			$pistol = new Pistol($file); 
+			
+			return $pistol->doinclude();
+		}
+		
+		/**
+		 * 
+		 */
 		function tag_set($element)
 		{
 			$var = $element->getAttribute("var");
