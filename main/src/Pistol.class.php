@@ -355,6 +355,10 @@
 					$child = $this->doc->documentElement->firstChild;
 					$output = $this->process($child);
 				}
+				else
+				{
+					$output = "<!-- " . $this->document . ".pistol.xml not found -->\n";
+				}
 				
 				return $output;
 			}
