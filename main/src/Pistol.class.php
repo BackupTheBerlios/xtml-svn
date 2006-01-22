@@ -453,7 +453,8 @@
 					else
 					{
 						// check for crappy HTML tags, but maintain XHTML output compatibility
-						if ($element->tagName == "br")
+						if ($element->tagName == "br" ||
+							$element->tagName == "hr")
 						{
 							$output .= "<" . $element->tagName . "/>";
 						}

@@ -1,10 +1,10 @@
 <?
 	/**
-	 * $Author: jallen $
-	 * $LastChangedDate: 2006-01-18 08:10:24Z $
-	 * $LastChangedRevision: 74 $
-	 * $LastChangedBy: jallen $
-	 * $HeadURL: svn+ssh://svn.classesarecode.net/var/svn/pistol/main/src/mdTag.class.php $
+	 * $Author$
+	 * $LastChangedDate$
+	 * $LastChangedRevision$
+	 * $LastChangedBy$
+	 * $HeadURL$
 	 * 
 	 * PiSToL - The PHP Standard Tag Library
 	 * Copyright 2005, 2006 by John Allen and others (see AUTHORS file for additional info).
