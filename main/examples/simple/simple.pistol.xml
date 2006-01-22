@@ -18,8 +18,7 @@
 	xmlns:md = "http://www.classesarecode.net/pistol/md">
 	
 	<c:preview>
-		<!-- create a data set so we can display this page using a generic
-			director script -->
+		<!-- create a data set so we can display this page using the preview script -->
 		<c:set var="languages">
 			<c:array>
 				<c:object name="C" description="A high level procedural language, that can still be used for programming the bare metal"/>
