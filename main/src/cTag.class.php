@@ -322,6 +322,8 @@
 			$output = "";
 			$data = $element->getAttribute("value");
 			$var = $element->getAttribute("var");
+			$limit = $element->getAttribute("limit");
+			$index = 0;
 
 			if ($data{0} == '(')
 			{
@@ -342,6 +344,12 @@
 				foreach ($data as $tmp)
 				{
 					$this->pistol->setVar($var, $tmp);
+					
+					if ($limit && $index++ == $limit)
+					{
+						break;
+					}
+					
 					$output .= $this->pistol->process($firstChild);
 				}
 			}
@@ -354,6 +362,11 @@
 					// MySQL result resource support for loops			
 					while ($tmp = mysql_fetch_object($data))
 					{
+						if ($limit && $index++ == $limit)
+						{
+							break;
+						}
+					
 						$this->pistol->setVar($var, $tmp);
 						$output .= $this->pistol->process($firstChild);
 					}
@@ -363,6 +376,11 @@
 					// PostgreSQL result resource support for loops			
 					while ($tmp = pg_fetch_object($data))
 					{
+						if ($limit && $index++ == $limit)
+						{
+							break;
+						}
+					
 						$this->pistol->setVar($var, $tmp);
 						$output .= $this->pistol->process($firstChild);
 					}

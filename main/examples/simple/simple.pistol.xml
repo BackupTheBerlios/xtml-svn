@@ -90,7 +90,7 @@
 			Programming languages<br/>
 			<c:table row-classes="light,dark">
 				<tr class="green"><th><i18n:message>Name</i18n:message></th><th><i18n:message>Description</i18n:message></th></tr>
-				<c:loop value="$languages" var="language">
+				<c:loop value="$languages" var="language" limit="3">
 					<c:tr>
 						<c:td><c:out value="$language.name"/></c:td>
 						<c:td><b><c:out value="$language.description"/></b></c:td>
@@ -100,19 +100,26 @@
 		<c:else/>
 			<md:text>The $languages variable is *not* set</md:text>
 		</c:ifset>
-		<c:set var="myArray">
+		<c:set var="days">
 			<c:array>
-				<c:string>one</c:string>
-				<c:string>two</c:string>
-				<c:string>three</c:string>
+				<c:string>Monday</c:string>
+				<c:string>Tuesday</c:string>
+				<c:string>Wednesday</c:string>
+				<c:string>Thursday</c:string>
+				<c:string>Friday</c:string>
+				<c:string>Saturday</c:string>
+				<c:string>Sunday</c:string>
 			</c:array>
 		</c:set>
-		<html:ul value="$myArray"/>
+		<html:ul value="$days"/>
 		<html:ol member="name">$languages</html:ol>
-		<html:select value="$myArray" name="myNumberSelect" default="two"/>
+		<html:select value="$days" name="day" default="Friday"/>
+		<br/>
 		<string:truncate length="20">How much is that doggy in the window? How much is that doggy in the window? How much is that doggy in the window? </string:truncate>
+		<br/>
 		<string:mask mask="*">foobar</string:mask>
-		<string:mask mask="****">12345678</string:mask>
+		<br/>
+		<string:mask mask="************">4921071541900055</string:mask>
 		<hr/>
 		<p>View the sources</p>
 		<p>
