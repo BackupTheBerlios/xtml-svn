@@ -30,7 +30,7 @@
 	</c:preview>
 	
 	<!-- set a variable "title" to the translated message title -->
-	<c:set var="title"><i18n:message>simple PiSToL Example</i18n:message></c:set>
+	<c:set var="title"><i18n:message>Simple PiSToL Example</i18n:message></c:set>
 	
 	<head>
 		<c:preview>
@@ -50,8 +50,8 @@
 			<p>View this page using the <a href="/examples/simple/simple.php">script</a> that would normally drive this page.</p>
 		<c:else/>
 			<p>You can also view this page using the <a href="/src/preview.php?script=../examples/simple/simple">preview</a> script.
-			When you use the preview script, tags inside <e:lt/>c:preview<e:gt/> before the <e:lt/>c:else/<e:gt/> get included, 
-			and tags inside after the <e:lt/>c:else/<e:gt/> are excluded.</p>
+			When you use the preview script, tags between <e:lt/>c:preview<e:gt/> and <e:lt/>c:else/<e:gt/> get included, 
+			otherwise the tags between <e:lt/>c:else/<e:gt/> and <e:lt/>/c:preview<e:gt/> get included.</p>
 		</c:preview>
 		
 		<c:ifset var="$languages">
