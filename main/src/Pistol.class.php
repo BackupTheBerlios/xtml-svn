@@ -73,8 +73,17 @@
 			else
 			{
 				$scriptName = basename($_SERVER['SCRIPT_FILENAME']);
-				$scriptDir =  str_replace($scriptName, "", $_SERVER['SCRIPT_FILENAME']);
-				$pageloc = $scriptDir . "/index";
+				$scriptDir = str_replace($scriptName, "", $_SERVER['SCRIPT_FILENAME']);
+				$pistolXML = str_replace(".php", ".pistol.xml", $_SERVER['SCRIPT_FILENAME']);
+				
+				if (!file_exists($pistolXML))
+				{
+					$pageloc = $scriptDir . "/index";
+				}
+				else
+				{
+					$pageloc = str_replace(".php", "", $_SERVER['SCRIPT_FILENAME']);
+				}
 			}
 			
 			return $pageloc;
