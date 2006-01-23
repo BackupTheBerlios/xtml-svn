@@ -377,7 +377,7 @@
 		 */
 		function generate()
 		{
-			if (file_exists($this->document))
+			if (file_exists($this->document) && !is_dir($this->document))
 			{
 				if (function_exists("mime_content_type"))
 				{
@@ -401,7 +401,9 @@
 					} 
 				}
 				
-				if ($this->doc->load($this->document . ".pistol.xml"))
+				$docname = $this->document . ".pistol.xml";
+				
+				if ($this->doc->load($docname))
 				{
 					$output = $this->process($this->doc->documentElement);
 				}

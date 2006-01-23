@@ -11,6 +11,7 @@
 	 * Released under the GNU GPL v2
 	 */
 
+	//phpinfo();
 	$doc = new DOMDocument();
 	$scriptName = basename($_SERVER['SCRIPT_FILENAME']);
 	$scriptDir =  str_replace($scriptName, "", $_SERVER['SCRIPT_FILENAME']);
