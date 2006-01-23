@@ -1,5 +1,5 @@
 <?
-	/**
+	/*
 	 * $Author$
 	 * $LastChangedDate$
 	 * $LastChangedRevision$

@@ -1,6 +1,6 @@
 <?php
 
-	/**
+	/*
 	 * $Author$
 	 * $LastChangedDate$
 	 * $LastChangedRevision$
@@ -11,6 +11,10 @@
 	 * Copyright 2005, 2006 by John Allen and others (see AUTHORS file for additional info).
 	 * Released under the GNU GPL v2
 	 */
+	 
+	/**
+	 * The PiSToL String tag library.
+	 */
 	class stringTag
 		extends PistolTag
 	{
@@ -19,8 +23,8 @@
 			parent::PistolTag($pistol);
 		}
 		
-		/**
-		 * 
+		/*
+		 * @ignore 
 		 */
 		function copyright()
 		{
@@ -30,7 +34,14 @@
 		}
 
 		/**
+		 * The ucase tag converts either the tag body, or the value attribute to uppercase.
+		 * The value attribute, if present, takes precedence over the tag body.
 		 * 
+		 * eg.
+		 * <string:ucase>This is a nice day</string:ucase>
+		 * 
+		 * Will produce the following output:-
+		 * THIS IS A NICE DAY  
 		 */		
 		function tag_ucase($element)
 		{

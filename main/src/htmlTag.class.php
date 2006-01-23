@@ -1,5 +1,5 @@
 <?php
-	/**
+	/*
 	 * $Author$
 	 * $LastChangedDate$
 	 * $LastChangedRevision$
