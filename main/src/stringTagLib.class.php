@@ -18,6 +18,9 @@
 	class stringTagLib
 		extends PistolTag
 	{
+		/**
+		 * @ignore
+		 */
 		function stringTag($pistol)
 		{
 			parent::PistolTagLib($pistol);

@@ -17,6 +17,9 @@
 	class eTagLib
 		extends PistolTag
 	{
+		/**
+		 * @ignore
+		 */
 		function eTagLib($pistol)
 		{
 			parent::PistolTag($pistol);

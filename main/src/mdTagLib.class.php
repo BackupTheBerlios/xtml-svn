@@ -19,6 +19,9 @@
 	class mdTagLib
 		extends PistolTag
 	{
+		/**
+		 * @ignore
+		 */
 		function mdTag($pistol)
 		{
 			parent::PistolTagLib($pistol);

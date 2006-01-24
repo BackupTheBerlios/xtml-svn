@@ -21,6 +21,9 @@
 		private $tablesIndex;
 		private $iftable;
 		
+		/**
+		 * @ignore
+		 */
 		function phpTagLib($pistol)
 		{
 			parent::PistolTag($pistol);

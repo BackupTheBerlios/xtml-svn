@@ -23,6 +23,9 @@
 		private $tablesIndex;
 		private $iftable;
 		
+		/**
+		 * @ignore
+		 */
 		function cTagLib($pistol)
 		{
 			parent::PistolTag($pistol);

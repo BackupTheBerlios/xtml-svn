@@ -14,6 +14,9 @@
 	class htmlTagLib
 		extends PistolTag
 	{
+		/**
+		 * @ignore
+		 */
 		function htmlTagLib($pistol)
 		{
 			parent::PistolTag($pistol);

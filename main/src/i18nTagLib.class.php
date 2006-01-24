@@ -19,6 +19,9 @@
 	{
 		private $lang;
 		
+		/**
+		 * @ignore
+		 */
 		function i18nTagLib($pistol)
 		{
 			parent::PistolTag($pistol);
