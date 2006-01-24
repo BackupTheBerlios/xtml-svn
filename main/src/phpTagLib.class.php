@@ -39,7 +39,7 @@
 		}
 
 		/**
-		 * 
+		 * Insert the result of the phpinfo() function into the output.
 		 */
 		function php_colon_info($element)
 		{
@@ -49,7 +49,7 @@
 		}
 
 		/**
-		 * 
+		 * Insert the value of PHP_SELF (full path to the script from the document root) into the output
 		 */
 		function php_colon_self($element)
 		{
