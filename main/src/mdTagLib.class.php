@@ -25,7 +25,7 @@
 		}
 		
 		/**
-		 * 
+		 * @ignore
 		 */
 		function copyright()
 		{

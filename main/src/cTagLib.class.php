@@ -40,7 +40,7 @@
 		}
 
 		/**
-		 * 
+		 * @ignore
 		 */
 		function copyright()
 		{

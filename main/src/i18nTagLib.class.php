@@ -28,7 +28,7 @@
 		}
 
 		/**
-		 * 
+		 * @ignore
 		 */
 		function copyright()
 		{
@@ -38,7 +38,7 @@
 		}
 
 		/**
-		 * 
+		 * @ignore
 		 */
 		function getlang()
 		{
@@ -46,7 +46,7 @@
 		}
 		
 		/**
-		 * 
+		 * @ignore
 		 */
 		function setlang($lang)
 		{

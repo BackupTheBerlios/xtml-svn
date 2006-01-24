@@ -20,7 +20,7 @@
 		}
 		
 		/**
-		 * 
+		 * @ignore
 		 */
 		function copyright()
 		{
@@ -54,7 +54,7 @@
 		}
 
 		/**
-		 * 
+		 * @ignore
 		 */
 		function _list($element)
 		{

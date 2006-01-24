@@ -27,7 +27,7 @@
 		}
 
 		/**
-		 * 
+		 * @ignore
 		 */
 		function copyright()
 		{
@@ -36,6 +36,16 @@
 				"Released under the GNU GPL v2\n" .
 				"http://pistol.classesarecode.net/"
 				;
+		}
+
+		/**
+		 * 
+		 */
+		function php_colon_info($element)
+		{
+			ob_start();
+			phpinfo();
+			return ob_get_clean();
 		}
 
 		/**
