@@ -16,14 +16,14 @@
 	/**
 	 *
 	 */
-	class cTag
+	class cTagLib
 		extends PistolTag
 	{
 		private $tables;
 		private $tablesIndex;
 		private $iftable;
 		
-		function cTag($pistol)
+		function cTagLib($pistol)
 		{
 			parent::PistolTag($pistol);
 			
@@ -78,7 +78,7 @@
 		/**
 		 * 
 		 */
-		function tag_include($element)
+		function c_colon_include($element)
 		{
 			$file = $element->getAttribute("file");
 			$pistol = new Pistol($file); 
@@ -89,7 +89,7 @@
 		/**
 		 * 
 		 */
-		function tag_set($element)
+		function c_colon_set($element)
 		{
 			$var = $element->getAttribute("var");
 			$value = $this->pistol->_getValueOrAttribute($element);
@@ -102,7 +102,7 @@
 		/**
 		 * 
 		 */
-		function tag_array($element)
+		function c_colon_array($element)
 		{
 			$a = array();
 			$child = $element->firstChild;
@@ -131,7 +131,7 @@
 		/**
 		 * 
 		 */
-		function tag_object($element)
+		function c_colon_object($element)
 		{
 			$object = new stdClass();
 			$i = 0;
@@ -148,7 +148,7 @@
 		/**
 		 * 
 		 */
-		function tag_preview($element)
+		function c_colon_preview($element)
 		{
 			if ($this->pistol->isPreviewModeEnabled())
 			{
@@ -163,7 +163,7 @@
 		/**
 		 * 
 		 */
-		function tag_ifset($element)
+		function c_colon_ifset($element)
 		{
 			$var = $element->getAttribute("var");
 			
@@ -180,7 +180,7 @@
 		/**
 		 * 
 		 */
-		function tag_if($element)
+		function c_colon_if($element)
 		{
 			$method = $this->iftable[$element->getAttribute("op")];
 
@@ -199,7 +199,7 @@
 		/**
 		 * 
 		 */
-		function tag_table($element)
+		function c_colon_table($element)
 		{
 			$output = "";
 			$this->tables[$this->tablesIndex++] = new PistolTableSupport();
@@ -225,7 +225,7 @@
 		/**
 		 * 
 		 */
-		function tag_tr($element)
+		function c_colon_tr($element)
 		{
 			$explicitClassSpecified = false;
 			$output = "";
@@ -284,7 +284,7 @@
 		/**
 		 * 
 		 */
-		function tag_td($element)
+		function c_colon_td($element)
 		{
 			$output = "";
 			$table = $this->getTable();
@@ -317,7 +317,7 @@
 		/**
 		 * 
 		 */
-		function tag_loop($element)
+		function c_colon_loop($element)
 		{
 			$output = "";
 			$data = $element->getAttribute("value");
@@ -395,7 +395,7 @@
 		/**
 		 * 
 		 */
-		function tag_redirect($element)
+		function c_colon_redirect($element)
 		{
 			$to = $value = $this->pistol->_getValueOrAttribute($element, "to");
 			header("Location: $to");
@@ -404,7 +404,7 @@
 		/**
 		 * 
 		 */
-		function tag_out($element)
+		function c_colon_out($element)
 		{
 			$value = $this->pistol->_getValueOrAttribute($element);
 		
@@ -421,9 +421,9 @@
 		/**
 		 * 
 		 */
-		function tag_string($element)
+		function c_colon_string($element)
 		{
-			return $this->tag_out($element);
+			return $this->c_colon_out($element);
 		}
 	}
 ?>

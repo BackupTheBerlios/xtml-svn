@@ -14,10 +14,10 @@
 	/**
 	 *
 	 */
-	class eTag
+	class eTagLib
 		extends PistolTag
 	{
-		function eTag($pistol)
+		function eTagLib($pistol)
 		{
 			parent::PistolTag($pistol);
 		}
@@ -50,7 +50,7 @@
 		/**
 		 * 
 		 */
-		function tag_lt($element)
+		function e_colon_lt($element)
 		{
 			return $this->_stringRepeat($element, "&lt;");
 		}
@@ -58,7 +58,7 @@
 		/**
 		 * 
 		 */
-		function tag_gt($element)
+		function e_colon_gt($element)
 		{
 			return $this->_stringRepeat($element, "&gt;");
 		}
@@ -66,7 +66,7 @@
 		/**
 		 * 
 		 */
-		function tag_nbsp($element)
+		function e_colon_nbsp($element)
 		{
 			return $this->_stringRepeat($element, "&nbsp;");
 		}
@@ -74,7 +74,7 @@
 		/**
 		 * 
 		 */
-		function tag_spc($element)
+		function e_colon_spc($element)
 		{
 			return $this->_stringRepeat($element, " ");
 		}

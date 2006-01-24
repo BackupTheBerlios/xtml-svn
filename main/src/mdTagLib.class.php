@@ -16,12 +16,12 @@
 	/**
 	 *
 	 */
-	class mdTag
+	class mdTagLib
 		extends PistolTag
 	{
 		function mdTag($pistol)
 		{
-			parent::PistolTag($pistol);
+			parent::PistolTagLib($pistol);
 		}
 		
 		/**
@@ -38,7 +38,7 @@
 		/**
 		 * 
 		 */
-		function tag_text($element)
+		function md_colon_text($element)
 		{
 			$value = $this->pistol->_getValueOrAttribute($element);
 		

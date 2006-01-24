@@ -11,10 +11,10 @@
 	 * Released under the GNU GPL v2
 	 */
 
-	class htmlTag
+	class htmlTagLib
 		extends PistolTag
 	{
-		function htmlTag($pistol)
+		function htmlTagLib($pistol)
 		{
 			parent::PistolTag($pistol);
 		}
@@ -32,7 +32,7 @@
 		/**
 		 * 
 		 */
-		function tag_select($element)
+		function html_colon_select($element)
 		{
 			$var = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
 			$name = $element->getAttribute("name");
@@ -83,7 +83,7 @@
 		/**
 		 * 
 		 */
-		function tag_ul($element)
+		function html_colon_ul($element)
 		{
 			return "<ul>". $this->_list($element) . "</ul>";
 		}
@@ -91,7 +91,7 @@
 		/**
 		 * 
 		 */
-		function tag_ol($element)
+		function html_colon_ol($element)
 		{
 			return "<ol>". $this->_list($element) . "</ol>";
 		}

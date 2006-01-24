@@ -14,12 +14,12 @@
 	/**
 	 *
 	 */
-	class i18nTag
+	class i18nTagLib
 		extends PistolTag
 	{
 		private $lang;
 		
-		function i18nTag($pistol)
+		function i18nTagLib($pistol)
 		{
 			parent::PistolTag($pistol);
 			
@@ -56,7 +56,7 @@
 		/**
 		 * 
 		 */
-		function tag_setlang($element)
+		function i18n_colon_setlang($element)
 		{
 			$value = $this->pistol->_getValueOrAttribute($element);
 			$lang = $this->pistol->getVar($value);
@@ -66,7 +66,7 @@
 		/**
 		 * 
 		 */
-		function tag_getlang($element)
+		function i18n_colon_getlang($element)
 		{
 			return $this->getlang();
 		}
@@ -74,7 +74,7 @@
 		/**
 		 * 
 		 */
-		function tag_message($element)
+		function i18n_colon_message($element)
 		{
 			// TODO: implement translate logic
 			$maxlen = $element->getAttribute("maxlen");

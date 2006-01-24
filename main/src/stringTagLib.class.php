@@ -15,12 +15,12 @@
 	/**
 	 * The PiSToL String tag library.
 	 */
-	class stringTag
+	class stringTagLib
 		extends PistolTag
 	{
 		function stringTag($pistol)
 		{
-			parent::PistolTag($pistol);
+			parent::PistolTagLib($pistol);
 		}
 		
 		/*
@@ -43,7 +43,7 @@
 		 * Will produce the following output:-
 		 * THIS IS A NICE DAY  
 		 */		
-		function tag_ucase($element)
+		function string_colon_ucase($element)
 		{
 			$str = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
 
@@ -53,7 +53,7 @@
 		/**
 		 * 
 		 */		
-		function tag_ucfirst($element)
+		function string_colon_ucfirst($element)
 		{
 			$str = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
 
@@ -63,7 +63,7 @@
 		/**
 		 * 
 		 */		
-		function tag_ucwords($element)
+		function string_colon_ucwords($element)
 		{
 			$str = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
 
@@ -73,7 +73,7 @@
 		/**
 		 * 
 		 */		
-		function tag_lcase($element)
+		function string_colon_lcase($element)
 		{
 			$str = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
 
@@ -83,7 +83,7 @@
 		/**
 		 * 
 		 */		
-		function tag_truncate($element)
+		function string_colon_truncate($element)
 		{
 			$str = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
 			$length = $this->pistol->getVar($element->getAttribute("length"));
@@ -94,7 +94,7 @@
 		/**
 		 * 
 		 */		
-		function tag_pad($element)
+		function string_colon_pad($element)
 		{
 			$str = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
 			$strlen = strlen($str);
@@ -106,7 +106,7 @@
 		/**
 		 * 
 		 */		
-		function tag_size($element)
+		function string_colon_size($element)
 		{
 			$str = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
 			$strlen = strlen($str);
@@ -129,7 +129,7 @@
 		/**
 		 * 
 		 */		
-		function tag_hide($element)
+		function string_colon_hide($element)
 		{
 			$str = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
 			$char = $this->pistol->getVar($element->getAttribute("char"));
@@ -140,7 +140,7 @@
 		/**
 		 * 
 		 */		
-		function tag_mask($element)
+		function string_colon_mask($element)
 		{
 			$str = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
 			$mask = $this->pistol->getVar($element->getAttribute("mask"));

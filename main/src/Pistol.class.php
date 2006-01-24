@@ -321,9 +321,8 @@
 		/**
 		 * 
 		 */
-		function createTagClass($tag)
+		function createTagClass($tagClass)
 		{
-			$tagClass = $tag . "Tag";
 			if (!class_exists($tagClass))
 			{
 				print "<b>$tag[0]</b>: required class '$tagClass' not found<br>";
@@ -464,18 +463,19 @@
 				{
 					if (($tag = explode(":", $element->tagName)) && count($tag) == 2)
 					{
-						$_class = $this->createTagClass($tag[0]);
-						$_method = "tag_" . $tag[1];
+						$_tagClassName = $tag[0] . "TagLib";
+						$_methodName = $tag[0] . "_colon_" . $tag[1];
+						$_class = $this->createTagClass($_tagClassName);
 	
 						//print $tag[0] . "->" . "$_method\n";
 						
-						if (!method_exists($_class, $_method))
+						if (!method_exists($_class, $_methodName))
 						{
-							print "<b>$tag[0]:$tag[1]</b>: required method $_method() not found<br>";
+							print "<b>$tag[0]:$tag[1]</b>: required method $_tagClassName::$_methodName() not found<br>";
 							die();
 						}
 						
-						$data = $_class->$_method($element);
+						$data = $_class->$_methodName($element);
 						
 						if (is_object($data) || is_array($data))
 						{

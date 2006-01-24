@@ -14,14 +14,14 @@
 	/**
 	 *
 	 */
-	class phpTag
+	class phpTagLib
 		extends PistolTag
 	{
 		private $tables;
 		private $tablesIndex;
 		private $iftable;
 		
-		function phpTag($pistol)
+		function phpTagLib($pistol)
 		{
 			parent::PistolTag($pistol);
 		}
@@ -41,7 +41,7 @@
 		/**
 		 * 
 		 */
-		function tag_self($element)
+		function php_colon_self($element)
 		{
 			return $_SERVER['PHP_SELF'];
 		}
