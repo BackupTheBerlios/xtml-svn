@@ -195,7 +195,7 @@
 		 */
 		function _getVar($key)
 		{
-			if ($key{0} == '$')
+			if (substr($key,0,-1) == '$')
 			{
 				$key = explode(".", $key);
 				
