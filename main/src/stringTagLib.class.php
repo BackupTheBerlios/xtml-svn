@@ -26,7 +26,7 @@
 			parent::PistolTagLib($pistol);
 		}
 		
-		/*
+		/**
 		 * @ignore 
 		 */
 		function copyright()
