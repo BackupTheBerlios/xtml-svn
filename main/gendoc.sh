@@ -10,4 +10,4 @@ phpdoc -f 'src/*TagLib.class.php' --title "PiSToL tag libraries documentation" \
 	--output $STYLE -t documentation/taglibs
 	
 # Replace _colon_ with : in the generated documentation	
-find documentation/ -type f | grep -v "\.svn" | xargs perl -pi -e "s/_colon_/:/g; s/mixed \$element//g"
+find documentation/ -type f | grep -v "\.svn" | xargs perl -pi -e "s/_colon_/:/g; s/\(<span.*mixed.*element.*span>\)//g"
