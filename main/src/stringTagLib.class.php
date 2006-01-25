@@ -48,7 +48,7 @@
 		 */		
 		function string_colon_ucase($element)
 		{
-			$str = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
+			$str = $this->pistol->getVar($this->pistol->_getAttributeOrBody($element));
 
 			return strtoupper($str);	
 		}
@@ -58,7 +58,7 @@
 		 */		
 		function string_colon_ucfirst($element)
 		{
-			$str = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
+			$str = $this->pistol->getVar($this->pistol->_getAttributeOrBody($element));
 
 			return ucfirst($str);	
 		}
@@ -68,7 +68,7 @@
 		 */		
 		function string_colon_ucwords($element)
 		{
-			$str = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
+			$str = $this->pistol->getVar($this->pistol->_getAttributeOrBody($element));
 
 			return ucwords($str);	
 		}
@@ -78,7 +78,7 @@
 		 */		
 		function string_colon_lcase($element)
 		{
-			$str = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
+			$str = $this->pistol->getVar($this->pistol->_getAttributeOrBody($element));
 
 			return strtolower($str);	
 		}
@@ -88,7 +88,7 @@
 		 */		
 		function string_colon_truncate($element)
 		{
-			$str = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
+			$str = $this->pistol->getVar($this->pistol->_getAttributeOrBody($element));
 			$length = $this->pistol->getVar($element->getAttribute("length"));
 
 			return substr($str, 0, $length);	
@@ -99,7 +99,7 @@
 		 */		
 		function string_colon_pad($element)
 		{
-			$str = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
+			$str = $this->pistol->getVar($this->pistol->_getAttributeOrBody($element));
 			$strlen = strlen($str);
 			$length = $this->pistol->getVar($element->getAttribute("length"));
 
@@ -111,7 +111,7 @@
 		 */		
 		function string_colon_size($element)
 		{
-			$str = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
+			$str = $this->pistol->getVar($this->pistol->_getAttributeOrBody($element));
 			$strlen = strlen($str);
 			$length = $this->pistol->getVar($element->getAttribute("length"));
 			
@@ -134,7 +134,7 @@
 		 */		
 		function string_colon_hide($element)
 		{
-			$str = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
+			$str = $this->pistol->getVar($this->pistol->_getAttributeOrBody($element));
 			$char = $this->pistol->getVar($element->getAttribute("char"));
 			
 			return str_repeat($char, strlen($str));
@@ -145,7 +145,7 @@
 		 */		
 		function string_colon_mask($element)
 		{
-			$str = $this->pistol->getVar($this->pistol->_getValueOrAttribute($element));
+			$str = $this->pistol->getVar($this->pistol->_getAttributeOrBody($element));
 			$mask = $this->pistol->getVar($element->getAttribute("mask"));
 
 			return $mask . substr($str, strlen($mask));	

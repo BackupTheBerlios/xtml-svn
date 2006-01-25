@@ -61,7 +61,7 @@
 		 */
 		function i18n_colon_setlang($element)
 		{
-			$value = $this->pistol->_getValueOrAttribute($element);
+			$value = $this->pistol->_getAttributeOrBody($element);
 			$lang = $this->pistol->getVar($value);
 			$this->setLang($lang);
 		}
@@ -82,7 +82,7 @@
 			// TODO: implement translate logic
 			$maxlen = $element->getAttribute("maxlen");
 			$ellipses = $element->getAttribute("ellipses") == "true" ? true:false;
-			$text = gettext($this->pistol->_getValueOrAttribute($element));
+			$text = gettext($this->pistol->_getAttributeOrBody($element));
 			
 			// TODO: handle variables in the text
 			

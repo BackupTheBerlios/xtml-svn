@@ -43,7 +43,7 @@
 		 */
 		function md_colon_text($element)
 		{
-			$value = $this->pistol->_getValueOrAttribute($element);
+			$value = $this->pistol->_getAttributeOrBody($element);
 		
 			if ($value{0} == '$')
 			{

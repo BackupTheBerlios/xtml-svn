@@ -93,7 +93,7 @@
 		 * Retrieve the named attribute from the element, if the attribute does not exist, or has no value,
 		 * then process the child nodes and return that as a value instead
 		 */
-		function _getValueOrAttribute($element, $attribute="value")
+		function _getAttributeOrBody($element, $attribute="value")
 		{
 			$value = $element->getAttribute($attribute);
 			

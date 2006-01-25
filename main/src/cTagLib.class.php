@@ -83,7 +83,7 @@
 		 */
 		function c_colon_include($element)
 		{
-			$file = $this->pistol->_getValueOrAttribute($element, "file");
+			$file = $this->pistol->_getAttributeOrBody($element, "file");
 			$pistol = new Pistol($file); 
 			
 			return $pistol->doinclude();
@@ -95,7 +95,7 @@
 		function c_colon_set($element)
 		{
 			$var = $element->getAttribute("var");
-			$value = $this->pistol->_getValueOrAttribute($element);
+			$value = $this->pistol->_getAttributeOrBody($element);
 
 			$this->pistol->setVar($var, $value);
 			
@@ -400,7 +400,7 @@
 		 */
 		function c_colon_redirect($element)
 		{
-			$to = $value = $this->pistol->_getValueOrAttribute($element, "to");
+			$to = $value = $this->pistol->_getAttributeOrBody($element, "to");
 			header("Location: $to");
 		}
 		
@@ -409,7 +409,7 @@
 		 */
 		function c_colon_out($element)
 		{
-			$value = $this->pistol->_getValueOrAttribute($element);
+			$value = $this->pistol->_getAttributeOrBody($element);
 		
 			if ($value{0} == '$')
 			{
