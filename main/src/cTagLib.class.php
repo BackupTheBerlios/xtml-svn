@@ -83,8 +83,7 @@
 		 */
 		function c_colon_include($element)
 		{
-			$file = $element->getAttribute("file");
-			if ($file{0} == '$' ) $file = $this->pistol->getVar($file);
+			$file = $this->pistol->_getValueOrAttribute($element, "file");
 			$pistol = new Pistol($file); 
 			
 			return $pistol->doinclude();

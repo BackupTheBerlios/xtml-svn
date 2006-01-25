@@ -99,10 +99,16 @@
 			
 			if ($value == "")
 			{
-				$value = $this->process($element->firstChild, true);
+				return $this->process($element->firstChild, true);
 			}
-	
-			return $value;
+			else if ($value{0} == '$')
+			{
+				return $this->getVar($value); 
+			}
+			else
+			{
+				return $value;
+			}
 		}
 				
 		/**
