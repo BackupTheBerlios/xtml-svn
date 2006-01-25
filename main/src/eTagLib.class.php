@@ -36,7 +36,7 @@
 		}
 
 		/**
-		 * 
+		 * @ignore
 		 */
 		function _stringRepeat($element, $str)
 		{
