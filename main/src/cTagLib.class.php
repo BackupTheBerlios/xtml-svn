@@ -55,7 +55,7 @@
 		}
 
 		/**
-		 * 
+		 * @ignore
 		 */
 		function getTable()
 		{
