@@ -63,7 +63,7 @@
 		}
 		
 		/**
-		 * 
+		 * @ignore
 		 */
 		function ifneq($lvalue, $rvalue)
 		{
@@ -71,7 +71,7 @@
 		}
 		
 		/**
-		 * 
+		 * @ignore
 		 */
 		function ifeq($lvalue, $rvalue)
 		{
