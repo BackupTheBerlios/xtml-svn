@@ -37,6 +37,12 @@
 		}
 
 		/**
+		 * This tag replaces one piece of text with another, in either the body of the
+		 * element, or if specified the "value" attribute.
+		 *
+		 * <string:replace find="text to find" replace="text to replace with" value="text"/>
+		 * 
+		 * <string:replace find="text to find" replace="text to replace with">text</string:replace>
 		 * 
 		 */
 		function string_colon_replace($element)

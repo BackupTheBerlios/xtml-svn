@@ -101,7 +101,7 @@
 			{
 				$value = $element->getAttribute($attribute);
 				
-				if ($value{0} == '$')
+				if (isset($value{0}) && $value{0} == '$')
 				{
 					return $this->getVar($value); 
 				}
