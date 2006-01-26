@@ -37,6 +37,18 @@
 		}
 
 		/**
+		 * 
+		 */
+		function string_colon_replace($element)
+		{
+			$value = $this->pistol->_getAttributeOrBody($element);
+			$find = $this->pistol->_getAttributeOrBody($element, "find");
+			$replace = $this->pistol->_getAttributeOrBody($element, "replace");
+			
+			return str_replace($find, $replace, $value);
+		}
+		
+		/**
 		 * The ucase tag converts either the tag body, or the value attribute to uppercase.
 		 * The value attribute, if present, takes precedence over the tag body.
 		 * 
@@ -48,9 +60,9 @@
 		 */		
 		function string_colon_ucase($element)
 		{
-			$str = $this->pistol->getVar($this->pistol->_getAttributeOrBody($element));
+			$value = $this->pistol->_getAttributeOrBody($element);
 
-			return strtoupper($str);	
+			return strtoupper($value);	
 		}
 		
 		/**
@@ -58,9 +70,9 @@
 		 */		
 		function string_colon_ucfirst($element)
 		{
-			$str = $this->pistol->getVar($this->pistol->_getAttributeOrBody($element));
+			$value = $this->pistol->_getAttributeOrBody($element);
 
-			return ucfirst($str);	
+			return ucfirst($value);	
 		}
 		
 		/**
@@ -68,9 +80,9 @@
 		 */		
 		function string_colon_ucwords($element)
 		{
-			$str = $this->pistol->getVar($this->pistol->_getAttributeOrBody($element));
+			$value = $this->pistol->_getAttributeOrBody($element);
 
-			return ucwords($str);	
+			return ucwords($value);	
 		}
 		
 		/**
@@ -78,9 +90,9 @@
 		 */		
 		function string_colon_lcase($element)
 		{
-			$str = $this->pistol->getVar($this->pistol->_getAttributeOrBody($element));
+			$value = $this->pistol->_getAttributeOrBody($element);
 
-			return strtolower($str);	
+			return strtolower($value);	
 		}
 		
 		/**
@@ -88,10 +100,10 @@
 		 */		
 		function string_colon_truncate($element)
 		{
-			$str = $this->pistol->getVar($this->pistol->_getAttributeOrBody($element));
+			$value = $this->pistol->_getAttributeOrBody($element);
 			$length = $this->pistol->getVar($element->getAttribute("length"));
 
-			return substr($str, 0, $length);	
+			return substr($value, 0, $length);	
 		}
 		
 		/**
@@ -99,11 +111,11 @@
 		 */		
 		function string_colon_pad($element)
 		{
-			$str = $this->pistol->getVar($this->pistol->_getAttributeOrBody($element));
-			$strlen = strlen($str);
+			$value = $this->pistol->_getAttributeOrBody($element);
+			$strlen = strlen($value);
 			$length = $this->pistol->getVar($element->getAttribute("length"));
 
-			return $str . str_repeat(" ", $length - $strlen);
+			return $value . str_repeat(" ", $length - $strlen);
 		}
 		
 		/**
@@ -111,21 +123,21 @@
 		 */		
 		function string_colon_size($element)
 		{
-			$str = $this->pistol->getVar($this->pistol->_getAttributeOrBody($element));
-			$strlen = strlen($str);
+			$value = $this->pistol->_getAttributeOrBody($element);
+			$strlen = strlen($value);
 			$length = $this->pistol->getVar($element->getAttribute("length"));
 			
 			if ($strlen > $length)
 			{
-				return substr($str, 0, $length);
+				return substr($value, 0, $length);
 			}
 			elseif ($strlen < $length)
 			{
-				return $str . str_repeat(" ", $length - $strlen);	
+				return $value . str_repeat(" ", $length - $strlen);	
 			}
 			else
 			{
-				return $str;
+				return $value;
 			}
 		}
 		
@@ -134,10 +146,10 @@
 		 */		
 		function string_colon_hide($element)
 		{
-			$str = $this->pistol->getVar($this->pistol->_getAttributeOrBody($element));
+			$value = $this->pistol->_getAttributeOrBody($element);
 			$char = $this->pistol->getVar($element->getAttribute("char"));
 			
-			return str_repeat($char, strlen($str));
+			return str_repeat($char, strlen($value));
 		}
 		
 		/**
@@ -145,10 +157,10 @@
 		 */		
 		function string_colon_mask($element)
 		{
-			$str = $this->pistol->getVar($this->pistol->_getAttributeOrBody($element));
+			$value = $this->pistol->_getAttributeOrBody($element);
 			$mask = $this->pistol->getVar($element->getAttribute("mask"));
 
-			return $mask . substr($str, strlen($mask));	
+			return $mask . substr($value, strlen($mask));	
 		}
 	}
 ?>

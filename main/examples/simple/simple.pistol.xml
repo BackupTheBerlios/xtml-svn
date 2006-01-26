@@ -127,15 +127,23 @@
 
 		<hr/>
 		<h1>A truncated string</h1>
-		<string:truncate length="20">How much is that doggy in the window?</string:truncate>
+		<p>How much is that doggy in the window?</p>
+		<p><string:truncate length="20">How much is that doggy in the window?</string:truncate></p>
 
 		<hr/>
 		<h1>A hidden string</h1>
-		<string:hide char="*">foobar</string:hide>
+		<p>foobar</p>
+		<p><string:hide char="*">foobar</string:hide></p>
 
 		<hr/>
 		<h1>A masked string</h1>
-		<string:mask mask="************">4921071541900055</string:mask>
+		<p>4921071541900055</p>
+		<p><string:mask mask="************">4921071541900055</string:mask></p>
+
+		<hr/>
+		<h1>A partially replaced string</h1>
+		<p>tags/release-1.0.126.1</p>
+		<p><string:replace find="tags/release-" replace="">viper tags/release-1.0.126.1</string:replace></p>
 
 		<hr/>
 		<p>View the sources</p>

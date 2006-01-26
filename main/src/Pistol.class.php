@@ -97,19 +97,22 @@
 		 */
 		function _getAttributeOrBody($element, $attribute="value")
 		{
-			$value = $element->getAttribute($attribute);
-			
-			if ($value == "")
+			if ($element->hasAttribute($attribute))
 			{
-				return $this->process($element->firstChild, true);
-			}
-			else if ($value{0} == '$')
-			{
-				return $this->getVar($value); 
+				$value = $element->getAttribute($attribute);
+				
+				if ($value{0} == '$')
+				{
+					return $this->getVar($value); 
+				}
+				else
+				{
+					return $value;
+				}
 			}
 			else
 			{
-				return $value;
+				return $this->process($element->firstChild, true);
 			}
 		}
 				
