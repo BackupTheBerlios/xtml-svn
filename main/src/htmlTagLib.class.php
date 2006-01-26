@@ -37,7 +37,7 @@
 		 */
 		function html_colon_select($element)
 		{
-			$var = $this->pistol->getVar($this->pistol->__getAttributeOrBody($element));
+			$var = $this->pistol->getVar($this->pistol->_getAttributeOrBody($element));
 			$name = $element->getAttribute("name");
 			$default = $element->getAttribute("default");
 			$output = "<select name='$name'>";
@@ -62,7 +62,7 @@
 		function _list($element)
 		{
 			$output = "";
-			$var = $this->pistol->getVar($this->pistol->__getAttributeOrBody($element));
+			$var = $this->pistol->getVar($this->pistol->_getAttributeOrBody($element));
 			$member = $element->getAttribute("member");
 
 			if (is_array($var))
