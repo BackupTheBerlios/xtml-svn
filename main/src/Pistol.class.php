@@ -90,8 +90,10 @@
 		}
 
 		/**
-		 * Retrieve the named attribute from the element, if the attribute does not exist, or has no value,
-		 * then process the child nodes and return that as a value instead
+		 * Retrieve the named attribute from the element, if the attribute does not exist, 
+		 * or has no value, then process the body and return that as a value instead.
+		 * 
+		 * Supports variable expansion.
 		 */
 		function _getAttributeOrBody($element, $attribute="value")
 		{
