@@ -33,15 +33,12 @@
 		 */
 		function Pistol($document = null, $script = null)
 		{
-			if ($document == null)
+			$this->document = $document;
+			$this->script = $script;
+
+			if ($this->document == null)
 			{
 				$this->document = Pistol::getPageLocation();
-				$this->script = Pistol::getPageLocation();
-			}
-			else
-			{
-				$this->document = $document;
-				$this->script = $script;
 			}
 			
 			$this->previewMode = false;
@@ -74,15 +71,15 @@
 			{
 				$scriptName = basename($_SERVER['SCRIPT_FILENAME']);
 				$scriptDir = str_replace($scriptName, "", $_SERVER['SCRIPT_FILENAME']);
-				$pistolXML = str_replace(".php", ".pistol.xml", $_SERVER['SCRIPT_FILENAME']);
+				$xmlFile = str_replace(".php", ".xml", $_SERVER['SCRIPT_FILENAME']);
 				
-				if (!file_exists($pistolXML))
+				if (file_exists($xmlFile))
 				{
-					$pageloc = $scriptDir . "/index";
+					$pageloc = $xmlFile; 
 				}
 				else
 				{
-					$pageloc = str_replace(".php", "", $_SERVER['SCRIPT_FILENAME']);
+					$pageloc = $scriptDir . "/index.xml";
 				}
 			}
 			
@@ -363,24 +360,45 @@
 		 */
 		function doinclude()
 		{
+			$output = "";
+			
 			if (file_exists($this->document))
 			{
-				return file_get_contents($this->document);
-			}
-			else
-			{
-				if ($this->doc->load($this->document . ".pistol.xml"))
+				$content = file_get_contents($this->document);
+				$xmlsig = "<?xml ";
+				
+				if (strncmp($xmlsig, $content, strlen ($xmlsig)) == 0)
 				{
-					$child = $this->doc->documentElement->firstChild;
-					$output = $this->process($child);
+					if ($this->doc->loadXML($content))
+					{
+						$child = $this->doc->documentElement->firstChild;
+						$output .= "<!-- " . $this->document . " STARTS -->\n";
+						$output .= $this->process($child);
+						$output .= "<!-- " . $this->document . " ENDS -->\n";
+					}
+					else
+					{
+						$output = "<!-- include " . $this->document . " not valid XML -->\n";
+					}
 				}
 				else
 				{
-					$output = "<!-- include " . $this->document . " not found -->\n";
+					$output .= "<!-- " . $this->document . " STARTS -->\n";
+					$output .= $content;
+					$output .= "<!-- " . $this->document . " ENDS -->\n";
+					
+					if (function_exists("mime_content_type"))
+					{
+						header("Content-type: " + mime_content_type($this->document));
+					}
 				}
-				
-				return $output;
 			}
+			else
+			{
+				$output = "<!-- include " . $this->document . " not found -->\n";
+			}
+				
+			return $output;
 		}
 		
 		/**
@@ -388,52 +406,69 @@
 		 */
 		function generate()
 		{
+			$output = "";
+			
 			if (file_exists($this->document) && !is_dir($this->document))
 			{
-				if (function_exists("mime_content_type"))
-				{
-					header("Content-type: " + mime_content_type($this->document));
-				}
+				$started = microtime(true);
+				$content = file_get_contents($this->document);
+				$xmlsig = "<?xml ";
 				
-				return file_get_contents($this->document);
+				if (strncmp($xmlsig, $content, strlen ($xmlsig)) == 0)
+				{
+					if ($this->doc->loadXML($content))
+					{
+						if ($this->script)
+						{
+							$script = $this->script;
+							
+							if (file_exists($this->script) && !is_dir($this->script))
+							{
+								require_once $this->script;
+								pistolScript($this);
+							} 
+						}
+						
+						$output .= "<!-- " . $this->document . " STARTS -->\n";
+						$output .= $this->process($this->doc->documentElement);
+						$output .= "<!-- " . $this->document . " ENDS -->\n";
+						$finished = microtime(true);
+						$renderTime = ($finished - $started) * 1000;
+						
+						// TODO: Update to add specified DOCTYPE (XHTML, XML)
+						$output = 
+							"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\"\n" . 
+							"	\"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n\n" .
+							"<!--\nGenerated using PiSToL, the PHP Standard Tag Library\n\n" .
+							"The following tag libraries were used to render this document\n" .
+							$this->copyrights .
+							"\nRendering took ${renderTime}ms\n" .
+							"-->\n\n" .
+							$output;
+					}
+					else
+					{
+						$output = "<!-- " . $this->document . " not valid XML -->\n";
+					}
+				}
+				else
+				{
+					$output .= "<!-- " . $this->document . " STARTS -->\n";
+					$output .= $content;
+					$output .= "<!-- " . $this->document . " ENDS -->\n";
+
+					if (function_exists("mime_content_type"))
+					{
+						header("Content-type: " + mime_content_type($this->document));
+					}
+				}
 			}
 			else
 			{
-				$started = microtime(true);
-		
-				if ($this->script)
-				{
-					$script = $this->script . ".pistol.php";
-					
-					if (file_exists($script))
-					{
-						require_once "$script";
-						pistolScript($this);
-					} 
-				}
-				
-				$docname = $this->document . ".pistol.xml";
-				
-				if ($this->doc->load($docname))
-				{
-					$output = $this->process($this->doc->documentElement);
-				}
-				
-				$finished = microtime(true);
-				$renderTime = ($finished - $started) * 1000;
-	
-				$output = 
-					"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\"\n" . 
-					"	\"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n\n" .
-					"<!--\nGenerated using PiSToL, the PHP Standard Tag Library\n\n" .
-					"The following tag libraries were used to render this document\n" .
-					$this->copyrights .
-					"\nRendering took ${renderTime}ms\n" .
-					"-->\n\n" .
-					$output;
-				
-				return $output;
+				$output = "<!-- " . $this->document . " not found -->\n";
 			}
+			
+			return $output;
 		}
 		
 		/**

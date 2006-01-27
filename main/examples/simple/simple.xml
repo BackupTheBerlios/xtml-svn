@@ -58,14 +58,14 @@
 	<title><c:out value="$title"/></title>
 	</head>
 	<body>
-		<!-- include the logo.pistol.xml 
+		<!-- include the logo.xml 
 			NOTE: If the file specified exists it will be inserted verbatim,
 			if you want to include a PiSToL tag file, then just leave out the
 			.pistol.xml extension -->
 		<c:preview>
-			<c:include file="../examples/logo"/>
+			<c:include file="../examples/logo.xml"/>
 		<c:else/>
-			<c:include file="../logo"/>
+			<c:include file="../logo.xml"/>
 		</c:preview>
 		<br/>
 		<table>
@@ -78,7 +78,7 @@
 					<p>View this page using the <a href="/examples/simple/simple.php">simple.php</a>
 					script that initialises the data in the script code.</p>
 				<c:else/>
-					<p>View this page using the <a href="/src/preview.php?script=../examples/simple/simple">preview</a> script.
+					<p>View this page using the <a href="/src/preview.php?script=../examples/simple/simple.xml">preview</a> script.
 					The preview script enables the display of data embedded in the XML.
 					When you use the preview script, tags between <e:lt/>c:preview<e:gt/> and <e:lt/>c:else/<e:gt/> get included, 
 					and the tags between <e:lt/>c:else/<e:gt/> and <e:lt/>/c:preview<e:gt/> get excluded.</p>
@@ -150,7 +150,7 @@
 		<p>
 			<a href="/examples/simple/simple.phps">simple.php</a><br/>
 			<a href="/src/preview.phps">preview.php</a><br/>
-			<a href="/examples/simple/simple.pistol.xml">simple.pistol.xml</a><br/>
+			<a href="/examples/simple/simple.xml">simple.xml</a><br/>
 		</p>
 	</body>
 </html>

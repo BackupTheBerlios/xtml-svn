@@ -34,7 +34,7 @@
 	 * located in the same directory as the script	
 	 * 
 	 */
-	$pistol = new Pistol("simple");
+	$pistol = new Pistol("simple.xml");
 
 	$a = array(
 		new Language("C", "A high level procedural language, that can still be used for programming the bare metal"),
