@@ -62,7 +62,7 @@
 		function i18n_colon_setlang($element)
 		{
 			$value = $this->pistol->_getAttributeOrBody($element);
-			$lang = $this->pistol->getVar($value);
+			$lang = $this->pistol->evaluate($value);
 			$this->setLang($lang);
 		}
 		

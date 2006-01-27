@@ -45,14 +45,7 @@
 		{
 			$value = $this->pistol->_getAttributeOrBody($element);
 		
-			if ($value{0} == '$')
-			{
-				return Markdown(trim($this->pistol->getVar($value)));
-			}
-			else
-			{
-				return Markdown(trim($value));
-			}
+			return Markdown(trim($this->pistol->evaluate($value)));
 		}
 	}
 ?>

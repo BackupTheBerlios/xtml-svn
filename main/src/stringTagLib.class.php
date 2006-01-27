@@ -107,7 +107,7 @@
 		function string_colon_truncate($element)
 		{
 			$value = $this->pistol->_getAttributeOrBody($element);
-			$length = $this->pistol->getVar($element->getAttribute("length"));
+			$length = $this->pistol->evaluate($element->getAttribute("length"));
 
 			return substr($value, 0, $length);	
 		}
@@ -119,7 +119,7 @@
 		{
 			$value = $this->pistol->_getAttributeOrBody($element);
 			$strlen = strlen($value);
-			$length = $this->pistol->getVar($element->getAttribute("length"));
+			$length = $this->pistol->evaluate($element->getAttribute("length"));
 
 			return $value . str_repeat(" ", $length - $strlen);
 		}
@@ -131,7 +131,7 @@
 		{
 			$value = $this->pistol->_getAttributeOrBody($element);
 			$strlen = strlen($value);
-			$length = $this->pistol->getVar($element->getAttribute("length"));
+			$length = $this->pistol->evaluate($element->getAttribute("length"));
 			
 			if ($strlen > $length)
 			{
@@ -153,7 +153,7 @@
 		function string_colon_hide($element)
 		{
 			$value = $this->pistol->_getAttributeOrBody($element);
-			$char = $this->pistol->getVar($element->getAttribute("char"));
+			$char = $this->pistol->evaluate($element->getAttribute("char"));
 			
 			return str_repeat($char, strlen($value));
 		}
@@ -164,7 +164,7 @@
 		function string_colon_mask($element)
 		{
 			$value = $this->pistol->_getAttributeOrBody($element);
-			$mask = $this->pistol->getVar($element->getAttribute("mask"));
+			$mask = $this->pistol->evaluate($element->getAttribute("mask"));
 
 			return $mask . substr($value, strlen($mask));	
 		}

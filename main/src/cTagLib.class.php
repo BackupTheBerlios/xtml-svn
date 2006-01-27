@@ -188,8 +188,8 @@
 			$method = $this->iftable[$element->getAttribute("op")];
 
 			if ($this->$method(
-				$this->pistol->getVar($element->getAttribute("lvalue")), 
-				$this->pistol->getVar($element->getAttribute("rvalue"))))
+				$this->pistol->evaluate($element->getAttribute("lvalue")), 
+				$this->pistol->evaluate($element->getAttribute("rvalue"))))
 			{
 				return $this->pistol->process($element->firstChild);
 			}
@@ -333,13 +333,13 @@
 				$_code = "\$data = array" . $data . ";";
 				eval($_code);
 			}
-			else if ($data{0} == '$' && $this->pistol->hasData($data))
+			else if ($data{0} == '$')
 			{
-				$data = $this->pistol->getVar($data);
+				$data = $this->pistol->evaluate($data);
 			}
 
 			$firstChild = $element->firstChild;
-			$previousValue = $this->pistol->getVar($var);
+			$previousValue = $this->pistol->evaluate($var);
 
 			if (is_array($data))
 			{
@@ -410,15 +410,7 @@
 		function c_colon_out($element)
 		{
 			$value = $this->pistol->_getAttributeOrBody($element);
-		
-			if ($value{0} == '$')
-			{
-				return $this->pistol->getVar($value);
-			}
-			else
-			{
-				return $value;
-			}
+			return $this->pistol->evaluate($value);
 		}
 
 		/**

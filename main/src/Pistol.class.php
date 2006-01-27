@@ -97,15 +97,7 @@
 			if ($element->hasAttribute($attribute))
 			{
 				$value = $element->getAttribute($attribute);
-				
-				if (isset($value{0}) && $value{0} == '$')
-				{
-					return $this->getVar($value); 
-				}
-				else
-				{
-					return $value;
-				}
+				return $this->evaluate($value);
 			}
 			else
 			{
@@ -203,22 +195,27 @@
 		 */
 		function _getVar($key)
 		{
-			if ($key && $key{0} == '$')
+			if ($key && strncmp('${', $key, 2) == 0)
 			{
-				$key = explode(".", $key);
+				$keylen = strlen($key);
 				
-				if ($this->hasData($key[0]))
+				if ($key{$keylen-1} == '}')
 				{
-					if (count($key) > 1)
+					$key = explode(".", substr($key, 2, $keylen-3));
+					
+					if ($this->hasData($key[0]))
 					{
-						return $this->getVar($this->getObjectData($key));
-					}
-					else
-					{
-						return $this->getVar($this->data[$key[0]]);
+						if (count($key) > 1)
+						{
+							return $this->_evaluate($this->getObjectData($key));
+						}
+						else
+						{
+							return $this->_evaluate($this->data[$key[0]]);
+						}
 					}
 				}
-	
+				
 				return "";
 			}
 			else
@@ -226,22 +223,32 @@
 				return $key;
 			}
 		}
-		
+
 		/**
 		 * 
 		 */
-		function getVar($key)
+		function _evaluate($key)
 		{
+			if (is_array($key))
+			{
+				return $key;
+			}
+			
+			if (strlen(trim($key)) == 0)
+			{
+				return $key;
+			}
+			
 			$data = $this->_getVar($key);
 
 			if (!is_array($data))
 			{
 				// make sure data becomes string
-				$data .= "";
-				$len = strlen($data);
+				$source = $data . "";
 				$pos = 0;
-				$source = $data;
+				$len = strlen($source);
 				$data = "";
+				$key="";
 				
 				while ($pos < $len)
 				{
@@ -250,47 +257,32 @@
 						$pos++;
 						$data .= $source{$pos++};
 					}
-					else if ($source{$pos} == '$')
+					else if ($source{$pos} == '$' && $source{$pos+1} == '{')
 					{
-						$key = "";
+						$key .= $source{$pos++};
+						$key .= $source{$pos++};
 						
-						if ($source{$pos+1} == '{')
+						while ($pos < $len &&
+							($c = $source{$pos}) != '}')
 						{
-							$pos+=2;
-							
-							while ($pos < $len &&
-								($c = $source{$pos}) != '}')
-							{
-								$key .= $source{$pos};
-								$pos++;
-							}
-							
-							if ($c != '}')
-							{
-								// missing close }
-								// XML file is probably faulty
-							}
-							
-							$key = "\${$key}";
-							$data .= $this->getVar("\${$key}");
+							$key .= $source{$pos};
+							$pos++;
+						}
+						
+						if ($c != '}')
+						{
+							// missing close }
+							// XML file is probably faulty
+							$key .= "}";
 						}
 						else
 						{
+							$key .= $source{$pos};
 							$pos++;
-							
-							while ($pos < $len &&
-								($c = $source{$pos}) != ' ' &&
-								$c != '$')
-							{
-								$key .= $c;
-								$pos++;
-							}
-							
-							$key = "\$$key";
 						}
-
-						//print "key=[$key]=" . $this->getVar($key) . "<br>\n";
-						$data .= $this->getVar($key);
+						
+						$data .= $this->evaluate($key);
+						$key="";
 					}
 					else
 					{
@@ -305,9 +297,17 @@
 		/**
 		 * 
 		 */
+		function evaluate($key)
+		{
+			return $this->_evaluate($key);
+		}
+		
+		/**
+		 * 
+		 */
 		function setVar($key, $data)
 		{
-			$this->data["\$$key"] = $data;
+			$this->data[$key] = $data;
 		}
 		
 		/**
@@ -315,7 +315,7 @@
 		 */
 		function unsetVar($key)
 		{
-			unset($this->data["\$$key"]);
+			unset($this->data[$key]);
 		}
 
 		/**
@@ -577,24 +577,17 @@
 				
 				case XML_TEXT_NODE:
 				{
-					if ($element->nodeValue{0} == '$')
+					$data = $this->evaluate($element->nodeValue);
+
+					if (is_object($data) || is_array($data))
 					{
-						$data = $this->getVar($element->nodeValue);
-						
-						if (is_object($data) || is_array($data))
-						{
-							$output = $data;
-						}
-						else
-						{
-							$output .= $data;
-						}
+						$output = $data;
 					}
 					else
 					{
 						if ($skipws)
 						{
-							$text = trim($element->nodeValue);
+							$text = trim($data);
 							
 							if ($text)
 							{
@@ -603,7 +596,7 @@
 						}
 						else
 						{
-							$output .= $element->nodeValue;
+							$output .= $data;
 						}
 					}
 				}

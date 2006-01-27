@@ -55,7 +55,7 @@
 		</c:preview>
 		<meta http-equiv="expires" content="0"/>
 		<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=iso-8859-1"/>
-	<title><c:out value="$title"/></title>
+	<title><c:out value="${title}"/></title>
 	</head>
 	<body>
 		<!-- include the logo.xml 
@@ -86,20 +86,20 @@
 			</tr>
 		</table>
 		
-		<c:ifset var="$languages">
+		<c:ifset var="languages">
 			<hr/>
 			<h1><i18n:message>Programming languages</i18n:message></h1>
 			<c:table row-classes="light,dark">
 				<tr class="green"><th><i18n:message>Name</i18n:message></th><th><i18n:message>Description</i18n:message></th></tr>
-				<c:loop value="$languages" var="language" limit="3">
+				<c:loop value="${languages}" var="language" limit="3">
 					<c:tr>
-						<c:td><c:out value="$language.name"/></c:td>
-						<c:td><b><c:out value="$language.description"/></b></c:td>
+						<c:td><c:out/>${language.name}</c:td>
+						<c:td><b><c:out/>${language.description}</b></c:td>
 					</c:tr>
 				</c:loop>
 			</c:table>
 		<c:else/>
-			<md:text>The $languages variable is *not* set</md:text>
+			<md:text>The languages variable is *not* set</md:text>
 		</c:ifset>
 		<c:set var="days">
 			<c:array>
@@ -115,15 +115,15 @@
 		
 		<hr/>
 		<h1>An unordered list</h1>
-		<html:ul value="$days"/>
+		<html:ul value="${days}"/>
 
 		<hr/>
 		<h1>An ordered list</h1>
-		<html:ol member="name">$languages</html:ol>
+		<html:ol member="name">${languages}</html:ol>
 
 		<hr/>
 		<h1>A selection</h1>
-		<html:select value="$days" name="day" default="Friday"/>
+		<html:select value="${days}" name="day" default="Friday"/>
 
 		<hr/>
 		<h1>A truncated string</h1>

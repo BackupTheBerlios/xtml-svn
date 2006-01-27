@@ -40,7 +40,7 @@
 		 */
 		function _stringRepeat($element, $str)
 		{
-			$num = $this->pistol->getVar($element->getAttribute("repeat"));
+			$num = $this->pistol->evaluate($element->getAttribute("repeat"));
 			if ($num > 0)
 			{
 				return str_repeat($str, $num);
