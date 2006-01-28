@@ -17,9 +17,8 @@
 		require_once $file;
  	}
 
-	define('PF_PRISTINE', 	0x00000001);
-	define('PF_SKIPWS', 	0x00000002);
-	define('PF_EVALUATE', 	0x00000004);
+	define('PF_SKIPWS', 	0x00000001);
+	define('PF_EVALUATE', 	0x00000002);
  	
 	class Pistol
 	{
@@ -107,26 +106,11 @@
 		 */
 		function _getAttributeOrBody($element, $attribute="value", $flags = PF_EVALUATE)
 		{
-			print "";
 			if ($element->hasAttribute($attribute))
 			{
-				if (Pistol::isFlagSet($flags, PF_SKIPWS))
-				{
-					$value = trim($element->getAttribute($attribute));
-				}
-				else
-				{
-					$value = $element->getAttribute($attribute);
-				}
+				$value = $element->getAttribute($attribute);
 				
-				if (Pistol::isFlagSet($flags, PF_EVALUATE))
-				{
-					return $this->evaluate($value);
-				}
-				else
-				{
-					return $value;
-				}
+				return $this->evaluate($value, $flags);
 			}
 			else
 			{
@@ -256,21 +240,21 @@
 		/**
 		 * 
 		 */
-		function _evaluate($key)
+		function _evaluate($text)
 		{
-			if (is_array($key))
+			if (is_array($text))
 			{
-				return $key;
+				return $text;
 			}
 			
-			if (strlen(trim($key)) == 0)
+			if (strlen(trim($text)) == 0)
 			{
-				return $key;
+				return $text;
 			}
 			
-			$data = $this->_getVar($key);
+			$data = $this->_getVar($text);
 
-			if (!is_array($data))
+			if (!is_array($data) && !is_object($data))
 			{
 				// make sure data becomes string
 				$source = $data . "";
@@ -326,9 +310,24 @@
 		/**
 		 * 
 		 */
-		function evaluate($key)
+		function evaluate($text, $flags = PF_EVALUATE)
 		{
-			return $this->_evaluate($key);
+			if (Pistol::isFlagSet($flags, PF_SKIPWS))
+			{
+				if (trim($text) == "")
+				{
+					return "";
+				}
+			}
+			
+			if (Pistol::isFlagSet($flags, PF_EVALUATE))
+			{
+				return $this->_evaluate($text, $flags);
+			}
+			else
+			{
+				return $text;
+			}
 		}
 		
 		/**
@@ -552,7 +551,7 @@
 						
 						if (is_object($data) || is_array($data))
 						{
-							$output = $data;
+							return $data;
 						}
 						else
 						{
@@ -604,7 +603,7 @@
 				
 				case XML_TEXT_NODE:
 				{
-					$data = $this->evaluate($element->nodeValue);
+					$data = $this->evaluate($element->nodeValue, $flags);
 
 					if (is_object($data) || is_array($data))
 					{
@@ -612,19 +611,7 @@
 					}
 					else
 					{
-						if (Pistol::isFlagSet($flags, PF_SKIPWS))
-						{
-							$text = trim($data);
-							
-							if ($text)
-							{
-								$output .= $element->nodeValue;
-							}
-						}
-						else
-						{
-							$output .= $data;
-						}
+						$output .= $data;
 					}
 				}
 				break;
@@ -666,13 +653,13 @@
 	
 				$data = $this->processElement($child, $flags);
 			
-				if (is_object($data) || is_array($data))
+				if ($data)
 				{
-					$output = $data;
-				}
-				else
-				{
-					if ($data)
+					if (is_object($data) || is_array($data))
+					{
+						$output = $data;
+					}
+					else
 					{
 						$output .= $data;
 					}
@@ -709,13 +696,13 @@
 	
 				$data = $this->processElement($child, $flags);
 			
-				if (is_object($data) || is_array($data))
+				if ($data)
 				{
-					$output = $data;
-				}
-				else
-				{
-					if ($data)
+					if (is_object($data) || is_array($data))
+					{
+						$output = $data;
+					}
+					else
 					{
 						$output .= $data;
 					}
