@@ -442,7 +442,7 @@
 							"<!--\nGenerated using PiSToL, the PHP Standard Tag Library\n\n" .
 							"The following tag libraries were used to render this document\n" .
 							$this->copyrights .
-							"\nRendering took ${renderTime}ms\n" .
+							"\nRendering took " . sprintf("%0.2f", $renderTime) . "ms\n" .
 							"-->\n\n" .
 							$output;
 					}
