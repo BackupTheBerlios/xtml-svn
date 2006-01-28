@@ -18,7 +18,8 @@
  	}
 
 	define('PF_DISCARD_WS_TEXT_NODES', 	0x00000001);
-	define('PF_EVALUATE', 	0x00000002);
+	define('PF_TRIM', 					0x00000002);
+	define('PF_EVALUATE', 				0x00000004);
  	
 	class Pistol
 	{
