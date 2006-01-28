@@ -365,9 +365,8 @@
 			if (file_exists($this->document))
 			{
 				$content = file_get_contents($this->document);
-				$xmlsig = "<?xml ";
 				
-				if (strncmp($xmlsig, $content, strlen ($xmlsig)) == 0)
+				if (strncmp("<?xml ", $content, 6) == 0)
 				{
 					if ($this->doc->loadXML($content))
 					{
@@ -412,9 +411,8 @@
 			{
 				$started = microtime(true);
 				$content = file_get_contents($this->document);
-				$xmlsig = "<?xml ";
 				
-				if (strncmp($xmlsig, $content, strlen ($xmlsig)) == 0)
+				if (strncmp("<?xml ", $content, 6) == 0)
 				{
 					if ($this->doc->loadXML($content))
 					{
