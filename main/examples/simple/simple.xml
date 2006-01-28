@@ -92,7 +92,11 @@
 			<hr/>
 			<h1><i18n:message>Programming languages</i18n:message></h1>
 			<c:table row-classes="light,dark">
-				<tr class="green"><th><i18n:message>Name</i18n:message></th><th><i18n:message>Description</i18n:message></th></tr>
+				<tr class="green">
+					<th><i18n:message>Key</i18n:message></th>
+					<th><i18n:message>Name</i18n:message></th>
+					<th><i18n:message>Description</i18n:message></th>
+				</tr>
 				<c:foreach value="${languages}" var="language" limit="3">
 					<c:tr>
 						<c:td>${#}</c:td>
