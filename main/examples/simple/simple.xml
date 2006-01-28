@@ -93,12 +93,13 @@
 			<h1><i18n:message>Programming languages</i18n:message></h1>
 			<c:table row-classes="light,dark">
 				<tr class="green"><th><i18n:message>Name</i18n:message></th><th><i18n:message>Description</i18n:message></th></tr>
-				<c:loop value="${languages}" var="language" limit="3">
+				<c:foreach value="${languages}" var="language" limit="3">
 					<c:tr>
-						<c:td><c:out/>${language.name}</c:td>
-						<c:td><b><c:out/>${language.description}</b></c:td>
+						<c:td>${#}</c:td>
+						<c:td>${language.name}</c:td>
+						<c:td><b>${language.description}</b></c:td>
 					</c:tr>
-				</c:loop>
+				</c:foreach>
 			</c:table>
 		<c:else/>
 			<md:text>The languages variable is *not* set</md:text>

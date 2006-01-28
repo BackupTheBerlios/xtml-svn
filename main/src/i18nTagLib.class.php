@@ -83,9 +83,7 @@
 			$maxlen = $element->getAttribute("maxlen");
 			$ellipses = $element->getAttribute("ellipses") == "true" ? true:false;
 			$text = gettext($this->pistol->_getAttributeOrBody($element, "value", 0));
-			//$text = $this->pistol->evaluate($text);
-			
-			// TODO: handle variables in the text
+			$text = $this->pistol->evaluate($text);
 			
 			if ($maxlen && strlen($text) > $maxlen)
 			{

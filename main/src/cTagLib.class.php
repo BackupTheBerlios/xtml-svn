@@ -320,13 +320,24 @@
 		/**
 		 * 
 		 */
-		function c_colon_loop($element)
+		function c_colon_foreach($element)
 		{
 			$output = "";
 			$data = $element->getAttribute("value");
-			$var = $element->getAttribute("var");
+			$varname = $element->getAttribute("var");
 			$limit = $element->getAttribute("limit");
-			$index = 0;
+			$keyname = $element->getAttribute("key");
+			$count = 0;
+			
+			if (!$keyname)
+			{
+				$keyname = '#';
+			}
+
+			if (!$varname)
+			{
+				$varname = '@';
+			}
 
 			if ($data{0} == '(')
 			{
@@ -339,21 +350,23 @@
 			}
 
 			$firstChild = $element->firstChild;
-			$previousValue = $this->pistol->evaluate($var);
+			$previousValue = $this->pistol->evaluate($varname);
 
 			if (is_array($data))
 			{
 				// array support for loops			
-				foreach ($data as $tmp)
+				foreach ($data as $key => $tmp)
 				{
-					$this->pistol->setVar($var, $tmp);
+					$this->pistol->setVar($varname, $tmp);
 					
-					if ($limit && $index++ == $limit)
+					if ($limit && $count++ == $limit)
 					{
 						break;
 					}
 					
+					$this->pistol->pushVar($keyname, $key);
 					$output .= $this->pistol->process($firstChild);
+					$this->pistol->popVar($keyname);
 				}
 			}
 			else if (gettype($data) == "resource")
@@ -365,12 +378,12 @@
 					// MySQL result resource support for loops			
 					while ($tmp = mysql_fetch_object($data))
 					{
-						if ($limit && $index++ == $limit)
+						if ($limit && $count++ == $limit)
 						{
 							break;
 						}
 					
-						$this->pistol->setVar($var, $tmp);
+						$this->pistol->setVar($varname, $tmp);
 						$output .= $this->pistol->process($firstChild);
 					}
 				}
@@ -379,18 +392,18 @@
 					// PostgreSQL result resource support for loops			
 					while ($tmp = pg_fetch_object($data))
 					{
-						if ($limit && $index++ == $limit)
+						if ($limit && $count++ == $limit)
 						{
 							break;
 						}
 					
-						$this->pistol->setVar($var, $tmp);
+						$this->pistol->setVar($varname, $tmp);
 						$output .= $this->pistol->process($firstChild);
 					}
 				}
 			}
 
-			$this->pistol->setVar($var, $previousValue);
+			$this->pistol->setVar($varname, $previousValue);
 			 			
 			return $output;
 		}

@@ -44,13 +44,17 @@
 			$this->previewMode = false;
 			$this->classCache = array();
 			$this->data = array();
+			$this->doc = new DOMDocument();
+			$this->doc->preserveWhiteSpace = true;
+
+			// TODO: expand to include the complete list of HTML tags
+			// that do not contain a body
 			$this->noBodyTags = array(
 				"link" => true,
 				"img" => true
 				);
-			$this->doc = new DOMDocument();
-			$this->doc->preserveWhiteSpace = true;
 
+			// TODO: remove, when php:ini() tag is implemented				
 			$this->setVar("include_path", ini_get('include_path'));
 		}
 
@@ -75,8 +79,6 @@
 				}
 				else
 				{
-					$scriptName = basename($_SERVER['SCRIPT_FILENAME']);
-					$scriptDir = str_replace($scriptName, "", $_SERVER['SCRIPT_FILENAME']);
 					$xmlFile = str_replace(".php", ".xml", $_SERVER['SCRIPT_FILENAME']);
 					
 					if (file_exists($xmlFile))
@@ -85,6 +87,8 @@
 					}
 					else
 					{
+						$scriptName = basename($_SERVER['SCRIPT_FILENAME']);
+						$scriptDir = str_replace($scriptName, "", $_SERVER['SCRIPT_FILENAME']);
 						$this->document = $scriptDir . "/index.xml";
 					}
 				}
@@ -169,7 +173,7 @@
 		 */
 		function hasData($key)
 		{
-			return isset($this->data[$key]); 
+			return isset($this->data[$key]) && count($this->data[$key]) > 0; 
 		}
 		
 		/**
@@ -201,7 +205,7 @@
 		 */
 		function getObjectData($key)
 		{
-			return $this->_getObjectData($this->data[$key[0]], $key, 1);
+			return $this->_getObjectData(end($this->data[$key[0]]), $key, 1);
 		}
 		
 		/**
@@ -225,7 +229,7 @@
 						}
 						else
 						{
-							return $this->_evaluate($this->data[$key[0]]);
+							return $this->_evaluate(end($this->data[$key[0]]));
 						}
 					}
 				}
@@ -258,7 +262,7 @@
 			if (!is_array($data) && !is_object($data))
 			{
 				// make sure data becomes string
-				$source = $data . "";
+				$source = "" . $data;
 				$pos = 0;
 				$len = strlen($source);
 				$data = "";
@@ -336,7 +340,35 @@
 		 */
 		function setVar($key, $data)
 		{
-			$this->data[$key] = $data;
+			$this->data[$key] = array($data);
+		}
+		
+		/**
+		 * 
+		 */
+		function pushVar($key, $data)
+		{
+			if (isset($this->data[$key]))
+			{
+				array_push($this->data[$key], $data);
+			}
+			else
+			{
+				$this->data[$key] = array($data);
+			}
+		}
+		
+		/**
+		 * 
+		 */
+		function popVar($key, $data)
+		{
+			array_pop($this->data[$key]);
+			
+			if (count($this->data[$key]) == 0)
+			{
+				unset($this->data[$key]);
+			}
 		}
 		
 		/**
@@ -654,7 +686,7 @@
 	
 				$data = $this->processElement($child, $flags);
 			
-				if ($data)
+				if ($data || is_numeric($data))
 				{
 					if (is_object($data) || is_array($data))
 					{
@@ -665,7 +697,7 @@
 						$output .= $data;
 					}
 				}
-					
+
 				$child = $child->nextSibling;
 			}
 			
