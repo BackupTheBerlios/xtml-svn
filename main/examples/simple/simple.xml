@@ -127,7 +127,7 @@
 
 		<hr/>
 		<h1>A truncated string</h1>
-		<p>How much is that doggy in the window?</p>
+		<p><e:lt/>string:truncate length="20"<e:gt/>How much is that doggy in the window?<e:lt/>/string:truncate><e:gt/></p>
 		<p><string:truncate length="20">How much is that doggy in the window?</string:truncate></p>
 
 		<hr/>
