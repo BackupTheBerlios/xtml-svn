@@ -82,7 +82,8 @@
 			// TODO: implement translate logic
 			$maxlen = $element->getAttribute("maxlen");
 			$ellipses = $element->getAttribute("ellipses") == "true" ? true:false;
-			$text = gettext($this->pistol->_getAttributeOrBody($element));
+			$text = gettext($this->pistol->_getAttributeOrBody($element, "value", PF_PRISTINE));
+			//$text = $this->pistol->evaluate($text);
 			
 			// TODO: handle variables in the text
 			

@@ -32,6 +32,8 @@
 		
 	</style>
 	
+	<c:set var="productName">PiSToL</c:set>
+	
 	<c:preview>
 		<!-- create a data set so we can display this page using the preview script -->
 		<c:set var="languages">
@@ -45,7 +47,7 @@
 	</c:preview>
 	
 	<!-- set a variable "title" to the translated message title -->
-	<c:set var="title"><i18n:message>Simple PiSToL Example</i18n:message></c:set>
+	<c:set var="title"><i18n:message>Simple ${productName} Example</i18n:message></c:set>
 	
 	<head>
 		<c:preview>
@@ -58,6 +60,7 @@
 	<title><c:out value="${title}"/></title>
 	</head>
 	<body>
+		<i18n:message>Simple ${productName} Example</i18n:message>
 		<!-- include the logo.xml 
 			NOTE: If the file specified exists it will be inserted verbatim,
 			if you want to include a PiSToL tag file, then just leave out the

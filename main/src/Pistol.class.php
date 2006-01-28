@@ -16,6 +16,10 @@
 		$file = $class_name . '.class.php';
 		require_once $file;
  	}
+
+	define('PF_PRISTINE', 	0x00000001);
+	define('PF_SKIPWS', 	0x00000002);
+	define('PF_EVALUATE', 	0x00000004);
  	
 	class Pistol
 	{
@@ -35,11 +39,7 @@
 		{
 			$this->document = $document;
 			$this->script = $script;
-
-			if ($this->document == null)
-			{
-				$this->document = Pistol::getPageLocation();
-			}
+			$this->setPageLocation();
 			
 			$this->previewMode = false;
 			$this->classCache = array();
@@ -57,33 +57,46 @@
 		/**
 		 * 
 		 */
-		function getPageLocation()
+		function setPageLocation()
 		{
-			if (isset($_SERVER['PATH_TRANSLATED']))
+			if ($this->document == null)
 			{
-				$pageloc = $_SERVER['PATH_TRANSLATED'];
-			}
-			else if (isset($_SERVER['REDIRECT_URL']))
-			{
-				$pageloc = $_SERVER['DOCUMENT_ROOT'] . $_SERVER['REDIRECT_URL'];
-			}
-			else
-			{
-				$scriptName = basename($_SERVER['SCRIPT_FILENAME']);
-				$scriptDir = str_replace($scriptName, "", $_SERVER['SCRIPT_FILENAME']);
-				$xmlFile = str_replace(".php", ".xml", $_SERVER['SCRIPT_FILENAME']);
-				
-				if (file_exists($xmlFile))
+				if (isset($_SERVER['PATH_TRANSLATED']))
 				{
-					$pageloc = $xmlFile; 
+					$path = $_SERVER['PATH_TRANSLATED'];
+					$this->document = "$path.xml";
+					$this->script = "$path.php";
+				}
+				else if (isset($_SERVER['REDIRECT_URL']))
+				{
+					$path = $_SERVER['DOCUMENT_ROOT'] . $_SERVER['REDIRECT_URL'];
+					$this->document = "$path.xml";
+					$this->script = "$path.php";
 				}
 				else
 				{
-					$pageloc = $scriptDir . "/index.xml";
+					$scriptName = basename($_SERVER['SCRIPT_FILENAME']);
+					$scriptDir = str_replace($scriptName, "", $_SERVER['SCRIPT_FILENAME']);
+					$xmlFile = str_replace(".php", ".xml", $_SERVER['SCRIPT_FILENAME']);
+					
+					if (file_exists($xmlFile))
+					{
+						$this->document = $xmlFile; 
+					}
+					else
+					{
+						$this->document = $scriptDir . "/index.xml";
+					}
 				}
 			}
-			
-			return $pageloc;
+		}
+
+		/**
+		 * 
+		 */
+		function isFlagSet($flags, $flag)
+		{
+			return ($flags & $flag) == $flag ? true:false;
 		}
 
 		/**
@@ -92,16 +105,32 @@
 		 * 
 		 * Supports variable expansion.
 		 */
-		function _getAttributeOrBody($element, $attribute="value")
+		function _getAttributeOrBody($element, $attribute="value", $flags = PF_EVALUATE)
 		{
+			print "";
 			if ($element->hasAttribute($attribute))
 			{
-				$value = $element->getAttribute($attribute);
-				return $this->evaluate($value);
+				if (Pistol::isFlagSet($flags, PF_SKIPWS))
+				{
+					$value = trim($element->getAttribute($attribute));
+				}
+				else
+				{
+					$value = $element->getAttribute($attribute);
+				}
+				
+				if (Pistol::isFlagSet($flags, PF_EVALUATE))
+				{
+					return $this->evaluate($value);
+				}
+				else
+				{
+					return $value;
+				}
 			}
 			else
 			{
-				return $this->process($element->firstChild, true);
+				return $this->process($element->firstChild, $flags);
 			}
 		}
 				
@@ -372,7 +401,7 @@
 					{
 						$child = $this->doc->documentElement->firstChild;
 						$output .= "<!-- " . $this->document . " STARTS -->\n";
-						$output .= $this->process($child);
+						$output .= $this->process($child, PF_EVALUATE);
 						$output .= "<!-- " . $this->document . " ENDS -->\n";
 					}
 					else
@@ -428,7 +457,7 @@
 						}
 						
 						$output .= "<!-- " . $this->document . " STARTS -->\n";
-						$output .= $this->process($this->doc->documentElement);
+						$output .= $this->process($this->doc->documentElement, PF_EVALUATE);
 						$output .= "<!-- " . $this->document . " ENDS -->\n";
 						$finished = microtime(true);
 						$renderTime = ($finished - $started) * 1000;
@@ -497,7 +526,7 @@
 		/**
 		 *
 		 */
-		function processElement($element, $skipws = false)
+		function processElement($element, $flags = PF_EVALUATE)
 		{
 			$output = "";
 			
@@ -565,7 +594,7 @@
 							else
 							{
 								$output .= ">";
-								$output .= $this->process($element->firstChild);
+								$output .= $this->process($element->firstChild, $flags);
 								$output .= "</" . $element->tagName . ">";
 							}
 						}
@@ -583,7 +612,7 @@
 					}
 					else
 					{
-						if ($skipws)
+						if (Pistol::isFlagSet($flags, PF_SKIPWS))
 						{
 							$text = trim($data);
 							
@@ -626,7 +655,7 @@
 		/**
 		 *
 		 */
-		function process($child, $skipws = false)
+		function process($child, $flags = PF_EVALUATE)
 		{
 			$output = "";
 			
@@ -635,7 +664,7 @@
 				//print "<pre>";
 				//print $child->tagName . ":" . $child->nodeType . "\n";
 	
-				$data = $this->processElement($child, $skipws);
+				$data = $this->processElement($child, $flags);
 			
 				if (is_object($data) || is_array($data))
 				{
@@ -658,7 +687,7 @@
 		/**
 		 *
 		 */
-		function processElse($child, $skipws = false)
+		function processElse($child, $flags = PF_EVALUATE)
 		{
 			$output = "";
 			
@@ -678,7 +707,7 @@
 				//print "<pre>";
 				//print $child->tagName . ":" . $child->nodeType . "\n";
 	
-				$data = $this->processElement($child, $skipws);
+				$data = $this->processElement($child, $flags);
 			
 				if (is_object($data) || is_array($data))
 				{
