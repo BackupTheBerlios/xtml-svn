@@ -195,7 +195,7 @@
 		 */
 		function _getVar($key)
 		{
-			if ($key && strncmp('${', $key, 2) == 0)
+			if ($key && $key{0} == '$' && $key{1} == '{')
 			{
 				$keylen = strlen($key);
 				
