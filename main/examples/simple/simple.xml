@@ -142,8 +142,8 @@
 
 		<hr/>
 		<h1>A partially replaced string</h1>
-		<p>tags/release-1.0.126.1</p>
-		<p><string:replace find="tags/release-" replace="">viper tags/release-1.0.126.1</string:replace></p>
+		<p>PiSToL tags/release-0.99.0.0</p>
+		<p><string:replace find="tags/release-" replace="">PiSToL tags/release-0.99.0.0</string:replace></p>
 
 		<hr/>
 		<p>View the sources</p>
