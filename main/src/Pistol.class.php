@@ -17,7 +17,7 @@
 		require_once $file;
  	}
 
-	define('PF_SKIPWS', 	0x00000001);
+	define('PF_DISCARD_WS_TEXT_NODES', 	0x00000001);
 	define('PF_EVALUATE', 	0x00000002);
  	
 	class Pistol
@@ -312,7 +312,7 @@
 		 */
 		function evaluate($text, $flags = PF_EVALUATE)
 		{
-			if (Pistol::isFlagSet($flags, PF_SKIPWS))
+			if (Pistol::isFlagSet($flags, PF_DISCARD_WS_TEXT_NODES))
 			{
 				if (trim($text) == "")
 				{

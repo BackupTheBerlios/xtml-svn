@@ -95,7 +95,7 @@
 		function c_colon_set($element)
 		{
 			$var = $element->getAttribute("var");
-			$value = $this->pistol->_getAttributeOrBody($element, "value", PF_SKIPWS | PF_EVALUATE);
+			$value = $this->pistol->_getAttributeOrBody($element, "value", PF_DISCARD_WS_TEXT_NODES | PF_EVALUATE);
 
 			$this->pistol->setVar($var, $value);
 			
@@ -116,7 +116,7 @@
 				{
 					case XML_ELEMENT_NODE:
 					{
-						$a[] = $this->pistol->processElement($child, PF_SKIPWS | PF_EVALUATE);
+						$a[] = $this->pistol->processElement($child, PF_DISCARD_WS_TEXT_NODES | PF_EVALUATE);
 					}
 					
 					default:
