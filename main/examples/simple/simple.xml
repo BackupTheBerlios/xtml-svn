@@ -46,7 +46,7 @@
 		</c:set>
 	</c:preview>
 	
-	<!-- set a variable "title" to the translated message title -->
+	<!-- set a variable "title" to the translated message -->
 	<c:set var="title"><i18n:message>Simple ${productName} Example</i18n:message></c:set>
 	
 	<head>
