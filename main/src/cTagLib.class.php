@@ -351,7 +351,7 @@
 				// array support for loops			
 				foreach ($data as $key => $tmp)
 				{
-					$this->pistol->setVar($asname, $tmp);
+					$this->pistol->pushVar($asname, $tmp);
 					
 					if ($limit && $count++ == $limit)
 					{
@@ -361,6 +361,7 @@
 					$this->pistol->pushVar("#$asname", $key);
 					$output .= $this->pistol->process($firstChild);
 					$this->pistol->popVar("#$asname");
+					$this->pistol->popVar($asname);
 				}
 			}
 			else if (gettype($data) == "resource")
