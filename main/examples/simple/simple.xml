@@ -60,10 +60,7 @@
 	<title><c:out value="${title}"/></title>
 	</head>
 	<body>
-		<!-- include the logo.xml 
-			NOTE: If the file specified exists it will be inserted verbatim,
-			if you want to include a PiSToL tag file, then just leave out the
-			.pistol.xml extension -->
+		<!-- include the logo.xml -->
 		<c:preview>
 			<c:include file="../examples/logo.xml"/>
 		<c:else/>
