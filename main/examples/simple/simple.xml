@@ -77,7 +77,7 @@
 					<p>View this page using the <a href="/examples/simple/simple.php">simple.php</a>
 					script that initialises the data in the script code.</p>
 				<c:else/>
-					<p>View this page using the <a href="/src/preview.php?script=../examples/simple/simple.xml">preview</a> script.
+					<p>View this page using the <a href="/src/preview.php?xml=../examples/simple/simple.xml">preview</a> script.
 					The preview script enables the display of data embedded in the XML.
 					When you use the preview script, tags between <e:lt/>c:preview<e:gt/> and <e:lt/>c:else/<e:gt/> get included, 
 					and the tags between <e:lt/>c:else/<e:gt/> and <e:lt/>/c:preview<e:gt/> get excluded.</p>

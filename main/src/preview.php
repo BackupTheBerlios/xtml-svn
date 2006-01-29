@@ -17,6 +17,6 @@
 	 * Create a new Pistol instance.	
 	 * 
 	 */
-	$pistol = new Pistol($_REQUEST['script']);
+	$pistol = new Pistol($_REQUEST['xml']);
 	$pistol->preview();
 ?>
