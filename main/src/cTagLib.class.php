@@ -324,19 +324,13 @@
 		{
 			$output = "";
 			$data = $element->getAttribute("value");
-			$varname = $element->getAttribute("var");
+			$asname = $element->getAttribute("as");
 			$limit = $element->getAttribute("limit");
-			$keyname = $element->getAttribute("key");
 			$count = 0;
 			
-			if (!$keyname)
+			if (!$asname)
 			{
-				$keyname = '#';
-			}
-
-			if (!$varname)
-			{
-				$varname = '@';
+				$asname = '@';
 			}
 
 			if ($data{0} == '(')
@@ -350,23 +344,23 @@
 			}
 
 			$firstChild = $element->firstChild;
-			$previousValue = $this->pistol->evaluate($varname);
+			$previousValue = $this->pistol->evaluate($asname);
 
 			if (is_array($data))
 			{
 				// array support for loops			
 				foreach ($data as $key => $tmp)
 				{
-					$this->pistol->setVar($varname, $tmp);
+					$this->pistol->setVar($asname, $tmp);
 					
 					if ($limit && $count++ == $limit)
 					{
 						break;
 					}
 					
-					$this->pistol->pushVar($keyname, $key);
+					$this->pistol->pushVar("#$asname", $key);
 					$output .= $this->pistol->process($firstChild);
-					$this->pistol->popVar($keyname);
+					$this->pistol->popVar("#$asname");
 				}
 			}
 			else if (gettype($data) == "resource")
@@ -383,7 +377,7 @@
 							break;
 						}
 					
-						$this->pistol->setVar($varname, $tmp);
+						$this->pistol->setVar($asname, $tmp);
 						$output .= $this->pistol->process($firstChild);
 					}
 				}
@@ -397,13 +391,13 @@
 							break;
 						}
 					
-						$this->pistol->setVar($varname, $tmp);
+						$this->pistol->setVar($asname, $tmp);
 						$output .= $this->pistol->process($firstChild);
 					}
 				}
 			}
 
-			$this->pistol->setVar($varname, $previousValue);
+			$this->pistol->setVar($asname, $previousValue);
 			 			
 			return $output;
 		}

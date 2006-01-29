@@ -97,9 +97,9 @@
 					<th><i18n:message>Name</i18n:message></th>
 					<th><i18n:message>Description</i18n:message></th>
 				</tr>
-				<c:foreach value="${languages}" var="language" limit="3">
+				<c:foreach value="${languages}" as="language" limit="3">
 					<c:tr>
-						<c:td>${#}</c:td>
+						<c:td>${#language}</c:td>
 						<c:td>${language.name}</c:td>
 						<c:td><b>${language.description}</b></c:td>
 					</c:tr>
