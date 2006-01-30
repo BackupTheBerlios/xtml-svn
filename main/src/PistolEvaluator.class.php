@@ -65,7 +65,7 @@
 		/**
 		 * 
 		 */
-	    function PistolEvaluator($pistol, $expression) 
+	    function PistolEvaluator($pistol) 
 	    {
 	    	$this->pistol = $pistol;
     	}
@@ -225,7 +225,7 @@
     				if (strstr("0123456789", $this->expression{$this->pos}) == true)
     				{
 			    		while ($this->pos < $this->expressionLen && 
-			    			strstr("0123456789.", $this->expression{$this->pos}) == true)
+			    			((($c = $this->expression{$this->pos}) >= '0' && $c <= '9') || $c == '.'))
 			    		{
 			    			$tok .= $this->expression{$this->pos++};
 			    		}
@@ -235,7 +235,7 @@
     				else
     				{
 			    		while ($this->pos < $this->expressionLen && 
-			    			strstr(" !%^&|?\"'()[]-+~.", $this->expression{$this->pos}) == false)
+			    			$this->expression{$this->pos} != ' ')
 			    		{
 			    			$tok .= $this->expression{$this->pos++};
 			    		}
@@ -255,7 +255,7 @@
     	{
     		while ($tok = $this->getToken())
     		{
-    			print "$tok[0]\n";
+    			//print "$tok[0]\n";
     			
     			if ($tok[0] == TOK_EMPTY)
     			{
@@ -280,6 +280,10 @@
 	print "Starting\n";
 	$p = new Pistol();
 	$e = new PistolEvaluator($p);
-	$e->evaluate("a > 10 && a < 20");
-	$e->evaluate("product.description['short']");
+	
+	for ($i=0; $i < 10000; $i++)
+	{
+		$e->evaluate("a > 10 && a < 20");
+		$e->evaluate("product.description['short']");
+	}
 ?>
