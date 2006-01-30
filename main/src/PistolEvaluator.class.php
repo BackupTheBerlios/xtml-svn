@@ -222,12 +222,19 @@
     			break;
     			
     			default:
-    				if (strstr("0123456789", $this->expression{$this->pos}) == true)
+    				$c = $this->expression{$this->pos};
+    				
+    				if (($c >= '0' && $c <= '9'))
     				{
-			    		while ($this->pos < $this->expressionLen && 
-			    			((($c = $this->expression{$this->pos}) >= '0' && $c <= '9') || $c == '.'))
+			    		while ($this->pos < $this->expressionLen &&
+			    			($c >= '0' && $c <= '9') || $c == '.')
 			    		{
 			    			$tok .= $this->expression{$this->pos++};
+			    			
+			    			if ($this->pos < $this->expressionLen)
+			    			{
+			    				$c = $this->expression{$this->pos};
+			    			}
 			    		}
 			    		
 			    		return array(TOK_NUMBER, $tok);
@@ -235,9 +242,14 @@
     				else
     				{
 			    		while ($this->pos < $this->expressionLen && 
-			    			$this->expression{$this->pos} != ' ')
+			    			$c != ' ')
 			    		{
 			    			$tok .= $this->expression{$this->pos++};
+
+			    			if ($this->pos < $this->expressionLen)
+			    			{
+			    				$c = $this->expression{$this->pos};
+			    			}
 			    		}
 			    		
 			    		return array(TOK_IDENT, $tok);
