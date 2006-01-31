@@ -40,6 +40,21 @@
 	/**
 	 * 
 	 */
+	class Token
+	{
+		public $type;
+		public $value;
+		
+		public function Token($type, $value=null)
+		{
+			$this->type = $type;
+			$this->value = $value;
+		}
+	}
+	
+	/**
+	 * 
+	 */
 	class XTMLExpressionEvaluator 
 	{
 		/**
@@ -83,34 +98,34 @@
     		
     		if ($this->pos >= $this->expressionLen)
     		{
-    			return array(TOK_EMPTY);
+    			return new Token(TOK_EMPTY);
     		}
 
     		switch ($this->expression{$this->pos})
     		{
     			case '(':
     				$this->pos++;
-    				return array(TOK_LPAREN);
+    				return new Token(TOK_LPAREN);
     			break;
     			
     			case ')':
     				$this->pos++;
-    				return array(TOK_RPAREN);
+    				return new Token(TOK_RPAREN);
     			break;
     			
     			case '[':
     				$this->pos++;
-    				return array(TOK_LBRACKET);
+    				return new Token(TOK_LBRACKET);
     			break;
     			
     			case ']':
     				$this->pos++;
-    				return array(TOK_RBRACKET);
+    				return new Token(TOK_RBRACKET);
     			break;
     			
     			case '.':
     				$this->pos++;
-    				return array(TOK_DOT);
+    				return new Token(TOK_DOT);
     			break;
     			
     			case '=':
@@ -119,10 +134,10 @@
     				if ($this->expression{$this->pos} == '=')
     				{
    						$this->pos++;
-   						return array(TOK_EQ);
+   						return new Token(TOK_EQ);
     				}
     				
-    				return array(TOK_EQ);
+    				return new Token(TOK_EQ);
     			break;
     			
     			case '&':
@@ -131,10 +146,10 @@
     				if ($this->expression{$this->pos} == "&")
     				{
   						$this->pos++;
-   						return array(TOK_AND);
+   						return new Token(TOK_AND);
     				}
     				    				
-    				return array(TOK_BITAND);
+    				return new Token(TOK_BITAND);
     			break;
     			
     			case '!':
@@ -143,10 +158,10 @@
     				if ($this->expression{$this->pos} == '=')
     				{
    						$this->pos++;
-   						return array(TOK_NEQ);
+   						return new Token(TOK_NEQ);
     				}
     				
-    				return array(TOK_NOT);
+    				return new Token(TOK_NOT);
     			break;
     			
     			case '>':
@@ -155,10 +170,10 @@
     				if ($this->expression{$this->pos} == '=')
     				{
    						$this->pos++;
-   						return array(TOK_GTE);
+   						return new Token(TOK_GTE);
     				}
     				
-    				return array(TOK_GT);
+    				return new Token(TOK_GT);
     			break;
     			
     			case '<':
@@ -167,10 +182,10 @@
     				if ($this->expression{$this->pos} == '=')
     				{
    						$this->pos++;
-   						return array(TOK_LTE);
+   						return new Token(TOK_LTE);
     				}
     				
-    				return array(TOK_LT);
+    				return new Token(TOK_LT);
     			break;
     			
     			case "'":
@@ -191,7 +206,7 @@
 
     				$this->pos++;
     				
-    				return array(TOK_STRING, $tok);
+    				return new Token(TOK_STRING, $tok);
     			break;
     			
     			default:
@@ -211,7 +226,7 @@
 			    			}
 			    		}
 			    		
-			    		return array(TOK_NUMBER, $tok);
+			    		return new Token(TOK_NUMBER, $tok);
     				}
     				else
     				{
@@ -226,12 +241,12 @@
 			    			}
 			    		}
 			    		
-			    		return array(TOK_IDENT, $tok);
+			    		return new Token(TOK_IDENT, $tok);
     				}
 		    	break;
     		}
     		
-    		return array(TOK_EMPTY);
+    		return new Token(TOK_EMPTY);
     	}
     	
     	/**
@@ -243,7 +258,7 @@
     		{
     			//print "$tok[0]\n";
     			
-    			if ($tok[0] == TOK_EMPTY)
+    			if ($tok->type == TOK_EMPTY)
     			{
     				break;
     			}
@@ -268,7 +283,7 @@
 	$e = new XTMLExpressionEvaluator($p);
 	
 	$started = microtime(true);
-	$iterations = 10000;
+	$iterations = 100000;
 	$count = 0;
 
 	$started = microtime(true);
@@ -279,12 +294,13 @@
 		$e->evaluate("a > 10 && a < 20");
 		$count++;
 
-		$e->evaluate("product.description['short']");
-		$count++;
+		//$e->evaluate("product.description['short']");
+		//$count++;
 	}
 
 	$finished = microtime(true);
-	$renderTime = (($finished - $started) * 1000) / $count;
+	$renderTime = ($finished - $started) * 1000;
+	$perIterationRenderTime = (($finished - $started) * 1000) / $count;
 
-	print "Tokenising took " . sprintf("%0.2f", $renderTime) . "ms per iteration\n";
+	print "Tokenising $count iterations took " . sprintf("%0.2f", $renderTime) . "ms, " . sprintf("%0.2f", $perIterationRenderTime) . "ms per iteration\n";
 ?>
