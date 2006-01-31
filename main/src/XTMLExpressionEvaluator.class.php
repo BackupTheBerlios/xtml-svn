@@ -243,7 +243,6 @@
 			    		
 			    		return new Token(TOK_IDENT, $tok);
     				}
-		    	break;
     		}
     		
     		return new Token(TOK_EMPTY);
@@ -283,7 +282,7 @@
 	$e = new XTMLExpressionEvaluator($p);
 	
 	$started = microtime(true);
-	$iterations = 100000;
+	$iterations = 10000;
 	$count = 0;
 
 	$started = microtime(true);
