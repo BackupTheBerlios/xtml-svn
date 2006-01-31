@@ -40,7 +40,7 @@
 	/**
 	 * 
 	 */
-	class PistolEvaluator 
+	class XTMLExpressionEvaluator 
 	{
 		/**
 		 * 
@@ -65,7 +65,7 @@
 		/**
 		 * 
 		 */
-	    function PistolEvaluator($pistol) 
+	    function XTMLExpressionEvaluator($pistol) 
 	    {
 	    	$this->pistol = $pistol;
     	}
@@ -75,8 +75,6 @@
     	 */
     	function getToken()
     	{
-    		$tok = "";
-
     		while ($this->pos < $this->expressionLen &&
     			$this->expression{$this->pos} == ' ')
     		{
@@ -87,7 +85,7 @@
     		{
     			return array(TOK_EMPTY);
     		}
-    		
+
     		switch ($this->expression{$this->pos})
     		{
     			case '(':
@@ -118,12 +116,10 @@
     			case '=':
     				$this->pos++;
     				
-    				switch ($this->expression{$this->pos})
+    				if ($this->expression{$this->pos} == '=')
     				{
-    					case '=':
-    						$this->pos++;
-    						return array(TOK_EQ);
-    					break;
+   						$this->pos++;
+   						return array(TOK_EQ);
     				}
     				
     				return array(TOK_EQ);
@@ -132,26 +128,22 @@
     			case '&':
     				$this->pos++;
     				
-    				switch ($this->expression{$this->pos})
+    				if ($this->expression{$this->pos} == "&")
     				{
-    					case '&':
-    						$this->pos++;
-    						return array(TOK_AND);
-    					break;
+  						$this->pos++;
+   						return array(TOK_AND);
     				}
-    				
+    				    				
     				return array(TOK_BITAND);
     			break;
     			
     			case '!':
     				$this->pos++;
     				
-    				switch ($this->expression{$this->pos})
+    				if ($this->expression{$this->pos} == '=')
     				{
-    					case '=':
-    						$this->pos++;
-    						return array(TOK_NEQ);
-    					break;
+   						$this->pos++;
+   						return array(TOK_NEQ);
     				}
     				
     				return array(TOK_NOT);
@@ -160,12 +152,10 @@
     			case '>':
     				$this->pos++;
     				
-    				switch ($this->expression{$this->pos})
+    				if ($this->expression{$this->pos} == '=')
     				{
-    					case '=':
-    						$this->pos++;
-    						return array(TOK_GTE);
-    					break;
+   						$this->pos++;
+   						return array(TOK_GTE);
     				}
     				
     				return array(TOK_GT);
@@ -174,46 +164,29 @@
     			case '<':
     				$this->pos++;
     				
-    				switch ($this->expression{$this->pos})
+    				if ($this->expression{$this->pos} == '=')
     				{
-    					case '=':
-    						$this->pos++;
-    						return array(TOK_LTE);
-    					break;
+   						$this->pos++;
+   						return array(TOK_LTE);
     				}
     				
     				return array(TOK_LT);
     			break;
     			
     			case "'":
+    			case "\"":
+    				$quot = $this->expression{$this->pos};
     				$this->pos++;
     				
-		    		while ($this->expression{$this->pos} != "'")
+		    		while (($c = $this->expression{$this->pos}) != $quot)
 		    		{
-		    			if ($this->expression{$this->pos} == '\\')
+		    			if ($c == '\\')
 		    			{
-		    				$tok .= $this->expression{$this->pos++};
+		    				$tok .= $c; 
+		    				$c = $this->expression{$this->pos++};
 		    			}
 		    			
-		    			$tok .= $this->expression{$this->pos++};
-		    		}
-
-    				$this->pos++;
-    				
-    				return array(TOK_STRING, $tok);
-    			break;
-    			
-    			case '"':
-    				$this->pos++;
-    				
-		    		while ($this->expression{$this->pos} != '"')
-		    		{
-		    			if ($this->expression{$this->pos} == '\\')
-		    			{
-		    				$tok .= $this->expression{$this->pos++};
-		    			}
-		    			
-		    			$tok .= $this->expression{$this->pos++};
+		    			$tok .= $c;
 		    		}
 
     				$this->pos++;
@@ -222,6 +195,7 @@
     			break;
     			
     			default:
+		    		$tok = "";
     				$c = $this->expression{$this->pos};
     				
     				if (($c >= '0' && $c <= '9'))
@@ -291,11 +265,26 @@
 	
 	print "Starting\n";
 	$p = new Pistol();
-	$e = new PistolEvaluator($p);
+	$e = new XTMLExpressionEvaluator($p);
 	
-	for ($i=0; $i < 10000; $i++)
+	$started = microtime(true);
+	$iterations = 10000;
+	$count = 0;
+
+	$started = microtime(true);
+	$count = 0;
+
+	for ($i=0; $i < $iterations; $i++)
 	{
 		$e->evaluate("a > 10 && a < 20");
+		$count++;
+
 		$e->evaluate("product.description['short']");
+		$count++;
 	}
+
+	$finished = microtime(true);
+	$renderTime = (($finished - $started) * 1000) / $count;
+
+	print "Tokenising took " . sprintf("%0.2f", $renderTime) . "ms per iteration\n";
 ?>
