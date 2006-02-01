@@ -85,6 +85,14 @@
 			</tr>
 		</table>
 		
+		<hr/>
+		<p>View the sources</p>
+		<p>
+			<a href="/examples/simple/simple.phps">simple.php</a><br/>
+			<a href="/src/preview.phps">preview.php</a><br/>
+			<a href="/examples/simple/simple.xml">simple.xml</a><br/>
+		</p>
+
 		<c:ifset var="languages">
 			<hr/>
 			<h1><i18n:message>Programming languages</i18n:message></h1>
@@ -154,13 +162,5 @@
 		<h1>A partially replaced string</h1>
 		<p><e:lt/>string:replace find="tags/release-" replace=""<e:gt/>XTML tags/release-0.99.0.0<e:lt/>/string:replace<e:gt/></p>
 		<p><string:replace find="tags/release-" replace="">XTML tags/release-0.99.0.0</string:replace></p>
-
-		<hr/>
-		<p>View the sources</p>
-		<p>
-			<a href="/examples/simple/simple.phps">simple.php</a><br/>
-			<a href="/src/preview.phps">preview.php</a><br/>
-			<a href="/examples/simple/simple.xml">simple.xml</a><br/>
-		</p>
 	</body>
 </html>
