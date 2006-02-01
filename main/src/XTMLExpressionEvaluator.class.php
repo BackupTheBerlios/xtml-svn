@@ -40,21 +40,6 @@
 	/**
 	 * 
 	 */
-	class Token
-	{
-		public $type;
-		public $value;
-		
-		public function Token($type, $value=null)
-		{
-			$this->type = $type;
-			$this->value = $value;
-		}
-	}
-	
-	/**
-	 * 
-	 */
 	class XTMLExpressionEvaluator 
 	{
 		/**
@@ -80,6 +65,11 @@
 		/**
 		 * 
 		 */
+		public $value;
+		
+		/**
+		 * 
+		 */
 	    function XTMLExpressionEvaluator($pistol) 
 	    {
 	    	$this->pistol = $pistol;
@@ -98,34 +88,34 @@
     		
     		if ($this->pos >= $this->expressionLen)
     		{
-    			return new Token(TOK_EMPTY);
+    			return TOK_EMPTY;
     		}
 
     		switch ($this->expression{$this->pos})
     		{
     			case '(':
     				$this->pos++;
-    				return new Token(TOK_LPAREN);
+    				return TOK_LPAREN;
     			break;
     			
     			case ')':
     				$this->pos++;
-    				return new Token(TOK_RPAREN);
+    				return TOK_RPAREN;
     			break;
     			
     			case '[':
     				$this->pos++;
-    				return new Token(TOK_LBRACKET);
+    				return TOK_LBRACKET;
     			break;
     			
     			case ']':
     				$this->pos++;
-    				return new Token(TOK_RBRACKET);
+    				return TOK_RBRACKET;
     			break;
     			
     			case '.':
     				$this->pos++;
-    				return new Token(TOK_DOT);
+    				return TOK_DOT;
     			break;
     			
     			case '=':
@@ -134,10 +124,10 @@
     				if ($this->expression{$this->pos} == '=')
     				{
    						$this->pos++;
-   						return new Token(TOK_EQ);
+   						return TOK_EQ;
     				}
     				
-    				return new Token(TOK_EQ);
+    				return TOK_EQ;
     			break;
     			
     			case '&':
@@ -146,10 +136,10 @@
     				if ($this->expression{$this->pos} == "&")
     				{
   						$this->pos++;
-   						return new Token(TOK_AND);
+   						return TOK_AND;
     				}
     				    				
-    				return new Token(TOK_BITAND);
+    				return TOK_BITAND;
     			break;
     			
     			case '!':
@@ -158,10 +148,10 @@
     				if ($this->expression{$this->pos} == '=')
     				{
    						$this->pos++;
-   						return new Token(TOK_NEQ);
+   						return TOK_NEQ;
     				}
     				
-    				return new Token(TOK_NOT);
+    				return TOK_NOT;
     			break;
     			
     			case '>':
@@ -170,10 +160,10 @@
     				if ($this->expression{$this->pos} == '=')
     				{
    						$this->pos++;
-   						return new Token(TOK_GTE);
+   						return TOK_GTE;
     				}
     				
-    				return new Token(TOK_GT);
+    				return TOK_GT;
     			break;
     			
     			case '<':
@@ -182,14 +172,15 @@
     				if ($this->expression{$this->pos} == '=')
     				{
    						$this->pos++;
-   						return new Token(TOK_LTE);
+   						return TOK_LTE;
     				}
     				
-    				return new Token(TOK_LT);
+    				return TOK_LT;
     			break;
     			
     			case "'":
     			case "\"":
+    				$this->value = "";
     				$quot = $this->expression{$this->pos};
     				$this->pos++;
     				
@@ -197,20 +188,20 @@
 		    		{
 		    			if ($c == '\\')
 		    			{
-		    				$tok .= $c; 
+		    				$this->value .= $c; 
 		    				$c = $this->expression{$this->pos++};
 		    			}
 		    			
-		    			$tok .= $c;
+		    			$this->value .= $c;
 		    		}
 
     				$this->pos++;
     				
-    				return new Token(TOK_STRING, $tok);
+    				return TOK_STRING;
     			break;
     			
     			default:
-		    		$tok = "";
+		    		$this->value = "";
     				$c = $this->expression{$this->pos};
     				
     				if (($c >= '0' && $c <= '9'))
@@ -218,7 +209,7 @@
 			    		while ($this->pos < $this->expressionLen &&
 			    			($c >= '0' && $c <= '9') || $c == '.')
 			    		{
-			    			$tok .= $this->expression{$this->pos++};
+			    			$this->value .= $this->expression{$this->pos++};
 			    			
 			    			if ($this->pos < $this->expressionLen)
 			    			{
@@ -226,14 +217,14 @@
 			    			}
 			    		}
 			    		
-			    		return new Token(TOK_NUMBER, $tok);
+			    		return TOK_NUMBER;
     				}
     				else
     				{
 			    		while ($this->pos < $this->expressionLen && 
 			    			$c != ' ')
 			    		{
-			    			$tok .= $this->expression{$this->pos++};
+			    			$this->value .= $this->expression{$this->pos++};
 
 			    			if ($this->pos < $this->expressionLen)
 			    			{
@@ -241,11 +232,11 @@
 			    			}
 			    		}
 			    		
-			    		return new Token(TOK_IDENT, $tok);
+			    		return TOK_IDENT;
     				}
     		}
     		
-    		return new Token(TOK_EMPTY);
+    		return TOK_EMPTY;
     	}
     	
     	/**
@@ -257,7 +248,7 @@
     		{
     			//print "$tok[0]\n";
     			
-    			if ($tok->type == TOK_EMPTY)
+    			if ($tok == TOK_EMPTY)
     			{
     				break;
     			}
@@ -278,6 +269,7 @@
 	}
 	
 	print "Starting\n";
+	/*
 	$p = new Pistol();
 	$e = new XTMLExpressionEvaluator($p);
 	
@@ -301,5 +293,27 @@
 	$renderTime = ($finished - $started) * 1000;
 	$perIterationRenderTime = (($finished - $started) * 1000) / $count;
 
+	print "Tokenising $count iterations took " . sprintf("%0.2f", $renderTime) . "ms, " . sprintf("%0.2f", $perIterationRenderTime) . "ms per iteration\n";
+	*/
+	
+	print "Starting\n";
+	
+	$started = microtime(true);
+	$iterations = 1000000;
+	$count = 0;
+
+	$started = microtime(true);
+	$count = 0;
+
+	for ($i=0; $i < $iterations; $i++)
+	{
+		token_get_all("<? a > 10 && a < 20 ?>");
+		$count++;
+	}
+
+	$finished = microtime(true);
+	$renderTime = ($finished - $started) * 1000;
+	$perIterationRenderTime = (($finished - $started) * 1000) / $count;
+	
 	print "Tokenising $count iterations took " . sprintf("%0.2f", $renderTime) . "ms, " . sprintf("%0.2f", $perIterationRenderTime) . "ms per iteration\n";
 ?>
