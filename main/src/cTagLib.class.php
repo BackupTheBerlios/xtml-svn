@@ -29,7 +29,7 @@
 	 * http://developer.berlios.de/projects/xtml/
 	 *
 	 * @link http://developer.berlios.de/projects/xtml/
-	 * @copyright 2005, 2006 by John Allen and others (see AUTHORS file for additional info).
+	 * @copyright 2005, 2006 by John Allen and others (see AUTHORS file for contributor list).
 	 * @author John Allen <john.allen@classesarecode.net>
 	 * @version 0.99
 	 * 
@@ -72,7 +72,7 @@
 		function copyright()
 		{
 			return "Core - The XTML Core Tag Library\n" .
-				"Copyright 2005, 2006 by John Allen and others (see AUTHORS file for additional info).\n" .
+				"Copyright 2005, 2006 by John Allen and others (see AUTHORS file for contributor list).\n" .
 				"Released under the GNU GPL v2\n" .
 				"http://xtml.classesarecode.net/"
 				;
