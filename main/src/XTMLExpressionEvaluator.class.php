@@ -307,7 +307,21 @@
 
 	for ($i=0; $i < $iterations; $i++)
 	{
-		token_get_all("<? a > 10 && a < 20 ?>");
+		$tokens = token_get_all("<? a > 10 && a < 20 && s=='CPN'?>");
+
+		foreach ($tokens as $tok)
+		{
+			if (is_string($tok))
+			{
+				print "$tok\n";
+			}
+			else
+			{
+				list($id, $value) = $tok;
+				print token_name($id) . " -- $value\n";
+			}
+		}
+		
 		$count++;
 	}
 
