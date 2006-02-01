@@ -385,7 +385,7 @@
 		/**
 		 * 
 		 */
-		function popVar($key, $data)
+		function popVar($key)
 		{
 			array_pop($this->data[$key]);
 			
@@ -414,7 +414,7 @@
 		/**
 		 * 
 		 */
-		function createTagClass($tagClass)
+		function getTagClassInstance($tagClass)
 		{
 			if (!class_exists($tagClass))
 			{
@@ -594,7 +594,7 @@
 					{
 						$_tagClassName = $tag[0] . "TagLib";
 						$_methodName = $tag[0] . "_colon_" . $tag[1];
-						$_class = $this->createTagClass($_tagClassName);
+						$_class = $this->getTagClassInstance($_tagClassName);
 	
 						//print $tag[0] . "->" . "$_method\n";
 						

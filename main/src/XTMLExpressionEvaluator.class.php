@@ -36,7 +36,7 @@
 	 */
 
 	ini_set('include_path', ".:" . ini_get('include_path'));
-	require_once("XTML.class.php");
+	require_once("XTMLProcessor.class.php");
 	
 	$tokid = 0;
 	define('TOK_EMPTY', $tokid++);
@@ -293,12 +293,11 @@
 	}
 	
 	print "Starting\n";
-	/*
 	$p = new XTMLProcessor();
 	$e = new XTMLExpressionEvaluator($p);
 	
 	$started = microtime(true);
-	$iterations = 10000;
+	$iterations = 1000;
 	$count = 0;
 
 	$started = microtime(true);
@@ -306,7 +305,7 @@
 
 	for ($i=0; $i < $iterations; $i++)
 	{
-		$e->evaluate("a > 10 && a < 20");
+		$e->evaluate("(a > 10 && a < 20) || s=='CPN'");
 		$count++;
 
 		//$e->evaluate("product.description['short']");
@@ -317,41 +316,5 @@
 	$renderTime = ($finished - $started) * 1000;
 	$perIterationRenderTime = (($finished - $started) * 1000) / $count;
 
-	print "Tokenising $count iterations took " . sprintf("%0.2f", $renderTime) . "ms, " . sprintf("%0.2f", $perIterationRenderTime) . "ms per iteration\n";
-	*/
-	
-	print "Starting\n";
-	
-	$started = microtime(true);
-	$iterations = 1000000;
-	$count = 0;
-
-	$started = microtime(true);
-	$count = 0;
-
-	for ($i=0; $i < $iterations; $i++)
-	{
-		$tokens = token_get_all("<? a > 10 && a < 20 && s=='CPN'?>");
-
-		foreach ($tokens as $tok)
-		{
-			if (is_string($tok))
-			{
-				print "$tok\n";
-			}
-			else
-			{
-				list($id, $value) = $tok;
-				print token_name($id) . " -- $value\n";
-			}
-		}
-		
-		$count++;
-	}
-
-	$finished = microtime(true);
-	$renderTime = ($finished - $started) * 1000;
-	$perIterationRenderTime = (($finished - $started) * 1000) / $count;
-	
 	print "Tokenising $count iterations took " . sprintf("%0.2f", $renderTime) . "ms, " . sprintf("%0.2f", $perIterationRenderTime) . "ms per iteration\n";
 ?>

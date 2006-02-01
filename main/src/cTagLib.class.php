@@ -368,11 +368,10 @@
 			}
 
 			$firstChild = $element->firstChild;
-			$previousValue = $this->xtml->evaluate($asname);
 
 			if (is_array($data))
 			{
-				// array support for loops			
+				// foreach support for arrays			
 				foreach ($data as $key => $tmp)
 				{
 					$this->xtml->pushVar($asname, $tmp);
@@ -402,8 +401,9 @@
 							break;
 						}
 					
-						$this->xtml->setVar($asname, $tmp);
+						$this->xtml->pushVar($asname, $tmp);
 						$output .= $this->xtml->process($firstChild);
+						$this->xtml->popVar($asname);
 					}
 				}
 				else if ($type == "pgsql result")
@@ -416,14 +416,13 @@
 							break;
 						}
 					
-						$this->xtml->setVar($asname, $tmp);
+						$this->xtml->pushVar($asname, $tmp);
 						$output .= $this->xtml->process($firstChild);
+						$this->xtml->popVar($asname);
 					}
 				}
 			}
 
-			$this->xtml->setVar($asname, $previousValue);
-			 			
 			return $output;
 		}
 

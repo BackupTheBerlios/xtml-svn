@@ -83,7 +83,7 @@
 		/**
 		 * @ignore
 		 */
-		function _list($element)
+		private function _li($element)
 		{
 			$output = "";
 			$var = $this->xtml->evaluate($this->xtml->_getAttributeOrBody($element));
@@ -106,13 +106,82 @@
 			
 			return $output;
 		}
+
+		/**
+		 * @ignore
+		 */
+		private function _foreach($element)
+		{		
+			$output = "";
+			$tag = explode(":", $element->tagName);
+			
+			if ($element->hasAttribute("foreach"))
+			{
+				$data = $element->getAttribute("foreach");
+				$asname = $element->getAttribute("as");
+				$limit = $element->getAttribute("limit");
+				$count = 0;
+				
+				$element->removeAttribute("foreach");
+				$element->removeAttribute("as");
+				$element->removeAttribute("limit");
+				
+				if (!$asname)
+				{
+					$asname = '@';
+				}
+	
+				if ($data{0} == '(')
+				{
+					$_code = "\$data = array" . $data . ";";
+					eval($_code);
+				}
+				else if ($data{0} == '$')
+				{
+					$data = $this->xtml->evaluate($data);
+				}
+	
+				$firstChild = $element->firstChild;
+	
+				if (is_array($data))
+				{
+					// foreach support for arrays			
+					foreach ($data as $key => $tmp)
+					{
+						$this->xtml->pushVar($asname, $tmp);
+						
+						if ($limit && $count++ == $limit)
+						{
+							break;
+						}
+						
+						$this->xtml->pushVar("#$asname", $key);
+			
+						$output .= $this->xtml->_totext($element);
+						$output .= $this->xtml->process($firstChild);
+						$output .= "</" . $tag[1] . ">";
+			
+						$this->xtml->popVar("#$asname");
+						$this->xtml->popVar($asname);
+					}
+				}
+			}
+			else
+			{
+				$output .= $this->xtml->_totext($element);
+				$output .= $this->xtml->process($element->firstChild);
+				$output .= "</" . $tag[1] . ">";
+			}
+			
+			return $output;
+		}
 		
 		/**
 		 * 
 		 */
 		function html_colon_ul($element)
 		{
-			return "<ul>". $this->_list($element) . "</ul>";
+			return "<ul>". $this->_li($element) . "</ul>";
 		}
 		
 		/**
@@ -120,7 +189,17 @@
 		 */
 		function html_colon_ol($element)
 		{
-			return "<ol>". $this->_list($element) . "</ol>";
+			return "<ol>". $this->_li($element) . "</ol>";
+		}
+		
+		/**
+		 * Equivalent to the HTML <li> tag, but with foreach support.
+		 * 
+		 * <html:li foreach="${days}">${@}}</html:li>
+		 */
+		function html_colon_li($element)
+		{
+			return $this->_foreach($element);
 		}
 		
 	}	
