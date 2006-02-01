@@ -20,18 +20,6 @@
 	xmlns:php = "http://www.classesarecode.net/xtml/php"
 	xmlns:html = "http://www.classesarecode.net/xtml/html">
 	
-	<style>
-		#logo {
-		float: left;
-		padding: 0;
-		margin: 0;
-		width: 150px;
-		font-size: 13px;
-		cursor: default;
-		}
-		
-	</style>
-	
 	<c:set var="productName">XTML</c:set>
 	
 	<c:preview>
