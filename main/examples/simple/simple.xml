@@ -6,19 +6,19 @@
  $LastChangedBy$
  $HeadURL$
  
- PiSToL - PHP Standard Tag Library
+ XTML - PHP Standard Tag Library
  Copyright 2005, 2006 by John Allen and others (see AUTHORS file for additional info).
  Released under the GNU GPL v2
  -->
 
 <html
-	xmlns:c = "http://www.classesarecode.net/pistol/core"
-	xmlns:e = "http://www.classesarecode.net/pistol/entity"
-	xmlns:i18n = "http://www.classesarecode.net/pistol/i18n"
-	xmlns:md = "http://www.classesarecode.net/pistol/md"
-	xmlns:string = "http://www.classesarecode.net/pistol/string"
-	xmlns:php = "http://www.classesarecode.net/pistol/php"
-	xmlns:html = "http://www.classesarecode.net/pistol/html">
+	xmlns:c = "http://www.classesarecode.net/xtml/core"
+	xmlns:e = "http://www.classesarecode.net/xtml/entity"
+	xmlns:i18n = "http://www.classesarecode.net/xtml/i18n"
+	xmlns:md = "http://www.classesarecode.net/xtml/md"
+	xmlns:string = "http://www.classesarecode.net/xtml/string"
+	xmlns:php = "http://www.classesarecode.net/xtml/php"
+	xmlns:html = "http://www.classesarecode.net/xtml/html">
 	
 	<style>
 		#logo {
@@ -32,7 +32,7 @@
 		
 	</style>
 	
-	<c:set var="productName">PiSToL</c:set>
+	<c:set var="productName">XTML</c:set>
 	
 	<c:preview>
 		<!-- create a data set so we can display this page using the preview script -->
@@ -69,7 +69,7 @@
 		<br/>
 		<table>
 			<tr>
-				<td><md:text>This is a simple example of using the *PiSToL* tag library</md:text></td>
+				<td><md:text>This is a simple example of using the *XTML* tag library</md:text></td>
 			</tr>
 
 			<tr>
@@ -146,8 +146,8 @@
 
 		<hr/>
 		<h1>A partially replaced string</h1>
-		<p><e:lt/>string:replace find="tags/release-" replace=""<e:gt/>PiSToL tags/release-0.99.0.0<e:lt/>/string:replace<e:gt/></p>
-		<p><string:replace find="tags/release-" replace="">PiSToL tags/release-0.99.0.0</string:replace></p>
+		<p><e:lt/>string:replace find="tags/release-" replace=""<e:gt/>XTML tags/release-0.99.0.0<e:lt/>/string:replace<e:gt/></p>
+		<p><string:replace find="tags/release-" replace="">XTML tags/release-0.99.0.0</string:replace></p>
 
 		<hr/>
 		<p>View the sources</p>

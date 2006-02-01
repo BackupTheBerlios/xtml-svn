@@ -35,10 +35,27 @@
 	 * 
 	 */
 
-	// set the include path for XTML relative to this script
-	ini_set('include_path', "../../src:" . ini_get('include_path'));
-	
-	require_once "XTMLProcessor.class.php";
-	$xtml = new XTMLProcessor();
-	$xtml->render();
+	/**
+	 *
+	 */
+	class XTMLTag
+	{
+		protected $xtml;
+		
+		/**
+		 * 
+		 */
+		function XTMLTag($xtml)
+		{
+			$this->xtml = $xtml;
+		}
+		
+		/**
+		 * 
+		 */
+		function copyright()
+		{
+			return "";
+		}
+	}
 ?>

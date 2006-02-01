@@ -1,7 +1,6 @@
 a { color: #000090; text-decoration: none; }
 a:hover, a:active, a:focus { color: highlighttext; background-color: highlight; text-decoration: none; }
 
-body { background : #FFFFFF; }
 body, table { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt; }
 
 a img { border: 0px; }
@@ -85,7 +84,6 @@ a img { border: 0px; }
 /* Syntax highlighting */
 
 .src-code {  }
-*[class="src-code"], *[class="listing"], *[class="example"] { line-height : 0.5em }
 
 .src-code a:link { padding: 1px; text-decoration: underline; color: #0000DD; }
 .src-code a:visited { text-decoration: underline; color: #0000DD; }
@@ -113,20 +111,13 @@ a img { border: 0px; }
 .src-doc-type { font-style: italic; color: #444444 }
 .src-doc-var { color: #444444 }
 
-.tute-tag { color: #009999 }
-.tute-attribute-name { color: #0000FF }
-.tute-attribute-value { color: #0099FF }
-.tute-entity { font-weight: bold; }
-.tute-comment { font-style: italic }
-.tute-inline-tag { color: #636311; font-weight: bold }
-
 /* tutorial */
 
 .authors {  }
 .author { font-style: italic; font-weight: bold }
 .author-blurb { margin: .5em 0em .5em 2em; font-size: 85%; font-weight: normal; font-style: normal }
-.example { border: 1px dashed #999999; background-color: #EEEEEE; padding: .5em; }
-.listing { border: 1px dashed #999999; background-color: #EEEEEE; padding: .5em; white-space: nowrap; }
+.example { border: 1px dashed #999999; background-color: #EEEEEE; padding: .5em }
+.listing { border: 1px dashed #999999; background-color: #EEEEEE; padding: .5em; white-space: nowrap }
 .release-info { font-size: 85%; font-style: italic; margin: 1em 0em }
 .ref-title-box {  }
 .ref-title {  }

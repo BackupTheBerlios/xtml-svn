@@ -36,92 +36,61 @@
 	 */
 
 	/**
-	 *
+	 * 
 	 */
-	class i18nTagLib
-		extends XTMLTag
+	class XTMLRowSupport
 	{
-		private $lang;
+		var $colClasses;
+		var $colCount;
 		
 		/**
-		 * @ignore
+		 * 
 		 */
-		function i18nTagLib($xtml)
+		function XTMLRowSupport()
 		{
-			parent::XTMLTag($xtml);
-			
-			// Set language, default to en (English)
-			$this->lang = isset($_REQUEST['lang']) ? $_REQUEST['lang']:"value";
-		}
-
-		/**
-		 * @ignore
-		 */
-		function copyright()
-		{
-			return "i18n - The XTML i18n Tag Library\n" .
-				"Copyright 2005, 2006 by John Allen and others (see AUTHORS file for additional info).\n" .
-				"Released under the GNU GPL v2";
-		}
-
-		/**
-		 * @ignore
-		 */
-		function getlang()
-		{
-			return $this->lang;
-		}
-		
-		/**
-		 * @ignore
-		 */
-		function setlang($lang)
-		{
-			$this->lang = $lang;
+			$this->colClasses = null;
+			$this->colCount = 0;
 		}
 		
 		/**
 		 * 
 		 */
-		function i18n_colon_setlang($element)
+		function setColumnCount($count = 0)
 		{
-			$value = $this->xtml->_getAttributeOrBody($element);
-			$lang = $this->xtml->evaluate($value);
-			$this->setLang($lang);
+			$this->colCount = 0;
 		}
 		
 		/**
 		 * 
 		 */
-		function i18n_colon_getlang($element)
+		function setColClasses($classes)
 		{
-			return $this->getlang();
+			$this->colClasses = $classes;
 		}
 		
 		/**
 		 * 
 		 */
-		function i18n_colon_message($element)
+		function getColClasses()
 		{
-			// TODO: implement translate logic
-			$maxlen = $element->getAttribute("maxlen");
-			$ellipses = $element->getAttribute("ellipses") == "true" ? true:false;
-			$text = gettext($this->xtml->_getAttributeOrBody($element, "value", 0));
-			$text = $this->xtml->evaluate($text);
-			
-			if ($maxlen && strlen($text) > $maxlen)
-			{
-				if ($ellipses)
-				{
-					$text = substr($text, 0, $maxlen-3) . "&hellip;";
-				}
-				else
-				{
-					$text = substr($text, 0, $maxlen);
-				}
-			}
+			return $this->colClasses; 
+		}
+		
+		/**
+		 * 
+		 */
+		function incrementColCount()
+		{
+			$this->colCount++;
+		}
 
-			return $text;
+		/**
+		 * 
+		 */
+		function getColCount()
+		{
+			return $this->colCount;
 		}
 	}
+	
 ?>

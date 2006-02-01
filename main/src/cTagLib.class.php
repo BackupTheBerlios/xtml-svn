@@ -6,18 +6,42 @@
 	 * $LastChangedBy$
 	 * $HeadURL$
 	 * 
-	 * PiSToL - PHP Standard Tag Library
-	 * Copyright 2005, 2006 by John Allen and others (see AUTHORS file for additional info).
-	 * Released under the GNU GPL v2
+	 * XTML - eXtensible Tag Markup Language
+	 * 
+	 * This library is free software; you can redistribute it and/or
+	 * modify it under the terms of the GNU Lesser General Public
+	 * License as published by the Free Software Foundation; either
+	 * version 2.1 of the License, or (at your option) any later version.
+	 *
+	 * This library is distributed in the hope that it will be useful,
+	 * but WITHOUT ANY WARRANTY; without even the implied warranty of
+	 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	 * General Public License for more details.
+	 *
+	 * You should have received a copy of the GNU General Public License 
+	 * along with this library; if not, write to the Free Software
+	 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+	 *
+	 * You may contact the authors of XTML by e-mail at:
+	 * developers@classesarecode.net
+	 *
+	 * The latest version of XTML can be obtained from:
+	 * http://developer.berlios.de/projects/xtml/
+	 *
+	 * @link http://developer.berlios.de/projects/xtml/
+	 * @copyright 2005, 2006 by John Allen and others (see AUTHORS file for additional info).
+	 * @author John Allen <john.allen@classesarecode.net>
+	 * @version 0.99
+	 * 
 	 */
 
-	require_once("PistolTableSupport.class.php");
+	require_once("XTMLTableSupport.class.php");
 	
 	/**
 	 *
 	 */
 	class cTagLib
-		extends PistolTag
+		extends XTMLTag
 	{
 		private $tables;
 		private $tablesIndex;
@@ -26,9 +50,9 @@
 		/**
 		 * @ignore
 		 */
-		function cTagLib($pistol)
+		function cTagLib($xtml)
 		{
-			parent::PistolTag($pistol);
+			parent::XTMLTag($xtml);
 			
 			$this->tables = array();
 			$this->tablesIndex = 0;
@@ -47,10 +71,10 @@
 		 */
 		function copyright()
 		{
-			return "Core - The PiSToL Core Tag Library\n" .
+			return "Core - The XTML Core Tag Library\n" .
 				"Copyright 2005, 2006 by John Allen and others (see AUTHORS file for additional info).\n" .
 				"Released under the GNU GPL v2\n" .
-				"http://pistol.classesarecode.net/"
+				"http://xtml.classesarecode.net/"
 				;
 		}
 
@@ -83,10 +107,10 @@
 		 */
 		function c_colon_include($element)
 		{
-			$file = $this->pistol->_getAttributeOrBody($element, "file");
-			$pistol = new Pistol($file); 
+			$file = $this->xtml->_getAttributeOrBody($element, "file");
+			$xtml = new XTMLProcessor($file); 
 			
-			return $pistol->doinclude();
+			return $xtml->doinclude();
 		}
 		
 		/**
@@ -95,9 +119,9 @@
 		function c_colon_set($element)
 		{
 			$var = $element->getAttribute("var");
-			$value = $this->pistol->_getAttributeOrBody($element, "value", PF_DISCARD_WS_TEXT_NODES | PF_EVALUATE);
+			$value = $this->xtml->_getAttributeOrBody($element, "value", PF_DISCARD_WS_TEXT_NODES | PF_EVALUATE);
 
-			$this->pistol->setVar($var, $value);
+			$this->xtml->setVar($var, $value);
 			
 			return "";
 		}
@@ -116,7 +140,7 @@
 				{
 					case XML_ELEMENT_NODE:
 					{
-						$a[] = $this->pistol->processElement($child, PF_DISCARD_WS_TEXT_NODES | PF_EVALUATE);
+						$a[] = $this->xtml->processElement($child, PF_DISCARD_WS_TEXT_NODES | PF_EVALUATE);
 					}
 					
 					default:
@@ -153,13 +177,13 @@
 		 */
 		function c_colon_preview($element)
 		{
-			if ($this->pistol->isPreviewModeEnabled())
+			if ($this->xtml->isPreviewModeEnabled())
 			{
-				return $this->pistol->process($element->firstChild);
+				return $this->xtml->process($element->firstChild);
 			}
 			else
 			{
-				return $this->pistol->processElse($element->firstChild);
+				return $this->xtml->processElse($element->firstChild);
 			}
 		}
 
@@ -170,13 +194,13 @@
 		{
 			$var = $element->getAttribute("var");
 			
-			if ($this->pistol->hasData($var))
+			if ($this->xtml->hasData($var))
 			{
-				return $this->pistol->process($element->firstChild);
+				return $this->xtml->process($element->firstChild);
 			}
 			else
 			{
-				return $this->pistol->processElse($element->firstChild);
+				return $this->xtml->processElse($element->firstChild);
 			}
 		}
 
@@ -188,14 +212,14 @@
 			$method = $this->iftable[$element->getAttribute("op")];
 
 			if ($this->$method(
-				$this->pistol->evaluate($element->getAttribute("lvalue")), 
-				$this->pistol->evaluate($element->getAttribute("rvalue"))))
+				$this->xtml->evaluate($element->getAttribute("lvalue")), 
+				$this->xtml->evaluate($element->getAttribute("rvalue"))))
 			{
-				return $this->pistol->process($element->firstChild);
+				return $this->xtml->process($element->firstChild);
 			}
 			else
 			{
-				return $this->pistol->processElse($element->firstChild);
+				return $this->xtml->processElse($element->firstChild);
 			}
 		}
 
@@ -205,7 +229,7 @@
 		function c_colon_table($element)
 		{
 			$output = "";
-			$this->tables[$this->tablesIndex++] = new PistolTableSupport();
+			$this->tables[$this->tablesIndex++] = new XTMLTableSupport();
 			$table = $this->getTable();
 			
 			$rowClasses = $element->getAttribute("row-classes");
@@ -216,8 +240,8 @@
 				$table->setRowClasses(explode(",", $rowClasses));
 			}
 			
-			$output .= $this->pistol->_totext($element);
-			$output .= $this->pistol->process($element->firstChild);
+			$output .= $this->xtml->_totext($element);
+			$output .= $this->xtml->process($element->firstChild);
 			$output .= "</table>";
 			
 			unset($this->tables[--$this->tablesIndex]);
@@ -262,8 +286,8 @@
 				}
 			}
 			
-			$output .= $this->pistol->_totext($element);
-			$output .= $this->pistol->process($element->firstChild);
+			$output .= $this->xtml->_totext($element);
+			$output .= $this->xtml->process($element->firstChild);
 			$output .= "</tr>";
 			
 			if ($colClasses)
@@ -305,8 +329,8 @@
 				}
 			}
 			
-			$output .= $this->pistol->_totext($element);
-			$output .= $this->pistol->process($element->firstChild);
+			$output .= $this->xtml->_totext($element);
+			$output .= $this->xtml->process($element->firstChild);
 			$output .= "</td>";
 			
 			if ($row)
@@ -340,28 +364,28 @@
 			}
 			else if ($data{0} == '$')
 			{
-				$data = $this->pistol->evaluate($data);
+				$data = $this->xtml->evaluate($data);
 			}
 
 			$firstChild = $element->firstChild;
-			$previousValue = $this->pistol->evaluate($asname);
+			$previousValue = $this->xtml->evaluate($asname);
 
 			if (is_array($data))
 			{
 				// array support for loops			
 				foreach ($data as $key => $tmp)
 				{
-					$this->pistol->pushVar($asname, $tmp);
+					$this->xtml->pushVar($asname, $tmp);
 					
 					if ($limit && $count++ == $limit)
 					{
 						break;
 					}
 					
-					$this->pistol->pushVar("#$asname", $key);
-					$output .= $this->pistol->process($firstChild);
-					$this->pistol->popVar("#$asname");
-					$this->pistol->popVar($asname);
+					$this->xtml->pushVar("#$asname", $key);
+					$output .= $this->xtml->process($firstChild);
+					$this->xtml->popVar("#$asname");
+					$this->xtml->popVar($asname);
 				}
 			}
 			else if (gettype($data) == "resource")
@@ -378,8 +402,8 @@
 							break;
 						}
 					
-						$this->pistol->setVar($asname, $tmp);
-						$output .= $this->pistol->process($firstChild);
+						$this->xtml->setVar($asname, $tmp);
+						$output .= $this->xtml->process($firstChild);
 					}
 				}
 				else if ($type == "pgsql result")
@@ -392,13 +416,13 @@
 							break;
 						}
 					
-						$this->pistol->setVar($asname, $tmp);
-						$output .= $this->pistol->process($firstChild);
+						$this->xtml->setVar($asname, $tmp);
+						$output .= $this->xtml->process($firstChild);
 					}
 				}
 			}
 
-			$this->pistol->setVar($asname, $previousValue);
+			$this->xtml->setVar($asname, $previousValue);
 			 			
 			return $output;
 		}
@@ -408,7 +432,7 @@
 		 */
 		function c_colon_redirect($element)
 		{
-			$to = $value = $this->pistol->_getAttributeOrBody($element, "to");
+			$to = $value = $this->xtml->_getAttributeOrBody($element, "to");
 			header("Location: $to");
 		}
 		
@@ -417,8 +441,8 @@
 		 */
 		function c_colon_out($element)
 		{
-			$value = $this->pistol->_getAttributeOrBody($element);
-			return $this->pistol->evaluate($value);
+			$value = $this->xtml->_getAttributeOrBody($element);
+			return $this->xtml->evaluate($value);
 		}
 
 		/**

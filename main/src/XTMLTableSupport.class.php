@@ -35,93 +35,74 @@
 	 * 
 	 */
 
+	require_once("XTMLRowSupport.class.php");
+
 	/**
-	 *
+	 * 
 	 */
-	class i18nTagLib
-		extends XTMLTag
+	class XTMLTableSupport
 	{
-		private $lang;
+		var $rowClasses;
+		var $rowCount;
+		var $row;
 		
 		/**
-		 * @ignore
+		 * 
 		 */
-		function i18nTagLib($xtml)
+		function XTMLTableSupport()
 		{
-			parent::XTMLTag($xtml);
-			
-			// Set language, default to en (English)
-			$this->lang = isset($_REQUEST['lang']) ? $_REQUEST['lang']:"value";
-		}
-
-		/**
-		 * @ignore
-		 */
-		function copyright()
-		{
-			return "i18n - The XTML i18n Tag Library\n" .
-				"Copyright 2005, 2006 by John Allen and others (see AUTHORS file for additional info).\n" .
-				"Released under the GNU GPL v2";
-		}
-
-		/**
-		 * @ignore
-		 */
-		function getlang()
-		{
-			return $this->lang;
-		}
-		
-		/**
-		 * @ignore
-		 */
-		function setlang($lang)
-		{
-			$this->lang = $lang;
+			$this->rowClasses = null;
+			$this->rowCount = 0;
+			$this->row = new XTMLRowSupport();
 		}
 		
 		/**
 		 * 
 		 */
-		function i18n_colon_setlang($element)
+		function getRow()
 		{
-			$value = $this->xtml->_getAttributeOrBody($element);
-			$lang = $this->xtml->evaluate($value);
-			$this->setLang($lang);
+			return $this->row;
 		}
 		
 		/**
 		 * 
 		 */
-		function i18n_colon_getlang($element)
+		function setColumnCount($count = 0)
 		{
-			return $this->getlang();
+			$this->row->setColumnCount($count);
 		}
 		
 		/**
 		 * 
 		 */
-		function i18n_colon_message($element)
+		function setRowClasses($classes)
 		{
-			// TODO: implement translate logic
-			$maxlen = $element->getAttribute("maxlen");
-			$ellipses = $element->getAttribute("ellipses") == "true" ? true:false;
-			$text = gettext($this->xtml->_getAttributeOrBody($element, "value", 0));
-			$text = $this->xtml->evaluate($text);
-			
-			if ($maxlen && strlen($text) > $maxlen)
-			{
-				if ($ellipses)
-				{
-					$text = substr($text, 0, $maxlen-3) . "&hellip;";
-				}
-				else
-				{
-					$text = substr($text, 0, $maxlen);
-				}
-			}
+			$this->rowClasses = $classes;
+		}
+		
+		/**
+		 * 
+		 */
+		function getRowClasses()
+		{
+			return $this->rowClasses; 
+		}
+		
+		/**
+		 * 
+		 */
+		function incrementRowCount()
+		{
+			$this->rowCount++;
+		}
 
-			return $text;
+		/**
+		 * 
+		 */
+		function getRowCount()
+		{
+			return $this->rowCount;
 		}
 	}
+	
 ?>

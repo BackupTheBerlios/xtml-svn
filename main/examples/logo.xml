@@ -1,20 +1,20 @@
 <?xml version="1.0"?>
 <!--
- $Author:jallen $
- $LastChangedDate:2006-01-22 15:22:28Z $
- $LastChangedRevision:138 $
- $LastChangedBy:jallen $
- $HeadURL:svn+ssh://svn.classesarecode.net/var/svn/pstl/main/examples/logo.pistol.xml $
+ $Author$
+ $LastChangedDate$
+ $LastChangedRevision$
+ $LastChangedBy$
+ $HeadURL$
  
- PiSToL - PHP Standard Tag Library
+ XTML - PHP Standard Tag Library
  Copyright 2005, 2006 by John Allen and others (see AUTHORS file for additional info).
  Released under the GNU GPL v2
  -->
 <xml
-	xmlns:c = "http://www.classesarecode.net/pistol/core"
-	xmlns:e = "http://www.classesarecode.net/pistol/entity"
-	xmlns:i18n = "http://www.classesarecode.net/pistol/i18n"
-	xmlns:md = "http://www.classesarecode.net/pistol/md">
+	xmlns:c = "http://www.classesarecode.net/xtml/core"
+	xmlns:e = "http://www.classesarecode.net/xtml/entity"
+	xmlns:i18n = "http://www.classesarecode.net/xtml/i18n"
+	xmlns:md = "http://www.classesarecode.net/xtml/md">
 	<div id="logo">
 		<c:preview>
 			<img src="../images/ClassesAreCodeLogo-1.png" width="100%"/>
