@@ -102,7 +102,7 @@
     	/**
     	 * 
     	 */
-    	function getToken()
+    	private function getToken()
     	{
     		while ($this->pos < $this->expressionLen &&
     			$this->expression{$this->pos} == ' ')
@@ -266,14 +266,81 @@
     	/**
     	 * 
     	 */
-    	function _evaluate()
+    	private function expected($tokens, $found)
     	{
-    		while ($tok = $this->getToken())
+    		die("Expected %, found $found");
+    	}
+    	
+    	/**
+    	 * 
+    	 */
+    	private function expect($tokens)
+    	{
+    		$tok = $this->getToken();
+    		
+    		if (!isset($tokens[$tok]))
     		{
-    			//print "$tok[0]\n";
-    			
-    			if ($tok == TOK_EMPTY)
+    			$this->expected($tokens, $tok);
+    		}
+    		
+    		return $tok;
+    	}
+    	
+    	/**
+    	 * 
+    	 */
+    	private function _evaluate_group()
+    	{
+    		while (($tok = $this->expect(
+    			array(
+    				TOK_IDENT => TOK_IDENT, 
+    				TOK_LPAREN => TOK_LPAREN, 
+    				TOK_RPAREN => TOK_RPAREN, 
+    				TOK_EMPTY => TOK_EMPTY))) != TOK_EMPTY)
+    		{
+    			switch ($tok)
     			{
+    				case TOK_IDENT:
+    				{
+    				}
+    				break;
+    				
+    				case TOK_LPAREN:
+    				{
+    					$this->_evaluate_group();
+    				}
+    				break;
+    				
+    				case TOK_RPAREN:
+    				{
+    				}
+    				break;
+    			}
+    		}
+    	}
+
+    	/**
+    	 * 
+    	 */
+    	private function _evaluate()
+    	{
+    		while (($tok = $this->expect(
+    			array(
+    				TOK_IDENT => TOK_IDENT, 
+    				TOK_LPAREN => TOK_LPAREN, 
+    				TOK_EMPTY => TOK_EMPTY))) != TOK_EMPTY)
+    		{
+    			switch ($tok)
+    			{
+    				case TOK_IDENT:
+    				{
+    				}
+    				break;
+    				
+    				case TOK_LPAREN:
+    				{
+    					$this->_evaluate_group();
+    				}
     				break;
     			}
     		}
@@ -295,6 +362,9 @@
 	print "Starting\n";
 	$p = new XTMLProcessor();
 	$e = new XTMLExpressionEvaluator($p);
+	
+	$e->evaluate("(a > 10 && a < 20) || s=='CPN'");
+	die();
 	
 	$started = microtime(true);
 	$iterations = 1000;
