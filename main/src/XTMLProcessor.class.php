@@ -520,6 +520,7 @@
 						
 						// TODO: Update to add specified DOCTYPE (XHTML, XML)
 						$output = 
+							"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" .
 							"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\"\n" . 
 							"	\"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n\n" .
 							"<!--\nThis page written using XTML, eXtensible Tag Markup Language\n\n" .
@@ -629,7 +630,7 @@
 							
 							if ($element->tagName == 'html')
 							{
-								$output .= " encoding=\"UTF-8\" xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\"";
+								$output .= " xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\"";
 							} 
 							
 							if ($element->hasAttributes())
