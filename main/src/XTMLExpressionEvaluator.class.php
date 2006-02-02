@@ -289,8 +289,46 @@
     	/**
     	 * 
     	 */
+    	private function _evaluate_ident($name)
+    	{
+    		$value = "";
+
+    		while (($tok = $this->expect(
+    			array(
+    				TOK_IDENT => TOK_IDENT, 
+    				TOK_LPAREN => TOK_DOT, 
+    				TOK_RPAREN => TOK_RPAREN, 
+    				TOK_EMPTY => TOK_EMPTY))) != TOK_EMPTY)
+    		{
+    			switch ($tok)
+    			{
+    				case TOK_IDENT:
+    				{
+    				}
+    				break;
+    				
+    				case TOK_LPAREN:
+    				{
+    					$this->_evaluate_group();
+    				}
+    				break;
+    				
+    				case TOK_RPAREN:
+    				{
+    					// evaluation finished.
+    				}
+    				break;
+    			}
+    		}
+    	}
+
+    	/**
+    	 * 
+    	 */
     	private function _evaluate_group()
     	{
+    		$value = "";
+
     		while (($tok = $this->expect(
     			array(
     				TOK_IDENT => TOK_IDENT, 
@@ -313,6 +351,7 @@
     				
     				case TOK_RPAREN:
     				{
+    					// evaluation finished.
     				}
     				break;
     			}
@@ -324,6 +363,8 @@
     	 */
     	private function _evaluate()
     	{
+    		$value = "";
+    		
     		while (($tok = $this->expect(
     			array(
     				TOK_IDENT => TOK_IDENT, 
