@@ -17,9 +17,9 @@
 	xmlns:md = "http://www.classesarecode.net/xtml/md">
 	<div id="logo">
 		<c:preview>
-			<img src="../images/ClassesAreCodeLogo-1.png"/>
+			<img src="../images/ClassesAreCodeLogo-1.png" alt="Logo"/>
 		<c:else/>
-			<img src="../../images/ClassesAreCodeLogo-1.png"/>
+			<img src="../../images/ClassesAreCodeLogo-1.png" alt="Logo"/>
 		</c:preview>
 	</div>
 </xml>

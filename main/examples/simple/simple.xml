@@ -54,7 +54,6 @@
 		<c:else/>
 			<c:include file="../logo.xml"/>
 		</c:preview>
-		<br/>
 		<table>
 			<tr>
 				<td><md:text>This is a simple example of using the *XTML* tag library</md:text></td>
