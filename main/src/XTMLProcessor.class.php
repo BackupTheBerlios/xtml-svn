@@ -522,7 +522,7 @@
 						$output = 
 							"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\"\n" . 
 							"	\"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n\n" .
-							"<!--\nGenerated using XTML, the PHP Standard Tag Library\n\n" .
+							"<!--\nGenerated using XTML-Lib, eXtensible Tag Markup Language\n\n" .
 							"The following tag libraries were used to render this document\n" .
 							$this->copyrights .
 							"\nRendering took " . sprintf("%0.2f", $renderTime) . "ms\n" .
