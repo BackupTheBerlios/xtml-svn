@@ -44,7 +44,7 @@
 			<link href="../examples.css" rel="stylesheet" type="text/css"/>
 		</c:preview>
 		<meta http-equiv="expires" content="0"/>
-		<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=iso-8859-1"/>
+		<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
 	<title><c:out value="${title}"/></title>
 	</head>
 	<body>
