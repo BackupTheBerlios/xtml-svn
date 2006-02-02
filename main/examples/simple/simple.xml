@@ -112,23 +112,25 @@
 			</c:array>
 		</c:set>
 		
-		<hr/>
-		<h1>An unordered list</h1>
-		<html:ul value="${days}"/>
-
-		<hr/>
-		<h1>An unordered list</h1>
-		<ul>
-			<html:li foreach="${days}">${@}</html:li>
-		</ul>
-
-		<hr/>
-		<h1>An ordered list</h1>
-		<html:ol member="name">${languages}</html:ol>
-
-		<hr/>
-		<h1>A selection</h1>
-		<html:select value="${days}" name="day" default="Friday"/>
+		<form action="redisplay" method="post">
+			<hr/>
+			<h1>An unordered list</h1>
+			<html:ul value="${days}"/>
+	
+			<hr/>
+			<h1>An unordered list</h1>
+			<ul>
+				<html:li foreach="${days}">${@}</html:li>
+			</ul>
+	
+			<hr/>
+			<h1>An ordered list</h1>
+			<html:ol member="name">${languages}</html:ol>
+	
+			<hr/>
+			<h1>A selection</h1>
+			<html:select value="${days}" name="day" default="Friday"/>
+		</form>
 
 		<hr/>
 		<h1>A truncated string</h1>
