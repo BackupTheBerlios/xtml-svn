@@ -74,6 +74,14 @@
 				return $str;
 			}
 		}
+                /**
+                 *
+                 */
+                function e_colon_copy($element)
+                {
+                        return $this->_stringRepeat($element, "&copy;");
+                }
+
 		/**
 		 * 
 		 */
