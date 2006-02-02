@@ -129,7 +129,7 @@
 	
 			<hr/>
 			<h1>A selection</h1>
-			<html:select value="${days}" name="day" default="Friday"/>
+			<p><html:select value="${days}" name="day" default="Friday"/></p>
 		</form>
 
 		<hr/>
