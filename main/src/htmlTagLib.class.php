@@ -71,7 +71,7 @@
 				$output .= "<option ";
 				if ($item == $default)
 				{
-					$output .= "SELECTED";
+					$output .= "selected=\"true\"";
 				}
 				$output .= ">$item</option>";
 			}
