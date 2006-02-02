@@ -629,7 +629,7 @@
 							
 							if ($element->tagName == 'html')
 							{
-								$output .= " xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\"";
+								$output .= " encoding=\"UTF-8\" xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\"";
 							} 
 							
 							if ($element->hasAttributes())
