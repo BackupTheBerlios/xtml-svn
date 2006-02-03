@@ -68,6 +68,7 @@
 	);
 
 	$xtml->setVar("languages", $a);
+	$xtml->setVar("logo", "logo.xml");
 
 	$xtml->render();
 ?>

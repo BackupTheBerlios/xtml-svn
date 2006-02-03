@@ -108,6 +108,9 @@
 		function c_colon_include($element)
 		{
 			$file = $this->xtml->_getAttributeOrBody($element, "file");
+			
+			print "$file"; die();
+			
 			$xtml = new XTMLProcessor($file, null, $this->xtml); 
 			
 			return $xtml->doinclude();
