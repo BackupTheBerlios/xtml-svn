@@ -161,7 +161,7 @@
 		/**
 		 * 
 		 */
-		function _totext($s)
+		function _totext($s, $nobody = false)
 		{
 			if (is_object($s))
 			{
@@ -190,7 +190,14 @@
 						}
 					}
 					
-					$text .= ">";
+					if ($nobody)
+					{
+						$text .= ">";
+					}
+					else
+					{
+						$text .= "/>";
+					}
 				}
 				else
 				{
@@ -665,25 +672,25 @@
 						}
 						else
 						{
-							$output .= "<" . $element->tagName;
-							
-							if ($element->tagName == 'html')
-							{
-								$output .= " xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\"";
-							} 
-							
-							$output .= $this->_totext($element);
-							 
 							if ($this->isNoBodyTag($element->tagName))
 							{
-								$output .= "/>";
+								$output .= $this->_totext($element, true);
 							}
 							else
 							{
-								$output .= ">";
+								if ($element->tagName == 'html')
+								{
+									$output .= "<" . $element->tagName;
+									$output .= " xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\">";
+								}
+								else
+								{
+									$output .= $this->_totext($element);
+								}
+								
 								$output .= $this->process($element->firstChild, $flags);
 								$output .= "</" . $element->tagName . ">";
-							}
+							} 
 						}
 					}
 				}

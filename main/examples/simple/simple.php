@@ -45,9 +45,10 @@
 		var $name;
 		var $description;
 		
-		function Language($name, $description)
+		function Language($name, $description, $cssClass="main")
 		{
 			$this->name = $name;
+			$this->cssClass = $cssClass;
 			$this->description = $description;
 		}
 	}
