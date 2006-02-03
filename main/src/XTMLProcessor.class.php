@@ -189,14 +189,14 @@
 								$this->evaluate($attr->nodeValue, XTFLAG_EVALUATE) . "\"";
 						}
 					}
-					
+
 					if ($nobody)
 					{
-						$text .= ">";
+						$text .= " />";
 					}
 					else
 					{
-						$text .= "/>";
+						$text .= ">";
 					}
 				}
 				else
