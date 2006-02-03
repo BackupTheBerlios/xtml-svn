@@ -185,7 +185,8 @@
 						
 						while ($attr = $attributes->item($i++))
 						{
-							$text .= " " . $attr->nodeName . "=\"" . $attr->nodeValue . "\"";
+							$text .= " " . $attr->nodeName . "=\"" . 
+								$this->evaluate($attr->nodeValue, PF_EVALUATE) . "\"";
 						}
 					}
 					
