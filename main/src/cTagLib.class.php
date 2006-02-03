@@ -109,8 +109,6 @@
 		{
 			$file = $this->xtml->_getAttributeOrBody($element, "file");
 			
-			print "$file"; die();
-			
 			$xtml = new XTMLProcessor($file, null, $this->xtml); 
 			
 			return $xtml->doinclude();
