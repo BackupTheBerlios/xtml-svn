@@ -50,9 +50,9 @@
 	<body>
 		<!-- include the logo.xml -->
 		<c:preview>
-			<c:include file="../examples/${logo}"/>
+			<c:include file="../examples/${logo}.xml"/>
 		<c:else/>
-			<c:include file="../${logo}"/>
+			<c:include file="../${logo}.xml"/>
 		</c:preview>
 		<table>
 			<tr>

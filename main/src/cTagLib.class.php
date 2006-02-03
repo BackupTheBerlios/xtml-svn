@@ -109,6 +109,11 @@
 		{
 			$file = $this->xtml->_getAttributeOrBody($element, "file");
 			
+			if ($file == null || $file == "")
+			{
+				print "<pre>Include file is null</pre>"; die();
+			}
+			
 			$xtml = new XTMLProcessor($file, null, $this->xtml); 
 			
 			return $xtml->doinclude();
