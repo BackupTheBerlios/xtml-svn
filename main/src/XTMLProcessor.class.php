@@ -59,18 +59,18 @@
 		/**
 		 * 
 		 */
-		function __construct($document = null, $script = null, $parent = null)
+		function __construct($document = null, $script = null, $master = null)
 		{
 			$this->document = $document;
 			$this->script = $script;
 			$this->setPageLocation();
 			
-			if ($parent)
+			if ($master)
 			{
-				$this->previewMode = $parent->previewMode;
-				$this->classCache = $parent->classCache;
-				$this->data = $parent->data;
-				$this->noBodyTags = $parent->noBodyTags;
+				$this->previewMode = $master->previewMode;
+				$this->classCache = $master->classCache;
+				$this->data = $master->data;
+				$this->noBodyTags = $master->noBodyTags;
 			}
 			else
 			{
