@@ -41,9 +41,9 @@
 		require_once $file;
  	}
 
-	define('PF_DISCARD_WS_TEXT_NODES', 	0x00000001);
-	define('PF_TRIM', 					0x00000002);
-	define('PF_EVALUATE', 				0x00000004);
+	define('XTFLAG_DISCARD_WS_TEXT_NODES', 	0x00000001);
+	define('XTFLAG_TRIM', 					0x00000002);
+	define('XTFLAG_EVALUATE', 				0x00000004);
  	
 	class XTMLProcessor
 	{
@@ -144,7 +144,7 @@
 		 * 
 		 * Supports variable expansion.
 		 */
-		function _getAttributeOrBody($element, $attribute="value", $flags = PF_EVALUATE)
+		function _getAttributeOrBody($element, $attribute="value", $flags = XTFLAG_EVALUATE)
 		{
 			if ($element->hasAttribute($attribute))
 			{
@@ -186,7 +186,7 @@
 						while ($attr = $attributes->item($i++))
 						{
 							$text .= " " . $attr->nodeName . "=\"" . 
-								$this->evaluate($attr->nodeValue, PF_EVALUATE) . "\"";
+								$this->evaluate($attr->nodeValue, XTFLAG_EVALUATE) . "\"";
 						}
 					}
 					
@@ -351,9 +351,9 @@
 		/**
 		 * 
 		 */
-		function evaluate($text, $flags = PF_EVALUATE)
+		function evaluate($text, $flags = XTFLAG_EVALUATE)
 		{
-			if (XTMLProcessor::isFlagSet($flags, PF_DISCARD_WS_TEXT_NODES))
+			if (XTMLProcessor::isFlagSet($flags, XTFLAG_DISCARD_WS_TEXT_NODES))
 			{
 				if (trim($text) == "")
 				{
@@ -361,7 +361,7 @@
 				}
 			}
 			
-			if (XTMLProcessor::isFlagSet($flags, PF_EVALUATE))
+			if (XTMLProcessor::isFlagSet($flags, XTFLAG_EVALUATE))
 			{
 				return $this->_evaluate($text, $flags);
 			}
@@ -469,7 +469,7 @@
 					{
 						$child = $this->doc->documentElement->firstChild;
 						$output .= "<!-- " . $this->document . " STARTS -->\n";
-						$output .= $this->process($child, PF_EVALUATE);
+						$output .= $this->process($child, XTFLAG_EVALUATE);
 						$output .= "<!-- " . $this->document . " ENDS -->\n";
 					}
 					else
@@ -548,7 +548,7 @@
 						}
 						
 						$output .= "<!-- " . $this->document . " STARTS -->\n";
-						$output .= $this->process($this->doc->documentElement, PF_EVALUATE);
+						$output .= $this->process($this->doc->documentElement, XTFLAG_EVALUATE);
 						$output .= "<!-- " . $this->document . " ENDS -->\n";
 						$finished = microtime(true);
 						$renderTime = ($finished - $started) * 1000;
@@ -622,7 +622,7 @@
 		/**
 		 *
 		 */
-		function processElement($element, $flags = PF_EVALUATE)
+		function processElement($element, $flags = XTFLAG_EVALUATE)
 		{
 			$output = "";
 			
@@ -739,7 +739,7 @@
 		/**
 		 *
 		 */
-		function process($child, $flags = PF_EVALUATE)
+		function process($child, $flags = XTFLAG_EVALUATE)
 		{
 			$output = "";
 			
@@ -771,7 +771,7 @@
 		/**
 		 *
 		 */
-		function processElse($child, $flags = PF_EVALUATE)
+		function processElse($child, $flags = XTFLAG_EVALUATE)
 		{
 			$output = "";
 			

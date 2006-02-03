@@ -119,7 +119,7 @@
 		function c_colon_set($element)
 		{
 			$var = $element->getAttribute("var");
-			$value = $this->xtml->_getAttributeOrBody($element, "value", PF_DISCARD_WS_TEXT_NODES | PF_EVALUATE);
+			$value = $this->xtml->_getAttributeOrBody($element, "value", XTFLAG_DISCARD_WS_TEXT_NODES | XTFLAG_EVALUATE);
 
 			$this->xtml->setVar($var, $value);
 			
@@ -140,7 +140,7 @@
 				{
 					case XML_ELEMENT_NODE:
 					{
-						$a[] = $this->xtml->processElement($child, PF_DISCARD_WS_TEXT_NODES | PF_EVALUATE);
+						$a[] = $this->xtml->processElement($child, XTFLAG_DISCARD_WS_TEXT_NODES | XTFLAG_EVALUATE);
 					}
 					
 					default:
