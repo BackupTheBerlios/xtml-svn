@@ -59,27 +59,38 @@
 		/**
 		 * 
 		 */
-		function __construct($document = null, $script = null)
+		function __construct($document = null, $script = null, $parent = null)
 		{
 			$this->document = $document;
 			$this->script = $script;
 			$this->setPageLocation();
 			
-			$this->previewMode = false;
-			$this->classCache = array();
-			$this->data = array();
+			if ($parent)
+			{
+				$this->previewMode = $parent->previewMode;
+				$this->classCache = $parent->classCache;
+				$this->data = $parent->data;
+				$this->noBodyTags = $parent->noBodyTags;
+			}
+			else
+			{
+				$this->previewMode = false;
+				$this->classCache = array();
+				$this->data = array();
+	
+				// TODO: expand to include the complete list of HTML tags
+				// that do not contain a body
+				$this->noBodyTags = array(
+					"link" => true,
+					"img" => true
+					);
+	
+				// TODO: remove, when php:ini() tag is implemented				
+				$this->setVar("include_path", ini_get('include_path'));
+			}
+
 			$this->doc = new DOMDocument();
 			$this->doc->preserveWhiteSpace = true;
-
-			// TODO: expand to include the complete list of HTML tags
-			// that do not contain a body
-			$this->noBodyTags = array(
-				"link" => true,
-				"img" => true
-				);
-
-			// TODO: remove, when php:ini() tag is implemented				
-			$this->setVar("include_path", ini_get('include_path'));
 		}
 
 		/**

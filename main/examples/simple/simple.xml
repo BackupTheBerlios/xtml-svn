@@ -118,9 +118,9 @@
 			<html:ul value="${days}"/>
 	
 			<hr/>
-			<h1>An unordered list</h1>
+			<h1>An unordered list (using html:li)</h1>
 			<ul>
-				<html:li foreach="${days}">${@}</html:li>
+				<html:li foreach="${languages}">${@.name}</html:li>
 			</ul>
 	
 			<hr/>
