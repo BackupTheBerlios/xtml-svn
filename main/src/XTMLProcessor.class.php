@@ -672,16 +672,7 @@
 								$output .= " xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\"";
 							} 
 							
-							if ($element->hasAttributes())
-							{
-								$attributes = $element->attributes; 
-								$i = 0;
-								
-								while ($attr = $attributes->item($i++))
-								{
-									$output .= " " . $attr->nodeName . "=\"" . $attr->nodeValue . "\"";
-								}
-							}
+							$output .= $this->_totext($element);
 							 
 							if ($this->isNoBodyTag($element->tagName))
 							{
