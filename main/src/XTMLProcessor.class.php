@@ -495,7 +495,30 @@
 				
 			return $output;
 		}
-		
+
+		/**
+		 * 
+		 */
+		function indent($level, $text)
+		{
+			$output ="";
+			$lines = explode("\n", $text);
+			
+			foreach ($lines as $line)
+			{
+				if (trim($line) == "")
+				{
+					$output .= "\n";
+				}
+				else
+				{
+					$output .= str_repeat("\t", $level) . $line . "\n";
+				}
+			}
+			
+			return $output;
+		}
+				
 		/**
 		 * 
 		 */
@@ -534,10 +557,14 @@
 							"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" .
 							"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\"\n" . 
 							"	\"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n\n" .
-							"<!--\nThis page written using XTML, eXtensible Tag Markup Language\n\n" .
-							"    The following tag libraries were used to render this document\n" .
-							$this->copyrights .
-							"\n  Rendering took " . sprintf("%0.2f", $renderTime) . "ms\n" .
+							"<!--\n" . 
+							$this->indent(1, 
+								"This page written in eXtensible Tag Markup Language\n\n" .
+								"The following tag libraries were used to render this document\n" .
+								$this->copyrights . "\n" .
+								"Rendering took " . 
+									sprintf("%0.4f", $renderTime / 1000) . "s, " .
+									sprintf("%0.2f", $renderTime) . "ms") .
 							"-->\n\n" .
 							$output;
 					}
