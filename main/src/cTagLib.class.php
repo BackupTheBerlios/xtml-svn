@@ -108,6 +108,7 @@
 		function c_colon_include($element)
 		{
 			$file = $this->xtml->_getAttributeOrBody($element, "file");
+			$attrfile = $element->getAttribute("file");
 			
 			if ($file == null || $file == "")
 			{

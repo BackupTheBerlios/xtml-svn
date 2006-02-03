@@ -275,14 +275,12 @@
 							return $this->_evaluate(end($this->data[$key[0]]));
 						}
 					}
-				}
 				
-				return "";
+					return "";
+				}
 			}
-			else
-			{
-				return $key;
-			}
+
+			return $key;
 		}
 
 		/**
