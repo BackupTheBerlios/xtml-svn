@@ -38,28 +38,31 @@
 	ini_set('include_path', ".:" . ini_get('include_path'));
 	require_once("XTMLProcessor.class.php");
 	
-	$tokid = 0;
-	define('TOK_EMPTY', $tokid++);
-	define('TOK_IDENT', $tokid++);
-	define('TOK_NUMBER', $tokid++);
-	define('TOK_LPAREN', $tokid++);
-	define('TOK_RPAREN', $tokid++);
-	define('TOK_DOT', $tokid++);
-	define('TOK_LT', $tokid++);
-	define('TOK_LTE', $tokid++);
-	define('TOK_GT', $tokid++);
-	define('TOK_GTE', $tokid++);
-	define('TOK_EQ', $tokid++);
-	define('TOK_NEQ', $tokid++);
-	define('TOK_NOT', $tokid++);
-	define('TOK_AND', $tokid++);
-	define('TOK_OR', $tokid++);
-	define('TOK_BITAND', $tokid++);
-	define('TOK_BITOR', $tokid++);
-	define('TOK_COMPLEMENT', $tokid++);
-	define('TOK_LBRACKET', $tokid++);
-	define('TOK_RBRACKET', $tokid++);
-	define('TOK_STRING', $tokid++);
+	define('TOK_EMPTY', "empty");
+	define('TOK_IDENT', "identifier");
+	define('TOK_WS', "whitespace");
+	define('TOK_NUMBER', "number");
+	define('TOK_LPAREN', "(");
+	define('TOK_RPAREN', ")");
+	define('TOK_DOT_OPERATOR', ".");
+	define('TOK_ARROW_OPERATOR', "->");
+	define('TOK_PLUS', "+");
+	define('TOK_MINUS', "-");
+	define('TOK_LT', "<");
+	define('TOK_LTE', "<=");
+	define('TOK_GT', ">");
+	define('TOK_GTE', ">=");
+	define('TOK_EQ', "==");
+	define('TOK_NEQ', "!=");
+	define('TOK_NOT', "!");
+	define('TOK_AND', "&&");
+	define('TOK_OR', "||");
+	define('TOK_BIT__AND', "&");
+	define('TOK_BIT__OR', "|");
+	define('TOK_COMPLEMENT', "~");
+	define('TOK_LBRACKET', "[");
+	define('TOK_RBRACKET', "]");
+	define('TOK_STRING', "string");
 	
 	/**
 	 * 
@@ -89,7 +92,17 @@
 		/**
 		 * 
 		 */
-		public $value;
+		private $eaten;
+		
+		/**
+		 * 
+		 */
+		public $token;
+		
+		/**
+		 * 
+		 */
+		public $saved_token;
 		
 		/**
 		 * 
@@ -102,14 +115,43 @@
     	/**
     	 * 
     	 */
+    	private function peekToken()
+    	{
+    		$pos = $this->pos;
+    		$tok = $this->getToken();
+    		$this->eaten = $this->pos;
+    		$this->pos = $pos;
+    		
+    		return $tok;
+    	}
+    	
+    	/**
+    	 * 
+    	 */
+    	private function eatToken()
+    	{
+    		$this->pos = $this->eaten;
+    	}
+    	
+    	/**
+    	 * 
+    	 */
     	private function getToken()
     	{
-    		while ($this->pos < $this->expressionLen &&
-    			$this->expression{$this->pos} == ' ')
-    		{
-    			$this->pos++;
-    		}
+    		$tok = $this->_getToken();
     		
+    		//print $tok . ": " . $this->token . "\n";
+    		
+    		return $tok;
+    	}
+    	
+    	/**
+    	 * 
+    	 */
+    	private function _getToken()
+    	{
+			$this->token = "";
+			
     		if ($this->pos >= $this->expressionLen)
     		{
     			return TOK_EMPTY;
@@ -117,6 +159,28 @@
 
     		switch ($this->expression{$this->pos})
     		{
+    			case " ":
+    			case "\t":
+    			{
+    				$c = $this->expression{$this->pos};
+    				
+    				if ($c == ' ' || $c == '\t')
+    				{
+			    		while ($this->pos < $this->expressionLen &&
+			    			($c == ' ' || $c == '\t'))
+			    		{
+			    			$this->token .= $this->expression{$this->pos++};
+			    			
+			    			if ($this->pos < $this->expressionLen)
+			    			{
+			    				$c = $this->expression{$this->pos};
+			    			}
+			    		}
+			    		
+			    		return TOK_WS;
+    				}
+    			}
+    			
     			case '(':
     				$this->pos++;
     				return TOK_LPAREN;
@@ -139,7 +203,24 @@
     			
     			case '.':
     				$this->pos++;
-    				return TOK_DOT;
+    				return TOK_DOT_OPERATOR;
+    			break;
+    			
+    			case '-':
+    				$this->pos++;
+
+    				if ($this->expression{$this->pos} == '>')
+    				{
+   						$this->pos++;
+   						return TOK_ARROW_OPERATOR;
+    				}
+    				
+    				return TOK_MINUS;
+    			break;
+    			
+    			case '+':
+    				$this->pos++;
+    				return TOK_PLUS;
     			break;
     			
     			case '=':
@@ -163,7 +244,19 @@
    						return TOK_AND;
     				}
     				    				
-    				return TOK_BITAND;
+    				return TOK_BIT_AND;
+    			break;
+    			
+    			case '|':
+    				$this->pos++;
+    				
+    				if ($this->expression{$this->pos} == "|")
+    				{
+  						$this->pos++;
+   						return TOK_OR;
+    				}
+    				    				
+    				return TOK_BIT_OR;
     			break;
     			
     			case '!':
@@ -204,7 +297,6 @@
     			
     			case "'":
     			case "\"":
-    				$this->value = "";
     				$quot = $this->expression{$this->pos};
     				$this->pos++;
     				
@@ -212,11 +304,12 @@
 		    		{
 		    			if ($c == '\\')
 		    			{
-		    				$this->value .= $c; 
 		    				$c = $this->expression{$this->pos++};
+		    				$this->token .= $c; 
 		    			}
 		    			
-		    			$this->value .= $c;
+	    				$c = $this->expression{$this->pos++};
+		    			$this->token .= $c;
 		    		}
 
     				$this->pos++;
@@ -225,7 +318,6 @@
     			break;
     			
     			default:
-		    		$this->value = "";
     				$c = $this->expression{$this->pos};
     				
     				if (($c >= '0' && $c <= '9'))
@@ -233,7 +325,7 @@
 			    		while ($this->pos < $this->expressionLen &&
 			    			($c >= '0' && $c <= '9') || $c == '.')
 			    		{
-			    			$this->value .= $this->expression{$this->pos++};
+			    			$this->token .= $this->expression{$this->pos++};
 			    			
 			    			if ($this->pos < $this->expressionLen)
 			    			{
@@ -246,9 +338,14 @@
     				else
     				{
 			    		while ($this->pos < $this->expressionLen && 
-			    			$c != ' ')
+			    			(
+			    				($c >= 'A' && $c <= 'Z') ||
+			    				($c >= 'a' && $c <= 'z') ||
+			    				($c >= '0' && $c <= '9') ||
+			    				$c == '_'
+			    			))
 			    		{
-			    			$this->value .= $this->expression{$this->pos++};
+			    			$this->token .= $this->expression{$this->pos++};
 
 			    			if ($this->pos < $this->expressionLen)
 			    			{
@@ -266,9 +363,18 @@
     	/**
     	 * 
     	 */
-    	private function expected($tokens, $found)
+    	private function expected($tokens, $tok)
     	{
-    		die("Expected %, found $found");
+			print "Found " . $tok . "(" . $this->token . "), expected";
+			
+			foreach ($tokens as $key => $value)
+			{
+				print " $value";
+			}
+			
+			print "\n";
+			
+    		die();
     	}
     	
     	/**
@@ -286,101 +392,95 @@
     		return $tok;
     	}
     	
+		/**
+		 * 
+		 */
+		private function getValue($key)
+		{
+			return $this->xtml->_getVarWithArrayKey($key); 
+		}
+		 
     	/**
     	 * 
     	 */
-    	private function _evaluate_ident($name)
+    	private function getIdent()
     	{
-    		$value = "";
+    		$key = $this->_getIdent($index = array());
+    		
+    		return $this->getValue($key);
+    	}
+    	
+    	/**
+    	 * 
+    	 */
+    	private function _getIdent($index)
+    	{
+    		array_push($index, $this->token);
 
-    		while (($tok = $this->expect(
-    			array(
-    				TOK_IDENT => TOK_IDENT, 
-    				TOK_LPAREN => TOK_DOT, 
-    				TOK_RPAREN => TOK_RPAREN, 
-    				TOK_EMPTY => TOK_EMPTY))) != TOK_EMPTY)
+    		for (;;)
     		{
+    			$tok = $this->peekToken();
+    			
     			switch ($tok)
     			{
-    				case TOK_IDENT:
+    				case TOK_DOT_OPERATOR:
+    				case TOK_ARROW_OPERATOR:
     				{
+    					$this->eatToken();
+    					$tok = $this->peekToken();
+    					
+    					if ($tok == TOK_IDENT)
+    					{
+    						$this->eatToken();
+    						$tok = $this->_getIdent($index);
+    					}
     				}
     				break;
     				
-    				case TOK_LPAREN:
+    				case TOK_WS:
     				{
-    					$this->_evaluate_group();
+    					// ignore ws
+    					$this->eatToken();
     				}
     				break;
     				
-    				case TOK_RPAREN:
+    				default:
     				{
-    					// evaluation finished.
+    					return $index;
     				}
-    				break;
     			}
     		}
+    		
+    		return $index;
     	}
 
     	/**
     	 * 
     	 */
-    	private function _evaluate_group()
-    	{
-    		$value = "";
-
-    		while (($tok = $this->expect(
-    			array(
-    				TOK_IDENT => TOK_IDENT, 
-    				TOK_LPAREN => TOK_LPAREN, 
-    				TOK_RPAREN => TOK_RPAREN, 
-    				TOK_EMPTY => TOK_EMPTY))) != TOK_EMPTY)
-    		{
-    			switch ($tok)
-    			{
-    				case TOK_IDENT:
-    				{
-    				}
-    				break;
-    				
-    				case TOK_LPAREN:
-    				{
-    					$this->_evaluate_group();
-    				}
-    				break;
-    				
-    				case TOK_RPAREN:
-    				{
-    					// evaluation finished.
-    				}
-    				break;
-    			}
-    		}
-    	}
-
-    	/**
-    	 * 
-    	 */
-    	private function _evaluate()
+    	private function _evaluate($terminal = TOK_EMPTY)
     	{
     		$value = "";
     		
     		while (($tok = $this->expect(
     			array(
-    				TOK_IDENT => TOK_IDENT, 
-    				TOK_LPAREN => TOK_LPAREN, 
-    				TOK_EMPTY => TOK_EMPTY))) != TOK_EMPTY)
+    				TOK_EMPTY => "empty", 
+    				TOK_WS => "whitespace", 
+    				TOK_IDENT => "identifier", 
+    				TOK_LPAREN => "(",
+    				$terminal => $terminal))) != TOK_EMPTY)
     		{
     			switch ($tok)
     			{
     				case TOK_IDENT:
     				{
+    					$value = $this->getIdent();
+    					print "$value\n";
     				}
     				break;
     				
     				case TOK_LPAREN:
     				{
-    					$this->_evaluate_group();
+    					$this->_evaluate(TOK_RPAREN);
     				}
     				break;
     			}
@@ -402,9 +502,11 @@
 	
 	print "Starting\n";
 	$p = new XTMLProcessor();
+	$p->setVar("a", "15");
+	$p->setVar("s", "CPN");
 	$e = new XTMLExpressionEvaluator($p);
 	
-	$e->evaluate("(a > 10 && a < 20) || s=='CPN'");
+	$e->evaluate("(a.b->z > 10 && a < 20) || s=='CPN'");
 	die();
 	
 	$started = microtime(true);

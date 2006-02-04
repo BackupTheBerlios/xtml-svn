@@ -254,6 +254,24 @@
 		/**
 		 * 
 		 */
+		function _getVarWithArrayKey($key)
+		{
+			if ($this->hasData($key[0]))
+			{
+				if (count($key) > 1)
+				{
+					return $this->_evaluate($this->getObjectData($key));
+				}
+				else
+				{
+					return $this->_evaluate(end($this->data[$key[0]]));
+				}
+			}
+		}
+
+		/**
+		 * 
+		 */
 		function _getVar($key)
 		{
 			if ($key && $key{0} == '$' && $key{1} == '{')
@@ -264,20 +282,10 @@
 				{
 					$key = explode(".", substr($key, 2, $keylen-3));
 					
-					if ($this->hasData($key[0]))
-					{
-						if (count($key) > 1)
-						{
-							return $this->_evaluate($this->getObjectData($key));
-						}
-						else
-						{
-							return $this->_evaluate(end($this->data[$key[0]]));
-						}
-					}
-				
-					return "";
+					return $this->_getVarWithArrayKey($key);
 				}
+
+				return "";
 			}
 
 			return $key;
