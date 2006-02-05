@@ -694,26 +694,31 @@
 		 */
 		function _ident()
 		{
-			print ">_ident($this->token($this->text))\n";
+			//print ">_ident($this->token($this->text))\n";
    			//print "A: " . $this->token . " " . $this->text . "\n";
    			
     		switch ($this->token)
     		{
     			case TOK_IDENT:
     			{
-    				$this->push($this->text);
+    				$ident = $this->text;
     				$this->consume();
     				
     				if ($this->token == TOK_DOT_OPERATOR || $this->token == TOK_ARROW_OPERATOR)
     				{
-    					$this->push($this->token);
     					$this->consume();
     					$this->_ident();
+    					$this->push($ident);
+    					$this->push(".");
+    				}
+    				else
+    				{
+	       				$this->push($ident);
     				}
     			}
     			break;
     		}
-			print "<_ident($this->token($this->text))\n";
+			//print "<_ident($this->token($this->text))\n";
 		}
 		
     	/**
@@ -721,7 +726,7 @@
     	 */
     	private function _expr()
     	{
-			print ">_expr($this->token($this->text))\n";
+			//print ">_expr($this->token($this->text))\n";
    			//print "A: " . $this->token . " " . $this->text . "\n";
    			
     		switch ($this->token)
@@ -782,7 +787,7 @@
     			{
     			}
     		}	
-			print "<_expr($this->token($this->text))\n";
+			//print "<_expr($this->token($this->text))\n";
     	}
     	
     	/**
