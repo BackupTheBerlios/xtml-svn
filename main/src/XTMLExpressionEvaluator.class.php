@@ -107,6 +107,11 @@
 		/**
 		 * 
 		 */
+		private $stack;
+		
+		/**
+		 * 
+		 */
 	    function XTMLExpressionEvaluator($xtml) 
 	    {
 	    	$this->xtml = $xtml;
@@ -115,6 +120,7 @@
 			$this->pos = null;
 			$this->token = null;
 			$this->text = null;
+			$this->stack = array();
 			$this->lvalue = null;
     	}
     	
@@ -137,6 +143,7 @@
     	private function consume()
     	{
     		$this->token = null;
+    		$this->getToken();
     	}
     	
     	/**
@@ -144,6 +151,28 @@
     	 */
     	private function _getToken()
     	{
+    		if ($this->pos < $this->expressionLen)
+    		{
+	    		// skip ws
+	    		switch (($c = $this->expression{$this->pos}))
+	    		{
+	    			case " ":
+	    			case "\t":
+	    			{
+	    				$c = $this->expression{$this->pos};
+	    				
+			    		while ($this->pos < $this->expressionLen &&
+			    			($c == ' ' || $c == '\t'))
+			    		{
+			    			if (++$this->pos < $this->expressionLen)
+			    			{
+			    				$c = $this->expression{$this->pos};
+			    			}
+			    		}
+	    			}
+	    		}
+    		}
+    			
 			$this->text = "";
 			
     		if ($this->pos >= $this->expressionLen)
@@ -153,28 +182,6 @@
 
     		switch ($this->expression{$this->pos})
     		{
-    			case " ":
-    			case "\t":
-    			{
-    				$c = $this->expression{$this->pos};
-    				
-    				if ($c == ' ' || $c == '\t')
-    				{
-			    		while ($this->pos < $this->expressionLen &&
-			    			($c == ' ' || $c == '\t'))
-			    		{
-			    			$this->text .= $this->expression{$this->pos++};
-			    			
-			    			if ($this->pos < $this->expressionLen)
-			    			{
-			    				$c = $this->expression{$this->pos};
-			    			}
-			    		}
-			    		
-			    		return TOK_WS;
-    				}
-    			}
-    			
     			case '(':
     				$this->pos++;
 
@@ -368,7 +375,7 @@
 		 */
 		private function getValue($key)
 		{
-			return $this->xtml->_getVarWithArrayKey($key); 
+			return $this->xtml->x_getVarWithArrayKey($key); 
 		}
 		 
     	/**
@@ -376,7 +383,7 @@
     	 */
     	private function getIdent()
     	{
-    		$key = $this->_getIdent($index = array());
+    		$key = $this->x_getIdent($index = array());
     		
     		return $this->getValue($key);
     	}
@@ -384,7 +391,7 @@
     	/**
     	 * 
     	 */
-    	private function _getIdent($index)
+    	private function x_getIdent($index)
     	{
     		array_push($index, $this->text);
 			$this->consume();
@@ -404,7 +411,7 @@
     					if ($tok == TOK_IDENT)
     					{
     						$this->consume();
-    						$tok = $this->_getIdent($index);
+    						$tok = $this->x_getIdent($index);
     					}
     				}
     				break;
@@ -429,7 +436,7 @@
     	/**
     	 * 
     	 */
-    	private function _expression()
+    	private function x_expression()
     	{
     		while ($tok = $this->getToken())
     		{
@@ -439,7 +446,7 @@
     				case TOK_NUMBER:
     				case TOK_STRING:
     				{
-    					$this->lvalue = $this->_expression();
+    					$this->lvalue = $this->x_expression();
     				}
     				break;
     				
@@ -587,7 +594,7 @@
     	/**
     	 * 
     	 */
-    	private function _evaluate($terminal = TOK_EMPTY)
+    	private function x_evaluate($terminal = TOK_EMPTY)
     	{
     		while ($tok = $this->getToken())
     		{
@@ -599,14 +606,14 @@
     				case TOK_NUMBER:
     				case TOK_STRING:
     				{
-    					$this->lvalue = $this->_expression();
+    					$this->lvalue = $this->x_expression();
     				}
     				break;
     				
     				case TOK_LPAREN:
     				{
     					$this->consume();
-    					$this->_evaluate(TOK_RPAREN);
+    					$this->x_evaluate(TOK_RPAREN);
     				}
     				break;
     				
@@ -640,16 +647,150 @@
     		}
     	}
 
+		/**
+		 * 
+		 */
+		private function _terminal($terminal)
+		{
+			
+		}
+
+		/**
+		 * 
+		 */
+		function isOperator()
+		{
+			switch ($this->token)
+			{
+				case TOK_PLUS:
+				case TOK_MINUS:
+				case TOK_LT:
+				case TOK_LTE:
+				case TOK_GT:
+				case TOK_GTE:
+				case TOK_EQ:
+				case TOK_NEQ:
+				case TOK_AND:
+				case TOK_OR:
+				case TOK_BIT_AND:
+				case TOK_BIT_OR:
+					return true;
+			}
+			
+			return false;
+		}
+		
+		/**
+		 * 
+		 */
+		private function _value()
+		{
+    		switch ($this->token)
+    		{
+    			case TOK_IDENT:
+    			case TOK_NUMBER:
+    			case TOK_STRING:
+    			{
+    				return $this->text;
+    			}
+    			break;
+    			
+    			default:
+				{
+					die("Found " . $this->token . " expected value, identifier\n");
+				}
+    		}	
+		}
+
     	/**
     	 * 
+    	 */
+    	private function _expr()
+    	{
+   			print "A: " . $this->token . " " . $this->text . "\n";
+   			
+    		switch ($this->token)
+    		{
+    			case TOK_LPAREN:
+    			{
+    				$this->_terminal(TOK_LPAREN); 
+    				$this->_expr(); 
+    				$this->_terminal(TOK_RPAREN); 
+    			}
+    			break;
+    			
+    			case TOK_IDENT:
+    			case TOK_NUMBER:
+    			case TOK_STRING:
+    			{
+    				$this->push($this->_value());
+    				$this->consume();
+    				
+    				if ($this->isOperator())
+    				{
+    					$operator = $this->token;
+    					$this->consume();
+    					$this->_expr();
+    					$this->push($operator);
+    				}
+    			}
+    			
+    			case TOK_WS:
+    			{
+    				$this->consume();
+    			}
+    			break;
+    			
+    			case TOK_EMPTY:
+    			{
+    			}
+    			
+    			default:
+    			{
+    			}
+    		}	
+    	}
+    	
+    	/**
+    	 * 
+    	 */
+    	function push($value)
+    	{
+    		array_push($this->stack, $value);
+    	}
+    	
+    	/**
+    	 * 
+    	 */
+    	function pop()
+    	{
+    		array_pop($this->stack);
+    	}
+    	
+    	/**
+    	 * goal = stmt | <empty>
+    	 * stmt = identifer 
+    	 * operator = && || & | + -   
+    	 * identifier = ident | ident -> | ident . 
+    	 * expr = identifier | stmt operator expr | ( stmt )
+    	 *
+    	 *  
     	 */
     	function evaluate($expression)
     	{
 	    	$this->pos = 0;
 	    	$this->expression = $expression;
 	    	$this->expressionLen = strlen($this->expression);
+			$this->token = null;
+			$this->stack = array();
 
-    		return $this->_evaluate();
+			$this->getToken();
+
+    		$this->_expr();
+    		print "$expression\n";
+    		print_r($this->stack);
+    		
+    		return "";
     	}
 	}
 	
@@ -659,7 +800,9 @@
 	$p->setVar("s", "CPN");
 	$e = new XTMLExpressionEvaluator($p);
 	
-	$e->evaluate("(a.b->z > 10 && a < 20) || s=='CPN'");
+	$e->evaluate("a > 10 && a < 20");
+	$e->evaluate("a + b + c");
+	//$e->evaluate("(a.b->z > 10 && a < 20) || s=='CPN'");
 	die();
 	
 	$started = microtime(true);
