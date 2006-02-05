@@ -650,9 +650,18 @@
 		/**
 		 * 
 		 */
-		private function _terminal($terminal)
+		private function _expect($terminal)
 		{
-			
+			if ($this->token == $terminal)
+			{
+				$this->consume();
+			}
+			else
+			{
+				print_r($this->expression);
+				print_r($this->stack);
+				die("found " . $this->token . "(" . $this->text . ") expected $terminal");
+			}
 		}
 
 		/**
@@ -683,47 +692,76 @@
 		/**
 		 * 
 		 */
-		private function _value()
+		function _ident()
 		{
+			print ">_ident($this->token($this->text))\n";
+   			//print "A: " . $this->token . " " . $this->text . "\n";
+   			
     		switch ($this->token)
     		{
     			case TOK_IDENT:
-    			case TOK_NUMBER:
-    			case TOK_STRING:
     			{
-    				return $this->text;
+    				$this->push($this->text);
+    				$this->consume();
+    				
+    				if ($this->token == TOK_DOT_OPERATOR || $this->token == TOK_ARROW_OPERATOR)
+    				{
+    					$this->push($this->token);
+    					$this->consume();
+    					$this->_ident();
+    				}
     			}
     			break;
-    			
-    			default:
-				{
-					die("Found " . $this->token . " expected value, identifier\n");
-				}
-    		}	
+    		}
+			print "<_ident($this->token($this->text))\n";
 		}
-
+		
     	/**
     	 * 
     	 */
     	private function _expr()
     	{
-   			print "A: " . $this->token . " " . $this->text . "\n";
+			print ">_expr($this->token($this->text))\n";
+   			//print "A: " . $this->token . " " . $this->text . "\n";
    			
     		switch ($this->token)
     		{
     			case TOK_LPAREN:
     			{
-    				$this->_terminal(TOK_LPAREN); 
-    				$this->_expr(); 
-    				$this->_terminal(TOK_RPAREN); 
+    				$this->_expect(TOK_LPAREN);
+    				$this->push(TOK_LPAREN);
+    				$this->_expr();
+    				$this->_expect(TOK_RPAREN); 
+    				$this->push(TOK_RPAREN);
+    				
+    				if ($this->isOperator())
+    				{
+    					$operator = $this->token;
+    					$this->consume();
+    					$this->_expr();
+    					$this->push($operator);
+    				}
     			}
     			break;
     			
     			case TOK_IDENT:
+    			{
+    				$this->_ident();
+    				
+    				if ($this->isOperator())
+    				{
+    					$operator = $this->token;
+    					$this->consume();
+    					$this->_expr();
+    					$this->push($operator);
+    				}
+    			}
+    			break;
+    			
     			case TOK_NUMBER:
     			case TOK_STRING:
     			{
-    				$this->push($this->_value());
+    				$this->push($this->text);
     				$this->consume();
     				
     				if ($this->isOperator())
@@ -735,20 +773,16 @@
     				}
     			}
     			
-    			case TOK_WS:
-    			{
-    				$this->consume();
-    			}
-    			break;
-    			
     			case TOK_EMPTY:
     			{
+    				return TOK_EMPTY; 
     			}
     			
     			default:
     			{
     			}
     		}	
+			print "<_expr($this->token($this->text))\n";
     	}
     	
     	/**
@@ -800,9 +834,9 @@
 	$p->setVar("s", "CPN");
 	$e = new XTMLExpressionEvaluator($p);
 	
-	$e->evaluate("a > 10 && a < 20");
-	$e->evaluate("a + b + c");
-	//$e->evaluate("(a.b->z > 10 && a < 20) || s=='CPN'");
+	//$e->evaluate("a > 10 && a < 20");
+	//$e->evaluate("a + b + c");
+	$e->evaluate("(a.b->z > 10 && a < 20) || s=='CPN'");
 	die();
 	
 	$started = microtime(true);
