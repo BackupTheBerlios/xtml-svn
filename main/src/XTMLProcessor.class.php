@@ -568,7 +568,6 @@
 						
 						// TODO: Update to add specified DOCTYPE (XHTML, XML)
 						$output = 
-							"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" .
 							"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\"\n" . 
 							"	\"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n\n" .
 							"<!--\n" . 
