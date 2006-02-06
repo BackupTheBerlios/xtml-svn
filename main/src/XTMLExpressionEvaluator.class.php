@@ -42,6 +42,7 @@
 	define('TOK_IDENT', "identifier");
 	define('TOK_WS', "whitespace");
 	define('TOK_NUMBER', "number");
+	define('TOK_BOOLEAN', "boolean");
 	define('TOK_LPAREN', "(");
 	define('TOK_RPAREN', ")");
 	define('TOK_DOT_OPERATOR', ".");
@@ -708,16 +709,17 @@
     				{
     					$this->consume();
     					$this->_ident();
-    					$this->push($ident);
-    					$this->push(".");
+    					$this->push(TOK_IDENT, $ident);
+						$this->push(TOK_DOT_OPERATOR, TOK_DOT_OPERATOR);
     				}
     				else
     				{
-	       				$this->push($ident);
+	       				$this->push(TOK_IDENT, $ident);
     				}
     			}
     			break;
     		}
+			
 			//print "<_ident($this->token($this->text))\n";
 		}
 		
@@ -734,17 +736,17 @@
     			case TOK_LPAREN:
     			{
     				$this->_expect(TOK_LPAREN);
-    				$this->push(TOK_LPAREN);
+    				$this->push(TOK_LPAREN, "(");
     				$this->_expr();
     				$this->_expect(TOK_RPAREN); 
-    				$this->push(TOK_RPAREN);
+    				$this->push(TOK_RPAREN, ")");
     				
     				if ($this->isOperator())
     				{
     					$operator = $this->token;
     					$this->consume();
     					$this->_expr();
-    					$this->push($operator);
+    					$this->push($operator, $operator);
     				}
     			}
     			break;
@@ -758,7 +760,7 @@
     					$operator = $this->token;
     					$this->consume();
     					$this->_expr();
-    					$this->push($operator);
+    					$this->push($operator, $operator);
     				}
     			}
     			break;
@@ -766,7 +768,7 @@
     			case TOK_NUMBER:
     			case TOK_STRING:
     			{
-    				$this->push($this->text);
+    				$this->push($this->token, $this->text);
     				$this->consume();
     				
     				if ($this->isOperator())
@@ -774,7 +776,7 @@
     					$operator = $this->token;
     					$this->consume();
     					$this->_expr();
-    					$this->push($operator);
+    					$this->push($operator, $operator);
     				}
     			}
     			
@@ -793,9 +795,9 @@
     	/**
     	 * 
     	 */
-    	function push($value)
+    	function push($tok, $value)
     	{
-    		array_push($this->stack, $value);
+    		array_push($this->stack, array($tok, $value));
     	}
     	
     	/**
@@ -803,7 +805,7 @@
     	 */
     	function pop()
     	{
-    		array_pop($this->stack);
+    		return array_pop($this->stack);
     	}
     	
     	/**
@@ -815,7 +817,7 @@
     	 *
     	 *  
     	 */
-    	function evaluate($expression)
+    	function createExecutionStack($expression)
     	{
 	    	$this->pos = 0;
 	    	$this->expression = $expression;
@@ -826,22 +828,160 @@
 			$this->getToken();
 
     		$this->_expr();
-    		print "$expression\n";
-    		print_r($this->stack);
+    		//print "$expression\n";
+    		//print_r($this->stack);
+    	}
+    	
+    	/**
+    	 *  
+    	 */
+    	function _evaluate()
+    	{
+    		while (count($this->stack) > 0)
+    		{
+    			$tok = $this->pop();
+    			//print_r($tok);
+    			
+    			switch ($tok[0])
+    			{
+    				case TOK_OR:
+    				{
+    					$rvalue = $this->_evaluate();
+    					$lvalue = $this->_evaluate();
+    					$this->push(TOK_BOOLEAN, $lvalue[1] || $rvalue[1] ? 1:0);
+    				}
+    				break;
+    				
+    				case TOK_EQ:
+    				{
+    					$rvalue = $this->_evaluate();
+    					$lvalue = $this->_evaluate();
+    					$this->push(TOK_BOOLEAN, $lvalue[1] == $rvalue[1] ? 1:0);
+    				}
+    				break;
+
+    				case TOK_GT:
+    				{
+    					$rvalue = $this->_evaluate();
+    					$lvalue = $this->_evaluate();
+    					//print "TOK_BOOLEAN, " . $lvalue[1] . " > " . $rvalue[1] . "\n";
+    					$this->push(TOK_BOOLEAN, $lvalue[1] > $rvalue[1] ? 1:0);
+    				}
+    				break;
+
+    				case TOK_LT:
+    				{
+    					$rvalue = $this->_evaluate();
+    					$lvalue = $this->_evaluate();
+    					$this->push(TOK_BOOLEAN, $lvalue[1] < $rvalue[1] ? 1:0);
+    				}
+    				break;
+
+    				case TOK_AND:
+    				{
+    					$rvalue = $this->_evaluate();
+    					$lvalue = $this->_evaluate();
+    					$this->push(TOK_BOOLEAN, $lvalue[1] && $rvalue[1] ? 1:0);
+    				}
+    				break;
+
+					// NOTE: covers the -> also, as it is transposed during stack creation  
+					case TOK_DOT_OPERATOR:
+					{
+						$tok = $this->pop();
+						print "$tok[1]\n";
+						$tok = $this->pop();
+						
+						while ($tok[0] == TOK_DOT_OPERATOR)
+						{
+							$tok = $this->pop();
+							print "$tok[1]\n";
+							$tok = $this->pop();
+						}
+							print "$tok[1]\n";
+					}
+					break;
+					
+					case TOK_RPAREN:
+					{
+						return $this->_evaluate();
+					}
+					break;
+
+					case TOK_LPAREN:
+					{
+						$tok = $this->pop();
+						
+						return $tok;
+					}
+					break;
+    				
+    				case TOK_STRING:
+    				case TOK_NUMBER:
+    				case TOK_BOOLEAN:
+    				{
+    					return $tok;
+    				}
+    				break;
+    				
+    				case TOK_IDENT:
+    				{
+    					$v = $this->xtml->_getVarWithArrayKey(array($tok[1]));
+    					
+    					if (is_numeric($v))
+    					{
+    						return array(TOK_NUMBER, $v);
+    					}
+    					else if (is_string($v))
+    					{
+    						return array(TOK_STRING, $v);
+    					}
+    				}
+    				break;
+    				
+    				default:
+    					print_r($this->stack);
+    					die("Unexpected instruction " . $tok[0] . "\n");
+    			}
+    		}
+
+			return;
+    	}
+    	/**
+    	 * goal = stmt | <empty>
+    	 * stmt = identifer 
+    	 * operator = && || & | + -   
+    	 * identifier = ident | ident -> | ident . 
+    	 * expr = identifier | stmt operator expr | ( stmt )
+    	 *
+    	 *  
+    	 */
+    	function evaluate($expression)
+    	{
+    		$this->createExecutionStack($expression);
+    		//print_r($this->stack);
+    		$result = $this->_evaluate();
     		
-    		return "";
+    		print "$expression = [";
+    		print_r($result);
+    		print "]\n";
+
+    		return $result[1];
     	}
 	}
 	
 	print "Starting\n";
-	$p = new XTMLProcessor();
-	$p->setVar("a", "15");
-	$p->setVar("s", "CPN");
-	$e = new XTMLExpressionEvaluator($p);
+	$x = new XTMLProcessor();
+	$x->setVar("a", "15");
+	$x->setVar("s", "CPN");
+	$e = new XTMLExpressionEvaluator($x);
 	
+	$e->evaluate("a > 30");
+	$e->evaluate("s");
 	//$e->evaluate("a > 10 && a < 20");
 	//$e->evaluate("a + b + c");
-	$e->evaluate("(a.b->z > 10 && a < 20) || s=='CPN'");
+	//$e->evaluate("(a > 10 && a < 20) || s=='XPN'");
+	//$e->evaluate("(a.b->z > 10 && a < 20) || s=='CPN'");
 	die();
 	
 	$started = microtime(true);
