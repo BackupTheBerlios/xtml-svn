@@ -102,13 +102,15 @@
 			{
 				if (isset($_SERVER['PATH_TRANSLATED']))
 				{
-					$path = $_SERVER['PATH_TRANSLATED'];
+					$path = str_replace(".xml", "", $_SERVER['PATH_TRANSLATED']);
 					$this->document = "$path.xml";
 					$this->script = "$path.php";
 				}
 				else if (isset($_SERVER['REDIRECT_URL']))
 				{
-					$path = $_SERVER['DOCUMENT_ROOT'] . $_SERVER['REDIRECT_URL'];
+					$path = $_SERVER['DOCUMENT_ROOT'] . 
+						str_replace(".xml", "", $_SERVER['REDIRECT_URL']);
+						
 					$this->document = "$path.xml";
 					$this->script = "$path.php";
 				}
