@@ -1,10 +1,10 @@
 <?php
 	/*
-	 * $Author$
-	 * $LastChangedDate$
-	 * $LastChangedRevision$
-	 * $LastChangedBy$
-	 * $HeadURL$
+	 * $Author:$
+	 * $LastChangedDate:$
+	 * $LastChangedRevision:$
+	 * $LastChangedBy:$
+	 * $HeadURL:$
 	 * 
 	 * XTML - eXtensible Tag Markup Language
 	 * 
