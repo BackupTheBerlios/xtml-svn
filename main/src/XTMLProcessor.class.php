@@ -274,6 +274,7 @@
 		 */
 		function _getVar($key)
 		{
+			print "<pre>key=$key";
 			if ($key && $key{0} == '$' && $key{1} == '{')
 			{
 				$keylen = strlen($key);
