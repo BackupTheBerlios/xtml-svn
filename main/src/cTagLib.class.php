@@ -112,7 +112,7 @@
 			
 			if ($file == null || $file == "")
 			{
-				print "<pre>Include file is null</pre>"; die();
+				print "<pre>Include file($attrfile) evaluates to null</pre>"; die();
 			}
 			
 			$xtml = new XTMLProcessor($file, null, $this->xtml); 
