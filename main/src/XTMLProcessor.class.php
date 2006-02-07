@@ -256,6 +256,7 @@
 		 */
 		function _getVarWithArrayKey($key)
 		{
+			print_r($key);
 			if ($this->hasData($key[0]))
 			{
 				if (count($key) > 1)
