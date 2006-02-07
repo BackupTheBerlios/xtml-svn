@@ -1,5 +1,5 @@
 <?
 
-	echo "Re-decoration in progress";
+	echo "We are redecorating, please call back later";
 
 ?>
