@@ -274,7 +274,6 @@
 		 */
 		function _getVar($key)
 		{
-			print "<pre>key=$key";
 			if ($key && $key{0} == '$' && $key{1} == '{')
 			{
 				$keylen = strlen($key);
@@ -295,7 +294,6 @@
 		 */
 		function _evaluate($text)
 		{
-			print "<pre>_evaluate($text)";
 			if (is_array($text))
 			{
 				return $text;
@@ -366,7 +364,6 @@
 		 */
 		function evaluate($text, $flags = XTFLAG_EVALUATE)
 		{
-			print "<pre>evaluate($text)";
 			if (XTMLProcessor::isFlagSet($flags, XTFLAG_DISCARD_WS_TEXT_NODES))
 			{
 				if (trim($text) == "")
