@@ -297,6 +297,7 @@
 		 */
 		function _evaluate($text)
 		{
+			print "<pre>_evaluate($text)";
 			if (is_array($text))
 			{
 				return $text;
@@ -367,6 +368,7 @@
 		 */
 		function evaluate($text, $flags = XTFLAG_EVALUATE)
 		{
+			print "<pre>evaluate($text)";
 			if (XTMLProcessor::isFlagSet($flags, XTFLAG_DISCARD_WS_TEXT_NODES))
 			{
 				if (trim($text) == "")
