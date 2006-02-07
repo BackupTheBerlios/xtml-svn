@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ $Author$
+ $LastChangedDate$
+ $LastChangedRevision$
+ $LastChangedBy$
+ $HeadURL$
+ -->
+
+<html 
+	xmlns:c = "http://www.classesarecode.net/xtml/core"
+	xmlns:e = "http://www.classesarecode.net/xtml/entity"
+	xmlns:i18n = "http://www.classesarecode.net/xtml/i18n"
+	xmlns:md = "http://www.classesarecode.net/xtml/md"
+	xmlns:string = "http://www.classesarecode.net/xtml/string"
+	xmlns:php = "http://www.classesarecode.net/xtml/php"
+	xmlns:html = "http://www.classesarecode.net/xtml/html">
+<head>
+<title>ClassesAreCode</title>
+<link rel="stylesheet" type="text/css" href="/styles/classesarecode.css" />
+</head>
+<body>
+<div class="container">
+<c:include file="site/header.xml"/>
+<c:include file="site/rightblock.xml"/>
+
+<div class="content">
+
+		 <h2>About Us</h2>
+		 <p>
+		 	<small>Classes</small><b><em>Are</em></b><small>Code</small> is 
+		 	a small OpenSource development group, based in Dublin Ireland.
+		 </p>
+</div>
+
+<c:include file="site/footer.xml"/>
+
+</div>
+</body>
+</html>

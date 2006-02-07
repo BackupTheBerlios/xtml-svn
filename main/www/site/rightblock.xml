@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml  
+	xmlns:c = "http://www.classesarecode.net/xtml/core"
+	xmlns:e = "http://www.classesarecode.net/xtml/entity"
+	xmlns:i18n = "http://www.classesarecode.net/xtml/i18n"
+	xmlns:md = "http://www.classesarecode.net/xtml/md"
+	xmlns:string = "http://www.classesarecode.net/xtml/string"
+	xmlns:php = "http://www.classesarecode.net/xtml/php"
+	xmlns:html = "http://www.classesarecode.net/xtml/html">
+
+<div class="rightcontainer">
+
+	<div class="rightbox"><h2>News</h2><p>I've got the expression evaluator working. Next steps will be to integrate it into the core.</p></div>
+
+  <div class="rightbox linkbox"><h2>Links</h2>
+  		 <a href="http://www.google.com/" title="Google">Google</a>
+  		 <a href="http://www.linuxtoday.com/" title="Linux Today">Linux Today</a>
+  		 <a href="http://www.oswd.org/" title="Open Source Web Design">OSWD</a>
+  		 <a href="http://www.tomshardware.com/index.html" title="Tom's Hardware Guide">THG</a>
+  		 <a href="http://www.howstuffworks.com/" title="How Stuff Works">How Stuff Works</a>
+  </div>
+</div>
+</xml>

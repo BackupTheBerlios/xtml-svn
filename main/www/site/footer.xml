@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml  
+	xmlns:c = "http://www.classesarecode.net/xtml/core"
+	xmlns:e = "http://www.classesarecode.net/xtml/entity"
+	xmlns:i18n = "http://www.classesarecode.net/xtml/i18n"
+	xmlns:md = "http://www.classesarecode.net/xtml/md"
+	xmlns:string = "http://www.classesarecode.net/xtml/string"
+	xmlns:php = "http://www.classesarecode.net/xtml/php"
+	xmlns:html = "http://www.classesarecode.net/xtml/html">
+<div class="footer">
+  <div class="right">
+    <p><e:copy/> 2006 The ClassesAreCode group.</p>
+    <p><a href="http://validator.w3.org/check/referer">Validate XHTML 1.0 Strict</a></p>
+  </div>
+    <p>Email <a href="mailto:webmaster@classesarecode.net">Webmaster</a></p>
+    <p>Written in XTML</p>
+</div>
+</xml>

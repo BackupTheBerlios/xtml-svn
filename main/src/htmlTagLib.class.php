@@ -59,6 +59,15 @@
 		/**
 		 * 
 		 */
+		function html_colon_mail($element)
+		{
+			$mailto = $this->xtml->_getAttributeOrBody($element, "to");
+			return "<a href=\"mailto:$mailto\">$mailto</a>";
+		}
+		
+		/**
+		 * 
+		 */
 		function html_colon_select($element)
 		{
 			$var = $this->xtml->evaluate($this->xtml->_getAttributeOrBody($element));

@@ -114,5 +114,21 @@
 		{
 			return $this->_stringRepeat($element, " ");
 		}
+		
+		/**
+		 * 
+		 */
+		function e_colon_ldquot($element)
+		{
+			return $this->_stringRepeat($element, "&ldquo;");
+		}
+		
+		/**
+		 * 
+		 */
+		function e_colon_rdquot($element)
+		{
+			return $this->_stringRepeat($element, "&rdquo;");
+		}
 	}
 ?>
