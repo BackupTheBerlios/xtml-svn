@@ -1,10 +1,10 @@
 <?php
 	/*
-	 * $Author$
-	 * $LastChangedDate$
-	 * $LastChangedRevision$
-	 * $LastChangedBy$
-	 * $HeadURL$
+	 * $Author:johnallen $
+	 * $LastChangedDate:2006-02-03 10:17:29Z $
+	 * $LastChangedRevision:251 $
+	 * $LastChangedBy:johnallen $
+	 * $HeadURL:svn+ssh://johnallen@svn.berlios.de/svnroot/repos/xtml/main/src/htmlTagLib.class.php $
 	 * 
 	 * XTML - eXtensible Tag Markup Language
 	 * 
