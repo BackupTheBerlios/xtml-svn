@@ -1,10 +1,10 @@
 <?php
 	/*
-	 * $Author: johnallen $
-	 * $LastChangedDate: 2006-02-03 10:17:29 +0000 (Fri, 03 Feb 2006) $
-	 * $LastChangedRevision: 251 $
-	 * $LastChangedBy: johnallen $
-	 * $HeadURL: svn+ssh://robgill@svn.berlios.de/svnroot/repos/xtml/main/src/dateTagLib.class.php $
+	 * $Author$
+	 * $LastChangedDate$
+	 * $LastChangedRevision$
+	 * $LastChangedBy$
+	 * $HeadURL$
 	 * 
 	 * XTML - eXtensible Tag Markup Language
 	 * 
@@ -61,10 +61,18 @@
 		 */
 		function date_colon_date($element)
 		{
-			$val = $this->xtml->_getAttributeorBody($element, "value");
-			if (!$val) return "";
+			if (!($val = $this->xtml->_getAttributeorBody($element, "value")))
+			{
+				return "";
+			}
+			
 			$format = $this->xtml->evaluate($element->getAttribute("format"));
-			if (!is_numeric($val)) $val = strtotime($val);
+			
+			if (!is_numeric($val))
+			{
+				$val = strtotime($val);
+			}
+			
 			return date($format, $val);
 		}
 	}	
