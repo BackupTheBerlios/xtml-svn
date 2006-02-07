@@ -285,8 +285,6 @@
 					
 					return $this->_getVarWithArrayKey($key);
 				}
-
-				return "";
 			}
 
 			return $key;
