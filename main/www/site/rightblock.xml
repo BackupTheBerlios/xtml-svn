@@ -10,7 +10,7 @@
 
 <div class="rightcontainer">
 
-	<div class="rightbox"><h2>News</h2><p>I've got the expression evaluator working. Next step will be to integrate it into the core.</p></div>
+	<div class="rightbox"><h2>News</h2><p><h3>XTML</h3>I've got the expression evaluator working. Next step will be to integrate it into the core.</p></div>
 
   <div class="rightbox linkbox"><h2>Links</h2>
   		 <a href="http://www.google.com/" title="Google">Google</a>
