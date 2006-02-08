@@ -64,6 +64,7 @@
 	define('TOK_LBRACKET', "[");
 	define('TOK_RBRACKET', "]");
 	define('TOK_STRING', "string");
+	define('TOK_OBJECT', "object");
 	
 	/**
 	 * 
@@ -363,291 +364,6 @@
     		return TOK_EMPTY;
     	}
     	
-    	/**
-    	 * 
-    	 */
-    	private function expected($line, $msg)
-    	{
-			die("($line): found '" . $this->token . "', expected $msg\n");
-    	}
-    	
-		/**
-		 * 
-		 */
-		private function getValue($key)
-		{
-			return $this->xtml->x_getVarWithArrayKey($key); 
-		}
-		 
-    	/**
-    	 * 
-    	 */
-    	private function getIdent()
-    	{
-    		$key = $this->x_getIdent($index = array());
-    		
-    		return $this->getValue($key);
-    	}
-    	
-    	/**
-    	 * 
-    	 */
-    	private function x_getIdent($index)
-    	{
-    		array_push($index, $this->text);
-			$this->consume();
-
-    		for (;;)
-    		{
-    			$tok = $this->getToken();
-
-    			switch ($tok)
-    			{
-    				case TOK_DOT_OPERATOR:
-    				case TOK_ARROW_OPERATOR:
-    				{
-    					$this->consume();
-    					$tok = $this->getToken();
-    					
-    					if ($tok == TOK_IDENT)
-    					{
-    						$this->consume();
-    						$tok = $this->x_getIdent($index);
-    					}
-    				}
-    				break;
-    				
-    				case TOK_WS:
-    				{
-    					// ignore ws
-    					$this->consume();
-    				}
-    				break;
-    				
-    				default:
-    				{
-    					return $index;
-    				}
-    			}
-    		}
-    		
-    		return $index;
-    	}
-
-    	/**
-    	 * 
-    	 */
-    	private function x_expression()
-    	{
-    		while ($tok = $this->getToken())
-    		{
-				switch ($tok = $this->getToken())
-				{
-    				case TOK_IDENT:
-    				case TOK_NUMBER:
-    				case TOK_STRING:
-    				{
-    					$this->lvalue = $this->x_expression();
-    				}
-    				break;
-    				
-					case TOK_EMPTY:
-					{
-						return $this->lvalue;
-					}
-					break;
-					
-					case TOK_RPAREN:
-					{
-						return $this->lvalue;
-					}
-					break;
-					
-					case TOK_PLUS:
-					case TOK_MINUS:
-					case TOK_LT:
-					case TOK_LTE:
-					case TOK_GT:
-					case TOK_GTE:
-					case TOK_EQ:
-					case TOK_NEQ:
-					case TOK_AND:
-					case TOK_OR:
-					case TOK_BIT_AND:
-					case TOK_BIT_OR:
-					{
-						$operator = $tok;
-						$this->consume();
-						
-						switch ($tok = $this->getToken())
-						{
-		    				case TOK_IDENT:
-		    				case TOK_NUMBER:
-		    				case TOK_STRING:
-		    				{
-		    					$this->consume();
-		    					
-		    					if ($tok == TOK_IDENT)
-		    					{
-		    						$rvalue = $this->getIdent();
-		    					}
-		    					else
-		    					{
-		    						$rvalue = $this->text;
-		    					}
-		    					
-		    					switch ($operator)
-		    					{
-									case TOK_PLUS:
-									{
-										$lvalue = $lvalue + $rvalue;
-									}
-									break;
-									
-									case TOK_MINUS:
-									{
-										$lvalue = $lvalue - $rvalue;
-									}
-									break;
-									
-									case TOK_LT:
-									{
-										$lvalue = $lvalue < $rvalue;
-									}
-									break;
-									
-									case TOK_LTE:
-									{
-										$lvalue = $lvalue <= $rvalue;
-									}
-									break;
-									
-									case TOK_GT:
-									{
-										$lvalue = $lvalue > $rvalue;
-									}
-									break;
-									
-									case TOK_GTE:
-									{
-										$lvalue = $lvalue >= $rvalue;
-									}
-									break;
-									
-									case TOK_EQ:
-									{
-										$lvalue = $lvalue == $rvalue;
-									}
-									break;
-									
-									case TOK_NEQ:
-									{
-										$lvalue = $lvalue != $rvalue;
-									}
-									break;
-									
-									case TOK_AND:
-									{
-										$lvalue = $lvalue && $rvalue;
-									}
-									break;
-									
-									case TOK_OR:
-									{
-										$lvalue = $lvalue || $rvalue;
-									}
-									break;
-									
-									case TOK_BIT_AND:
-									{
-										$lvalue = $lvalue & $rvalue;
-									}
-									break;
-									
-									case TOK_BIT_OR:
-									{
-										$lvalue = $lvalue | $rvalue;
-									}
-									break;
-		    					}
-		    				}
-		    				break;
-		    				
-		    				case TOK_WS:
-		    				{
-		    					$this->consume();
-		    				}
-		    				break;
-		    				
-		    				default:
-		    				{
-		    					$this->expected(__LINE__, "ident, number, string");
-		    				}
-						}
-					}
-					break;
-				}
-    		}
-    		
-    		return $lvalue;
-    	}
-    	
-    	/**
-    	 * 
-    	 */
-    	private function x_evaluate($terminal = TOK_EMPTY)
-    	{
-    		while ($tok = $this->getToken())
-    		{
-				//print "$tok: " . $this->text . "\n";
-    			
-    			switch ($tok)
-    			{
-    				case TOK_IDENT:
-    				case TOK_NUMBER:
-    				case TOK_STRING:
-    				{
-    					$this->lvalue = $this->x_expression();
-    				}
-    				break;
-    				
-    				case TOK_LPAREN:
-    				{
-    					$this->consume();
-    					$this->x_evaluate(TOK_RPAREN);
-    				}
-    				break;
-    				
-    				case TOK_RPAREN:
-    				{
-    					$this->consume();
-    					
-						if ($terminal != $tok)
-						{
-							$this->expected(__LINE__, "identifier (");
-						}
-    				}
-    				break;
-    				
-    				case TOK_WS:
-    				{
-    					$this->consume();
-    				}
-    				break;
-    				
-    				case TOK_EMPTY:
-    				{
-    				}
-    				break;
-    				
-    				default:
-    				{
-    					$this->expected(__LINE__, "identifier (");
-    				}
-    			}
-    		}
-    	}
-
 		/**
 		 * 
 		 */
@@ -696,7 +412,6 @@
 		function _ident()
 		{
 			//print ">_ident($this->token($this->text))\n";
-   			//print "A: " . $this->token . " " . $this->text . "\n";
    			
     		switch ($this->token)
     		{
@@ -710,7 +425,7 @@
     					$this->consume();
     					$this->_ident();
     					$this->push(TOK_IDENT, $ident);
-						$this->push(TOK_DOT_OPERATOR, TOK_DOT_OPERATOR);
+    					$this->push(TOK_DOT_OPERATOR, TOK_DOT_OPERATOR);
     				}
     				else
     				{
@@ -809,12 +524,6 @@
     	}
     	
     	/**
-    	 * goal = stmt | <empty>
-    	 * stmt = identifer 
-    	 * operator = && || & | + -   
-    	 * identifier = ident | ident -> | ident . 
-    	 * expr = identifier | stmt operator expr | ( stmt )
-    	 *
     	 *  
     	 */
     	function createExecutionStack($expression)
@@ -828,8 +537,6 @@
 			$this->getToken();
 
     		$this->_expr();
-    		//print "$expression\n";
-    		//print_r($this->stack);
     	}
     	
     	/**
@@ -840,10 +547,26 @@
     		while (count($this->stack) > 0)
     		{
     			$tok = $this->pop();
-    			//print_r($tok);
+    			print_r($tok);
     			
     			switch ($tok[0])
     			{
+    				case TOK_PLUS:
+    				{
+    					$rvalue = $this->_evaluate();
+    					$lvalue = $this->_evaluate();
+    					$this->push(TOK_NUMBER, $lvalue[1] + $rvalue[1]);
+    				}
+    				break;
+    				
+    				case TOK_MINUS:
+    				{
+    					$rvalue = $this->_evaluate();
+    					$lvalue = $this->_evaluate();
+    					$this->push(TOK_NUMBER, $lvalue[1] - $rvalue[1]);
+    				}
+    				break;
+    				
     				case TOK_OR:
     				{
     					$rvalue = $this->_evaluate();
@@ -888,17 +611,30 @@
 					// NOTE: covers the -> also, as it is transposed during stack creation  
 					case TOK_DOT_OPERATOR:
 					{
+						$key = array();
 						$tok = $this->pop();
-						print "$tok[1]\n";
+						array_push($key, $tok[1]);
 						$tok = $this->pop();
 						
 						while ($tok[0] == TOK_DOT_OPERATOR)
 						{
 							$tok = $this->pop();
-							print "$tok[1]\n";
+							array_push($key, $tok[1]);
 							$tok = $this->pop();
 						}
-							print "$tok[1]\n";
+						
+						array_push($key, $tok[1]);
+
+						$v = $this->xtml->_getVarWithArrayKey(array($tok[1]));
+						
+    					if (is_numeric($v))
+    					{
+    						return array(TOK_NUMBER, $v);
+    					}
+    					else if (is_string($v))
+    					{
+    						return array(TOK_STRING, $v);
+    					}
 					}
 					break;
 					
@@ -936,6 +672,10 @@
     					{
     						return array(TOK_STRING, $v);
     					}
+    					else if (is_object($v))
+    					{
+    						return array(TOK_OBJECT, $v);
+    					}
     				}
     				break;
     				
@@ -947,13 +687,8 @@
 
 			return;
     	}
+    	
     	/**
-    	 * goal = stmt | <empty>
-    	 * stmt = identifer 
-    	 * operator = && || & | + -   
-    	 * identifier = ident | ident -> | ident . 
-    	 * expr = identifier | stmt operator expr | ( stmt )
-    	 *
     	 *  
     	 */
     	function evaluate($expression)
@@ -973,15 +708,18 @@
 	print "Starting\n";
 	$x = new XTMLProcessor();
 	$x->setVar("a", "15");
+	$x->setVar("b", "23");
+	$x->setVar("c", "9");
 	$x->setVar("s", "CPN");
 	$e = new XTMLExpressionEvaluator($x);
 	
 	$e->evaluate("a > 30");
 	$e->evaluate("s");
-	//$e->evaluate("a > 10 && a < 20");
-	//$e->evaluate("a + b + c");
-	//$e->evaluate("(a > 10 && a < 20) || s=='XPN'");
-	//$e->evaluate("(a.b->z > 10 && a < 20) || s=='CPN'");
+	$e->evaluate("a > 10 && a < 20");
+	$e->evaluate("a + b + c");
+	$e->evaluate("(a > 10 && a < 20) || s=='XPN'");
+	$e->evaluate("(a > 30 && a < 50) || s=='CPN'");
+	$e->evaluate("(x.y->z > 10 && a < 20) || s=='CPN'");
 	die();
 	
 	$started = microtime(true);
