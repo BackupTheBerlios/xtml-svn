@@ -33,7 +33,7 @@ color:#8CD749; text-decoration:underline;}
 background-color:#FFFFFF; margin:0 auto 0 auto; padding:0; width:65%;}
 
 .titleblock {
-padding:2em; margin:0; text-align:left;
+padding:2em 0 0 2em; margin:0; text-align:left;
 background-image:url(leaf.jpg); background-repeat:no-repeat; background-position:right center;}
 
 .titleblock p {
@@ -49,15 +49,15 @@ ul.navbar li {
 display:inline;}
 
 a.nav:link, a.nav:visited {
-display:block; float:left; width:24.5%; padding:1.2em 0 1.2em 0; margin:0; 
+display:block; float:left; width:24.5%; padding:0.2em 0 0.2em 0; margin:0; 
 text-decoration:none; background-color:#999999; color:#FFFFFF;}
 
 a.nav:hover {
-display:block; float:left; width:24.5%; padding:1.2em 0 1.2em 0; margin:0; 
+display:block; float:left; width:24.5%; padding:0.2em 0 0.2em 0; margin:0; 
 text-decoration:none; background-color:#8CD749; color:#FFFFFF;}
 
 a.nav:active {
-display:block; float:left; width:24.5%; padding:1.2em 0 1.2em 0; margin:0; 
+display:block; float:left; width:24.5%; padding:0.2em 0 0.2em 0; margin:0; 
 text-decoration:none; background-color:#999999; color:#FFFFFF;}
 
 
