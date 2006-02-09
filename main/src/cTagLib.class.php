@@ -216,11 +216,9 @@
 		 */
 		function c_colon_if($element)
 		{
-			$method = $this->iftable[$element->getAttribute("op")];
+			$result = $this->xtml->_evaluateExpression($element->getAttribute("test"));
 
-			if ($this->$method(
-				$this->xtml->evaluate($element->getAttribute("lvalue")), 
-				$this->xtml->evaluate($element->getAttribute("rvalue"))))
+			if ($result)
 			{
 				return $this->xtml->process($element->firstChild);
 			}
