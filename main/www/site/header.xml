@@ -10,7 +10,7 @@
 
 <div class="titleblock">
 	<h1><img src="/images/ClassesAreCodeLogo-2.png" alt="Classes Are Code"/></h1>
-	<p><e:ldquot/>An <em>OpenSource</em> development group.<e:rdquot/></p>
+	<p><e:ldquot/>${QuoteOfTheDay}<e:rdquot/></p>
 </div>
 
 <div>

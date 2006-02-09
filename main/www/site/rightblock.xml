@@ -10,9 +10,10 @@
 
 <div class="rightcontainer">
 
-	<div class="rightbox"><h2>News</h2><h3>XTML</h3><p>I've got the expression evaluator working. Next step will be to integrate it into the core.</p></div>
+	<div class="rightbox"><h2>News</h2><h3>XTML</h3>
+	<p>The expression evaluator is now integrated into the core.</p></div>
 
-  <div class="rightbox linkbox"><h2>Links</h2>
+  <div class="rightbox linkbox"><h2><i18n:message>Links</i18n:message></h2>
   		 <a href="http://www.google.com/" title="Google">Google</a>
   		 <a href="http://www.linuxtoday.com/" title="Linux Today">Linux Today</a>
   		 <a href="http://www.oswd.org/" title="Open Source Web Design">OSWD</a>

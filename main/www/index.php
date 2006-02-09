@@ -44,13 +44,13 @@
 		ini_set('include_path', "../xtml/src:../src:" . ini_get('include_path'));
 		require_once "XTMLProcessor.class.php";
 	
-		//phpinfo(); die();
-		 
 		/*
 		 * Create a new XTMLProcessor instance.	
 		 * 
 		 */
 		$xtml = new XTMLProcessor();
+		$xtml->setVar("Title", "Classes Are Code");
+		$xtml->setVar("QuoteOfTheDay", "An <em>OpenSource</em> development group.");
 		$xtml->render();
 	}
 ?>

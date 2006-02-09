@@ -16,7 +16,7 @@
 	xmlns:php = "http://www.classesarecode.net/xtml/php"
 	xmlns:html = "http://www.classesarecode.net/xtml/html">
 <head>
-<title>ClassesAreCode</title>
+<title>${Title}</title>
 <link rel="stylesheet" type="text/css" href="/styles/classesarecode.css" />
 </head>
 <body>

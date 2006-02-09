@@ -35,9 +35,6 @@
 	 * 
 	 */
 
-	ini_set('include_path', ".:" . ini_get('include_path'));
-	require_once("XTMLProcessor.class.php");
-	
 	define('TOK_EMPTY', "empty");
 	define('TOK_IDENT', "identifier");
 	define('TOK_WS', "whitespace");
@@ -547,8 +544,7 @@
     		while (count($this->stack) > 0)
     		{
     			$tok = $this->pop();
-    			print_r($tok);
-    			
+
     			switch ($tok[0])
     			{
     				case TOK_PLUS:
@@ -587,7 +583,6 @@
     				{
     					$rvalue = $this->_evaluate();
     					$lvalue = $this->_evaluate();
-    					//print "TOK_BOOLEAN, " . $lvalue[1] . " > " . $rvalue[1] . "\n";
     					$this->push(TOK_BOOLEAN, $lvalue[1] > $rvalue[1] ? 1:0);
     				}
     				break;
@@ -697,14 +692,12 @@
     		//print_r($this->stack);
     		$result = $this->_evaluate();
     		
-    		print "$expression = [";
-    		print_r($result);
-    		print "]\n";
-
     		return $result[1];
     	}
 	}
 	
+	/*
+	 * TODO: Remove this test code
 	print "Starting\n";
 	$x = new XTMLProcessor();
 	$x->setVar("a", "15");
@@ -743,4 +736,5 @@
 	$perIterationRenderTime = (($finished - $started) * 1000) / $count;
 
 	print "Tokenising $count iterations took " . sprintf("%0.2f", $renderTime) . "ms, " . sprintf("%0.2f", $perIterationRenderTime) . "ms per iteration\n";
+	*/
 ?>

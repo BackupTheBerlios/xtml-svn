@@ -55,6 +55,7 @@
 		private $data;
 		private $doc;
 		private $previewMode;
+		private $expressionEvaluator;
 
 		/**
 		 * 
@@ -67,6 +68,7 @@
 			
 			if ($master)
 			{
+				$this->expressionEvaluator = $master->expressionEvaluator; 
 				$this->previewMode = $master->previewMode;
 				$this->classCache = $master->classCache;
 				$this->data = $master->data;
@@ -74,6 +76,7 @@
 			}
 			else
 			{
+				$this->expressionEvaluator = new XTMLExpressionEvaluator($this);
 				$this->previewMode = false;
 				$this->classCache = array();
 				$this->data = array();
@@ -274,21 +277,19 @@
 		/**
 		 * 
 		 */
-		function _getVar($key)
+		function _evaluateExpression($expr)
 		{
-			if ($key && $key{0} == '$' && $key{1} == '{')
+			if ($expr && $expr{0} == '$' && $expr{1} == '{')
 			{
-				$keylen = strlen($key);
+				$exprlen = strlen($expr);
 				
-				if ($key{$keylen-1} == '}')
+				if ($expr{$exprlen-1} == '}')
 				{
-					$key = explode(".", substr($key, 2, $keylen-3));
-					
-					return $this->_getVarWithArrayKey($key);
+					return $this->expressionEvaluator->evaluate(substr($expr, 2, $exprlen-3));
 				}
 			}
 
-			return $key;
+			return $expr;
 		}
 
 		/**
@@ -306,7 +307,7 @@
 				return $text;
 			}
 			
-			$data = $this->_getVar($text);
+			$data = $this->_evaluateExpression($text);
 
 			if (!is_array($data) && !is_object($data))
 			{
