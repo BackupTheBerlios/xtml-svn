@@ -482,9 +482,7 @@
 					if ($this->doc->loadXML($content))
 					{
 						$child = $this->doc->documentElement->firstChild;
-						$output .= "<!-- " . $this->document . " STARTS -->\n";
 						$output .= $this->process($child, XTFLAG_EVALUATE);
-						$output .= "<!-- " . $this->document . " ENDS -->\n";
 					}
 					else
 					{
@@ -493,9 +491,7 @@
 				}
 				else
 				{
-					$output .= "<!-- " . $this->document . " STARTS -->\n";
 					$output .= $content;
-					$output .= "<!-- " . $this->document . " ENDS -->\n";
 					
 					if (function_exists("mime_content_type"))
 					{

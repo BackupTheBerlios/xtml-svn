@@ -68,8 +68,9 @@
 		function md_colon_text($element)
 		{
 			$value = $this->xtml->_getAttributeOrBody($element);
-		
-			return Markdown(trim($this->xtml->evaluate($value)));
+			$value = trim($this->xtml->evaluate($value));
+			
+			return Markdown($value);
 		}
 	}
 ?>
