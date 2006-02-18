@@ -111,6 +111,11 @@
 		/**
 		 * 
 		 */
+		private $cache;
+		
+		/**
+		 * 
+		 */
 	    function XTMLExpressionEvaluator($xtml) 
 	    {
 	    	$this->xtml = $xtml;
@@ -523,7 +528,7 @@
     	/**
     	 *  
     	 */
-    	function createExecutionStack($expression)
+    	function parse($expression)
     	{
 	    	$this->pos = 0;
 	    	$this->expression = $expression;
@@ -534,12 +539,14 @@
 			$this->getToken();
 
     		$this->_expr();
+    		
+    		return $this->stack;
     	}
     	
     	/**
     	 *  
     	 */
-    	function _evaluate()
+    	function execute()
     	{
     		while (count($this->stack) > 0)
     		{
@@ -549,57 +556,56 @@
     			{
     				case TOK_PLUS:
     				{
-    					$rvalue = $this->_evaluate();
-    					$lvalue = $this->_evaluate();
+    					$rvalue = $this->execute();
+    					$lvalue = $this->execute();
     					$this->push(TOK_NUMBER, $lvalue[1] + $rvalue[1]);
     				}
     				break;
     				
     				case TOK_MINUS:
     				{
-    					$rvalue = $this->_evaluate();
-    					$lvalue = $this->_evaluate();
+    					$rvalue = $this->execute();
+    					$lvalue = $this->execute();
     					$this->push(TOK_NUMBER, $lvalue[1] - $rvalue[1]);
     				}
     				break;
     				
     				case TOK_OR:
     				{
-    					$rvalue = $this->_evaluate();
-    					$lvalue = $this->_evaluate();
+    					$rvalue = $this->execute();
+    					$lvalue = $this->execute();
     					$this->push(TOK_BOOLEAN, $lvalue[1] || $rvalue[1] ? 1:0);
     				}
     				break;
     				
     				case TOK_EQ:
     				{
-    					$rvalue = $this->_evaluate();
-    					$lvalue = $this->_evaluate();
+    					$rvalue = $this->execute();
+    					$lvalue = $this->execute();
     					$this->push(TOK_BOOLEAN, $lvalue[1] == $rvalue[1] ? 1:0);
     				}
     				break;
 
     				case TOK_GT:
     				{
-    					$rvalue = $this->_evaluate();
-    					$lvalue = $this->_evaluate();
+    					$rvalue = $this->execute();
+    					$lvalue = $this->execute();
     					$this->push(TOK_BOOLEAN, $lvalue[1] > $rvalue[1] ? 1:0);
     				}
     				break;
 
     				case TOK_LT:
     				{
-    					$rvalue = $this->_evaluate();
-    					$lvalue = $this->_evaluate();
+    					$rvalue = $this->execute();
+    					$lvalue = $this->execute();
     					$this->push(TOK_BOOLEAN, $lvalue[1] < $rvalue[1] ? 1:0);
     				}
     				break;
 
     				case TOK_AND:
     				{
-    					$rvalue = $this->_evaluate();
-    					$lvalue = $this->_evaluate();
-    					$this->push(TOK_BOOLEAN, $lvalue[1] && $rvalue[1] ? 1:0);
+    					$rvalue = $this->execute();
+    					$lvalue = $this->execute();
     				}
     				break;
 
@@ -635,7 +641,7 @@
 					
 					case TOK_RPAREN:
 					{
-						return $this->_evaluate();
+						return $this->execute();
 					}
 					break;
 
@@ -688,33 +694,34 @@
     	 */
     	function evaluate($expression)
     	{
-    		$this->createExecutionStack($expression);
-    		//print_r($this->stack);
-    		$result = $this->_evaluate();
+    		if (!isset($this->cache[$expression]))
+    		{
+	    		$stack = $this->parse($expression);
+    			$this->cache[$expression] = $stack;
+    		}
+    		else
+    		{
+    			$this->stack = $this->cache[$expression];
+    		}
+    		
+    		$result = $this->execute();
     		
     		return $result[1];
     	}
 	}
-	
+
 	/*
 	 * TODO: Remove this test code
-	print "Starting\n";
+	include "XTMLProcessor.class.php";
+	
 	$x = new XTMLProcessor();
 	$x->setVar("a", "15");
 	$x->setVar("b", "23");
 	$x->setVar("c", "9");
 	$x->setVar("s", "CPN");
+
 	$e = new XTMLExpressionEvaluator($x);
-	
-	$e->evaluate("a > 30");
-	$e->evaluate("s");
-	$e->evaluate("a > 10 && a < 20");
-	$e->evaluate("a + b + c");
-	$e->evaluate("(a > 10 && a < 20) || s=='XPN'");
-	$e->evaluate("(a > 30 && a < 50) || s=='CPN'");
-	$e->evaluate("(x.y->z > 10 && a < 20) || s=='CPN'");
-	die();
-	
+
 	$started = microtime(true);
 	$iterations = 1000;
 	$count = 0;
@@ -724,17 +731,15 @@
 
 	for ($i=0; $i < $iterations; $i++)
 	{
-		$e->evaluate("(a > 10 && a < 20) || s=='CPN'");
+		print $e->evaluate("(a > 10 && a < 14) || s=='CPN'") . "\n";
 		$count++;
-
-		//$e->evaluate("product.description['short']");
-		//$count++;
 	}
-
+	
 	$finished = microtime(true);
 	$renderTime = ($finished - $started) * 1000;
 	$perIterationRenderTime = (($finished - $started) * 1000) / $count;
 
-	print "Tokenising $count iterations took " . sprintf("%0.2f", $renderTime) . "ms, " . sprintf("%0.2f", $perIterationRenderTime) . "ms per iteration\n";
+	print "Executing $count iterations took " . sprintf("%0.2f", $renderTime) . "ms, " . sprintf("%0.2f", $perIterationRenderTime) . "ms per iteration\n";
+
 	*/
 ?>
