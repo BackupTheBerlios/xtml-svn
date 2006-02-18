@@ -37,6 +37,7 @@
 
 	define('TOK_EMPTY', "empty");
 	define('TOK_IDENT', "identifier");
+	define('TOK_CALL', "call");
 	define('TOK_WS', "whitespace");
 	define('TOK_NUMBER', "number");
 	define('TOK_BOOLEAN', "boolean");
@@ -60,8 +61,11 @@
 	define('TOK_COMPLEMENT', "~");
 	define('TOK_LBRACKET', "[");
 	define('TOK_RBRACKET', "]");
+	define('TOK_COMMA', ",");
 	define('TOK_STRING', "string");
 	define('TOK_OBJECT', "object");
+
+	define('CALL_COUNT', "count");
 	
 	/**
 	 * 
@@ -82,6 +86,11 @@
 		 * 
 		 */
 		private $expressionLen;
+		
+		/**
+		 * 
+		 */
+		private $calls;
 		
 		/**
 		 * 
@@ -126,6 +135,9 @@
 			$this->text = null;
 			$this->stack = array();
 			$this->lvalue = null;
+
+			$this->calls = array();
+			$this->calls[CALL_COUNT]=CALL_COUNT;
     	}
     	
     	/**
@@ -186,6 +198,12 @@
 
     		switch ($this->expression{$this->pos})
     		{
+    			case ',':
+    				$this->pos++;
+
+    				return TOK_COMMA;
+    			break;
+    			
     			case '(':
     				$this->pos++;
 
@@ -359,6 +377,11 @@
 			    			}
 			    		}
 			    		
+			    		if (isset($this->calls[$this->text]))
+			    		{
+			    			return TOK_CALL;
+			    		}
+			    		
 			    		return TOK_IDENT;
     				}
     		}
@@ -496,6 +519,34 @@
     					$this->push($operator, $operator);
     				}
     			}
+    			break;
+    			
+    			case TOK_CALL:
+    			{
+    				$func = $this->text;
+    				$this->consume();
+    				
+    				$this->_expect(TOK_LPAREN);
+    				$this->push(TOK_LPAREN, "(");
+    				
+    				for (;;)
+    				{
+    					$this->_expr();
+    					
+    					if ($this->token == TOK_COMMA)
+    					{
+    						$this->consume();
+    						continue;
+    					}
+    					    						
+    					break;
+    				}
+    				
+    				$this->_expect(TOK_RPAREN); 
+    				$this->push(TOK_RPAREN, ")");
+    				$this->push(TOK_CALL, $func);
+    			}
+    			break;
     			
     			case TOK_EMPTY:
     			{
@@ -554,6 +605,17 @@
 
     			switch ($tok[0])
     			{
+    				case TOK_CALL:
+    				{
+    					if (strcasecmp($tok[1], "count") == 0)
+    					{
+    					}
+    					else
+    					{
+    					}
+    				}
+    				break;
+    				
     				case TOK_PLUS:
     				{
     					$rvalue = $this->execute();
@@ -668,8 +730,7 @@
     					if (is_numeric($v))
     					{
     						return array(TOK_NUMBER, $v);
-    					}
-    					else if (is_string($v))
+    					}    					else if (is_string($v))
     					{
     						return array(TOK_STRING, $v);
     					}
@@ -704,6 +765,7 @@
     			$this->stack = $this->cache[$expression];
     		}
     		
+    		//print_r($this->stack); die();
     		$result = $this->execute();
     		
     		return $result[1];
@@ -731,7 +793,7 @@
 
 	for ($i=0; $i < $iterations; $i++)
 	{
-		print $e->evaluate("(a > 10 && a < 14) || s=='CPN'") . "\n";
+		$e->evaluate("count(a,b)");
 		$count++;
 	}
 	
@@ -740,6 +802,5 @@
 	$perIterationRenderTime = (($finished - $started) * 1000) / $count;
 
 	print "Executing $count iterations took " . sprintf("%0.2f", $renderTime) . "ms, " . sprintf("%0.2f", $perIterationRenderTime) . "ms per iteration\n";
-
 	*/
 ?>
