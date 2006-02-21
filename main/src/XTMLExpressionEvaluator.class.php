@@ -64,6 +64,7 @@
 	define('TOK_COMMA', ",");
 	define('TOK_STRING', "string");
 	define('TOK_OBJECT', "object");
+	define('TOK_ARRAY', "array");
 
 	define('CALL_COUNT', "count");
 	
@@ -688,15 +689,23 @@
 						
 						array_push($key, $tok[1]);
 
-						$v = $this->xtml->_getVarWithArrayKey(array($tok[1]));
+						$v = $this->xtml->_getVarWithArrayKey($key);
 						
     					if (is_numeric($v))
     					{
     						return array(TOK_NUMBER, $v);
-    					}
+    					}    					
     					else if (is_string($v))
     					{
     						return array(TOK_STRING, $v);
+    					}
+    					else if (is_array($v))
+    					{
+    						return array(TOK_ARRAY, $v);
+    					}
+    					else if (is_object($v))
+    					{
+    						return array(TOK_OBJECT, $v);
     					}
 					}
 					break;
@@ -730,9 +739,14 @@
     					if (is_numeric($v))
     					{
     						return array(TOK_NUMBER, $v);
-    					}    					else if (is_string($v))
+    					}    					
+    					else if (is_string($v))
     					{
     						return array(TOK_STRING, $v);
+    					}
+    					else if (is_array($v))
+    					{
+    						return array(TOK_ARRAY, $v);
     					}
     					else if (is_object($v))
     					{
@@ -758,6 +772,7 @@
     		if (!isset($this->cache[$expression]))
     		{
 	    		$stack = $this->parse($expression);
+	    		
     			$this->cache[$expression] = $stack;
     		}
     		else

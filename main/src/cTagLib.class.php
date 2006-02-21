@@ -372,6 +372,7 @@
 				$data = $this->xtml->evaluate($data);
 			}
 
+
 			$firstChild = $element->firstChild;
 
 			if (is_array($data))
