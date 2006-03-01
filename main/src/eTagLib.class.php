@@ -130,5 +130,22 @@
 		{
 			return $this->_stringRepeat($element, "&rdquo;");
 		}
+
+                /**
+                 *
+                 */
+                function e_colon_laquo($element)
+                {
+                        return $this->_stringRepeat($element, "&laquo;");
+                }
+
+                /**
+                 *
+                 */
+                function e_colon_raquo($element)
+                {
+                        return $this->_stringRepeat($element, "&raquo;");
+                }
+
 	}
 ?>
