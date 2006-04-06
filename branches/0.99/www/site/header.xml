@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml  
+	xmlns:c = "http://www.classesarecode.net/xtml/core"
+	xmlns:e = "http://www.classesarecode.net/xtml/entity"
+	xmlns:i18n = "http://www.classesarecode.net/xtml/i18n"
+	xmlns:md = "http://www.classesarecode.net/xtml/md"
+	xmlns:string = "http://www.classesarecode.net/xtml/string"
+	xmlns:php = "http://www.classesarecode.net/xtml/php"
+	xmlns:html = "http://www.classesarecode.net/xtml/html">
+
+<div class="titleblock">
+	<h1><img src="/images/ClassesAreCodeLogo-2.png" alt="Classes Are Code"/></h1>
+	<p><e:ldquot/>${QuoteOfTheDay}<e:rdquot/></p>
+</div>
+
+<div>
+	<ul class="navbar">
+		 <li><a href="/site/home" class="nav">Home</a></li>
+		 <li><a href="/site/aboutus" class="nav">About Us</a></li>
+		 <li><a href="/site/projects" class="nav">Projects</a></li>
+		 <li><a href="/site/contact" class="nav">Contact</a></li>
+	</ul>
+</div>
+
+</xml>
