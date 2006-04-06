@@ -33,6 +33,8 @@
 	 * @author John Allen <john.allen@classesarecode.net>
 	 * @version 0.99
 	 * 
+	 * Added branch for 0.99
+	 * 
 	 */
 
 	require_once("XTMLTableSupport.class.php");
