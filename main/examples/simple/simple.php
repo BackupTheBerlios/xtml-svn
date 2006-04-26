@@ -61,7 +61,7 @@
 	$xtml = new XTMLProcessor("simple.xml");
 
 	$a = array(
-		new Language("Java", "A modern object pure oriented language"),
+		new Language("Java", "A modern pure object oriented language"),
 		new Language("C++", "An extension of the original C language, adding object oriented features"),
 		new Language("C", "A high level procedural language, that can still be used for programming the bare metal"),
 		new Language("PHP", "A procedural web site scripting language , with object oriented features")
