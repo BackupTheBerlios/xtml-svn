@@ -9,12 +9,12 @@
 	xmlns:html = "http://www.classesarecode.net/xtml/html">
 
 <div class="titleblock">
-	<h1><img src="/images/ClassesAreCodeLogo-2.png" alt="Classes Are Code"/></h1>
 	<table width="100%">
-		<tr valign="top"><td><p><e:ldquot/>${QuoteOfTheDay}<e:rdquot/></p></td><td align="right">
+		<tr valign="top"><td><h1><img src="/images/ClassesAreCodeLogo-2.png" alt="Classes Are Code"/></h1></td><td align="right">
 			<a href="http://why.openoffice.org"><img src="http://why.openoffice.org/images/ooo_get_legal.png" border="0" hspace="3" vspace="3" alt="Get legal. Get OpenOffice.org"/></a>
 		</td></tr>
 	</table>
+	<p><e:ldquot/>${QuoteOfTheDay}<e:rdquot/></p>
 </div>
 
 <div>
