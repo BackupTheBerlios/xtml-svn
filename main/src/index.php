@@ -42,7 +42,6 @@
 
 	if (file_exists($configFile) && $doc->load($configFile))
 	{
-		$include_path = ini_get('include_path');
 		$nodes = $doc->getElementsByTagName("Initialisation");
 
 		if ($nodes->length > 0)
