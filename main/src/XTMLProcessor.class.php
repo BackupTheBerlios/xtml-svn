@@ -636,7 +636,6 @@
 							$cacheFilePath = $this->pageCache->getCacheFilePath();
 							$fmtime = filemtime($cacheFilePath);
 							
-							print $cacheFilePath . "<br>";
 							if ($fmtime && $fmtime > time())
 							{
 								return file_get_contents($cacheFilePath);
