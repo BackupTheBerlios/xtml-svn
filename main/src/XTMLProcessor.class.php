@@ -639,7 +639,6 @@
 							print $cacheFilePath . "<br>";
 							if ($fmtime && $fmtime > time())
 							{
-								print "Rendering cached copy<br>";
 								return file_get_contents($cacheFilePath);
 							}
 						}
@@ -706,7 +705,6 @@
 				$cacheFilePath = $this->pageCache->getCacheFilePath();
 				$tmpfilename = $cacheFilePath . uniqid();
 				
-				print "Saving copy to cache<br>";
 				if ($f = fopen($tmpfilename, "w+"))
 				{
 					fwrite($f, $output);
