@@ -598,7 +598,7 @@
 				{
 					if ($this->doc->loadXML($content))
 					{
-						$cacheEnabled = isset($_REQUEST['x-cache']) && $_REQUEST['x-cache'] != 'off';
+						$cacheEnabled = !(isset($_REQUEST['x-cache']) && $_REQUEST['x-cache'] == 'off');
 						//////////////////////////////////////////////////////
 						// Get the Cache tag if it exists
 						//
