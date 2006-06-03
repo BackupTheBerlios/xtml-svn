@@ -33,6 +33,12 @@
 		 	evolving daily, it is quite usable.
 		 </p>
 
+		 <h3>Examples</h3>
+		 <p>Click <a href="/examples">here</a> for examples</p>
+
+		 <h3>API documentation</h3>
+		 <p>Click <a href="/documentation">here</a> for API documentation</p>
+
 		 <h2>Squidget</h2>
 		 <p>
 		 	Squidget is a Squid proxy redirector. Squidget is written in Java, and is still in
