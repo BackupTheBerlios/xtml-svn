@@ -20,6 +20,13 @@
 	xmlns:php = "http://www.classesarecode.net/xtml/php"
 	xmlns:html = "http://www.classesarecode.net/xtml/html">
 	
+	<c:cache ttl="300">
+		<!-- example of using a post parameter to allow the same page to be cached
+			based in the input parameters -->
+		<param name="country"/>
+		<param name="city"/>
+	</c:cache>
+	
 	<c:set var="productName">XTML</c:set>
 	
 	<c:preview>
