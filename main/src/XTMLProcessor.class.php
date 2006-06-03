@@ -51,7 +51,7 @@
 		private $cacheDir;
 		private $cacheFile;
 		
-		function __construct($ttl = 300, $cacheDir = null, $cacheFile = null)
+		function __construct($ttl = 300, $cacheDir = "/var/x-cache", $cacheFile = null)
 		{
 			$this->ttl = $ttl;
 			$this->cacheDir = $cacheDir;
@@ -612,7 +612,7 @@
 						{
 							if ($cacheEnabled)
 							{
-								$this->pageCache = new XTMLCache($entry->getAttribute("ttl"), "/var/x-cache");
+								$this->pageCache = new XTMLCache($entry->getAttribute("ttl"));
 	
 								$params = $xpath->query("/html/c:cache//param");
 								$paramKey = $this->document;
@@ -638,6 +638,10 @@
 							
 							if ($fmtime && $fmtime > time())
 							{
+								// was using this
+								//readfile($cacheFilePath); exit();
+								
+								// but this seems just as quick (tested with ApacheBench)
 								return file_get_contents($cacheFilePath);
 							}
 						}
