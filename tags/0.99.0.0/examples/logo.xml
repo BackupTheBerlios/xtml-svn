@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+ $Author$
+ $LastChangedDate$
+ $LastChangedRevision$
+ $LastChangedBy$
+ $HeadURL$
+ 
+ XTML - eXtensible Tag Markup Language
+ Copyright 2005, 2006 by John Allen and others (see AUTHORS file for contributor list).
+ Released under the GNU GPL v2
+ -->
+<xml
+	xmlns:c = "http://www.classesarecode.net/xtml/core"
+	xmlns:e = "http://www.classesarecode.net/xtml/entity"
+	xmlns:i18n = "http://www.classesarecode.net/xtml/i18n"
+	xmlns:md = "http://www.classesarecode.net/xtml/md">
+	<div id="logo">
+		<c:preview>
+			<img src="../images/ClassesAreCodeLogo-2.png" alt="Logo"/>
+		<c:else/>
+			<img src="../../images/ClassesAreCodeLogo-2.png" alt="Logo"/>
+		</c:preview>
+	</div>
+</xml>

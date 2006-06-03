@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+<!--
+ $Author$
+ $LastChangedDate$
+ $LastChangedRevision$
+ $LastChangedBy$
+ $HeadURL$
+ 
+ XTML - eXtensible Tage Markup Language
+ Copyright 2005, 2006 by John Allen and others (see AUTHORS file for contributor list).
+ Released under the GNU GPL v2
+ -->
+
+<html
+	xmlns:c = "http://www.classesarecode.net/xtml/core"
+	xmlns:e = "http://www.classesarecode.net/xtml/entity"
+	xmlns:i18n = "http://www.classesarecode.net/xtml/i18n"
+	xmlns:md = "http://www.classesarecode.net/xtml/md"
+	xmlns:string = "http://www.classesarecode.net/xtml/string"
+	xmlns:php = "http://www.classesarecode.net/xtml/php"
+	xmlns:html = "http://www.classesarecode.net/xtml/html">
+	
+	<c:cache ttl="300">
+		<!-- example of using a post parameter to allow the same page to be cached
+			based in the input parameters -->
+		<param name="country"/>
+		<param name="city"/>
+	</c:cache>
+	
+	<c:set var="productName">XTML</c:set>
+	
+	<c:preview>
+		<!-- create a data set so we can display this page using the preview script -->
+		<c:set var="languages">
+			<c:array>
+				<c:object name="Basic" description="A high level procedural language, that has sunk into disuse"/>
+				<c:object name="Pascal" description="A high level procedural language, that has sunk into disuse"/>
+				<c:object name="Eiffel" description="A sophisticated object oriented language, that hardly anybody uses"/>
+				<c:object name="Python" description="An interpreted typeless object oriented language"/>
+			</c:array>
+		</c:set>
+	</c:preview>
+	
+	<!-- set a variable "title" to the translated message -->
+	<c:set var="title"><i18n:message>Simple ${productName} Example</i18n:message></c:set>
+	
+	<head>
+		<c:preview>
+			<link href="../examples/examples.css" rel="stylesheet" type="text/css"/>
+		<c:else/>
+			<link href="../examples.css" rel="stylesheet" type="text/css"/>
+		</c:preview>
+		<meta http-equiv="expires" content="0"/>
+		<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
+	<title><c:out value="${title}"/></title>
+	</head>
+	<body>
+		<!-- include the logo.xml -->
+		<c:preview>
+			<c:include file="../examples/${logo}.xml"/>
+		<c:else/>
+			<c:include file="${logo}.xml"/>
+		</c:preview>
+		<table>
+			<tr>
+				<td><md:text>This is a simple example of using the *XTML* tag library</md:text></td>
+			</tr>
+
+			<tr>
+				<td><c:preview>
+					<p>View this page using the <a href="/examples/simple/simple.php">simple.php</a>
+					script that initialises the data in the script code.</p>
+				<c:else/>
+					<p>View this page using the <a href="/src/preview.php?xml=../examples/simple/simple.xml">preview</a> script.
+					The preview script enables the display of data embedded in the XML.
+					When you use the preview script, tags between <e:lt/>c:preview<e:gt/> and <e:lt/>c:else/<e:gt/> get included, 
+					and the tags between <e:lt/>c:else/<e:gt/> and <e:lt/>/c:preview<e:gt/> get excluded.</p>
+				</c:preview></td>
+			</tr>
+		</table>
+		
+		<hr/>
+		<p>View the sources</p>
+		<p>
+			<a href="/examples/simple/simple.phps">simple.php</a><br/>
+			<a href="/src/preview.phps">preview.php</a><br/>
+			<a href="/examples/simple/simple.xml">simple.xml</a><br/>
+		</p>
+
+		<c:ifset var="languages">
+			<hr/>
+			<h1><i18n:message>Programming languages</i18n:message></h1>
+			<c:table row-classes="light,dark">
+				<tr class="green">
+					<th><i18n:message>Key</i18n:message></th>
+					<th><i18n:message>Name</i18n:message></th>
+					<th><i18n:message>Description</i18n:message></th>
+				</tr>
+				<c:foreach value="${languages}" as="language" limit="3">
+					<c:tr>
+						<c:td>${#language}</c:td>
+						<c:td>${language.name}</c:td>
+						<c:td><b>${language.description}</b></c:td>
+					</c:tr>
+				</c:foreach>
+			</c:table>
+		<c:else/>
+			<md:text>The languages variable is *not* set</md:text>
+		</c:ifset>
+		<c:set var="days">
+			<c:array>
+				<c:string>Monday</c:string>
+				<c:string>Tuesday</c:string>
+				<c:string>Wednesday</c:string>
+				<c:string>Thursday</c:string>
+				<c:string>Friday</c:string>
+				<c:string>Saturday</c:string>
+				<c:string>Sunday</c:string>
+			</c:array>
+		</c:set>
+		
+		<form action="redisplay" method="post">
+			<hr/>
+			<h1>An unordered list</h1>
+			<html:ul value="${days}"/>
+	
+			<hr/>
+			<h1>An unordered list (using html:li)</h1>
+			<ul>
+				<html:li foreach="${languages}"><a href="#" class="${@.name}">${@.name}</a></html:li>
+			</ul>
+	
+			<hr/>
+			<h1>An ordered list</h1>
+			<html:ol member="name">${languages}</html:ol>
+	
+			<hr/>
+			<h1>A selection</h1>
+			<p><html:select value="${days}" name="day" default="Friday"/></p>
+		</form>
+
+		<hr/>
+		<h1>A truncated string</h1>
+		<p><e:lt/>string:truncate length="20"<e:gt/>How much is that doggy in the window?<e:lt/>/string:truncate<e:gt/></p>
+		<p><string:truncate length="20">How much is that doggy in the window?</string:truncate></p>
+
+		<hr/>
+		<h1>A hidden string</h1>
+		<p><e:lt/>string:hide char="*"<e:gt/>foobar<e:lt/>/string:hide<e:gt/></p>
+		<p><string:hide char="*">foobar</string:hide></p>
+
+		<hr/>
+		<h1>A masked string</h1>
+		<p><e:lt/>string:mask mask="************"<e:gt/>4921071541900055<e:lt/>/string:mask<e:gt/></p>
+		<p><string:mask mask="************">4921071541900055</string:mask></p>
+
+		<hr/>
+		<h1>A partially replaced string</h1>
+		<p><e:lt/>string:replace find="tags/release-" replace=""<e:gt/>XTML tags/release-0.99.0.0<e:lt/>/string:replace<e:gt/></p>
+		<p><string:replace find="tags/release-" replace="">XTML tags/release-0.99.0.0</string:replace></p>
+	</body>
+</html>

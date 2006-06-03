@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+ $Author$
+ $LastChangedDate$
+ $LastChangedRevision$
+ $LastChangedBy$
+ $HeadURL$
+ 
+ XTML - PHP Standard Tag Library
+ Copyright 2005, 2006 by John Allen and others (see AUTHORS file for contributor list).
+ Released under the GNU GPL v2
+ -->
+
+<html
+	xmlns:c = "http://www.classesarecode.net/xtml/core"
+	xmlns:e = "http://www.classesarecode.net/xtml/entity"
+	xmlns:i18n = "http://www.classesarecode.net/xtml/i18n"
+	xmlns:md = "http://www.classesarecode.net/xtml/md"
+	xmlns:string = "http://www.classesarecode.net/xtml/string"
+	xmlns:html = "http://www.classesarecode.net/xtml/html">
+	<head>
+		<title>XTML Documentation - string:pad</title>
+	</head>
+	<body>
+		<h1>string:pad</h1>
+		<p>This tag will pad a string with spaces until it is <em>length</em> long.</p>
+		<p><e:lt/>string:pad length="40"<e:gt/>Pad out this string: <e:lt/>/string:pad<e:gt/> will result in</p>
+		<p><string:pad length="40">Pad out this string: </string:pad></p>
+		<p>Note: view the source to see the full effect</p>
+	</body>	
+</html>

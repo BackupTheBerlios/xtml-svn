@@ -1,0 +1,3 @@
+RewriteEngine On 
+RewriteBase /
+RewriteRule ^site/(.*)$ index.php/site/$1 [L,NC]

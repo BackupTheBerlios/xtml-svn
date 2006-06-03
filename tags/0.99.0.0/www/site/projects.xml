@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ $Author$
+ $LastChangedDate$
+ $LastChangedRevision$
+ $LastChangedBy$
+ $HeadURL$
+ -->
+
+<html 
+	xmlns:c = "http://www.classesarecode.net/xtml/core"
+	xmlns:e = "http://www.classesarecode.net/xtml/entity"
+	xmlns:i18n = "http://www.classesarecode.net/xtml/i18n"
+	xmlns:md = "http://www.classesarecode.net/xtml/md"
+	xmlns:string = "http://www.classesarecode.net/xtml/string"
+	xmlns:php = "http://www.classesarecode.net/xtml/php"
+	xmlns:html = "http://www.classesarecode.net/xtml/html">
+<head>
+<title>${Title}</title>
+<link rel="stylesheet" type="text/css" href="/styles/classesarecode.css" />
+</head>
+<body>
+<div class="container">
+<c:include file="site/header.xml"/>
+<c:include file="site/rightblock.xml"/>
+
+<div class="content">
+
+		 <h2>XTML</h2>
+		 <p>
+		 	XTML is eXtensible Markup Tag Language. It is an active tag language for PHP5.
+		 	It was used	to create this site, and whilst still not at release 1.0, and 
+		 	evolving daily, it is quite usable.
+		 </p>
+
+		 <h3>Examples</h3>
+		 <p>Click <a href="/examples">here</a> for examples</p>
+
+		 <h3>API documentation</h3>
+		 <p>Click <a href="/documentation">here</a> for API documentation</p>
+
+		 <h2>Squidget</h2>
+		 <p>
+		 	Squidget is a Squid proxy redirector. Squidget is written in Java, and is still in
+		 	development.
+		 </p>
+		 <p>
+		 	The correct pronunciation is "Squidge it".
+		 </p>
+</div>
+
+<c:include file="site/footer.xml"/>
+
+</div>
+</body>
+</html>
