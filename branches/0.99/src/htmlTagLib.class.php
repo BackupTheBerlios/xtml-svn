@@ -104,11 +104,11 @@
 				{
 					if (is_object($item))
 					{
-						$output .= "<li>".$item->$member."</li>";
+						$output .= "<li>" . $item->$member . "</li>";
 					}
 					else
 					{
-						$output .= "<li>".$item."</li>";
+						$output .= "<li>" . $item . "</li>";
 					}
 				}
 			}
@@ -123,7 +123,7 @@
 		{		
 			$output = "";
 			$tag = explode(":", $element->tagName);
-			
+
 			if ($element->hasAttribute("foreach"))
 			{
 				$data = $element->getAttribute("foreach");
@@ -151,19 +151,18 @@
 				}
 	
 				$firstChild = $element->firstChild;
-	
+
 				if (is_array($data))
 				{
 					// foreach support for arrays			
 					foreach ($data as $key => $tmp)
 					{
-						$this->xtml->pushVar($asname, $tmp);
-						
 						if ($limit && $count++ == $limit)
 						{
 							break;
 						}
-						
+
+						$this->xtml->pushVar($asname, $tmp);
 						$this->xtml->pushVar("#$asname", $key);
 			
 						$output .= $this->xtml->_totext($element);

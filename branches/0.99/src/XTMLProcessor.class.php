@@ -45,8 +45,58 @@
 	define('XTFLAG_TRIM', 					0x00000002);
 	define('XTFLAG_EVALUATE', 				0x00000004);
  	
+ 	class XTMLCache
+ 	{
+		private $ttl;
+		private $cacheDir;
+		private $cacheFile;
+		
+		function __construct($ttl = 300, $cacheDir = "/var/x-cache", $cacheFile = null)
+		{
+			$this->ttl = $ttl;
+			$this->cacheDir = $cacheDir;
+			$this->cacheFile = $cacheFile;
+		}
+		
+		function getTTL()
+		{
+			return $this->ttl;
+		}
+		
+		function setTTL($ttl)
+		{
+			$this->ttl = $ttl;
+		}
+		
+		function getCacheDir()
+		{
+			return $this->cacheDir;
+		}
+		
+		function setCacheDir($cacheDir)
+		{
+			$this->cacheDir = $cacheDir;
+		}
+		
+		function getCacheFile()
+		{
+			return $this->cacheFile;
+		}
+		
+		function setCacheFile($cacheFile)
+		{
+			$this->cacheFile = $cacheFile;
+		}
+
+		function getCacheFilePath()
+		{
+			return $this->cacheDir . "/" . $this->cacheFile;
+		}
+ 	}
+ 	
 	class XTMLProcessor
 	{
+		private $pageCache;
 		private $document;
 		private $script;
 		private $noBodyTags;
@@ -62,6 +112,7 @@
 		 */
 		function __construct($document = null, $script = null, $master = null)
 		{
+			$this->pageCache = null;
 			$this->document = $document;
 			$this->script = $script;
 			$this->setPageLocation();
@@ -430,7 +481,8 @@
 		}
 
 		/**
-		 * 
+		 * Returns true if this tag should not contain a body
+		 * eg. <img/>, <link/>
 		 */
 		function isNoBodyTag($tag)
 		{
@@ -546,6 +598,54 @@
 				{
 					if ($this->doc->loadXML($content))
 					{
+						$cacheEnabled = !(isset($_REQUEST['x-cache']) && $_REQUEST['x-cache'] == 'off');
+						//////////////////////////////////////////////////////
+						// Get the Cache tag if it exists
+						//
+						$xpath = new DOMXPath($this->doc);
+						$xpath->registerNamespace("c", "http://www.classesarecode.net/xtml/core");
+						$entries = $xpath->query("/html//c:cache");
+
+						// Only one c:cache node should be supplied
+						// but if multiple are, then only the last one will be used
+						foreach ($entries as $entry) 
+						{
+							if ($cacheEnabled)
+							{
+								$this->pageCache = new XTMLCache($entry->getAttribute("ttl"));
+	
+								$params = $xpath->query("/html/c:cache//param");
+								$paramKey = $this->document;
+								
+								foreach ($params as $param) 
+								{
+									$paramKey .= ":" . $param->getAttribute("name") . "=" . $_REQUEST[$param->getAttribute("name")];	
+								}
+	
+								$this->pageCache->setCacheFile(md5("$paramKey") . ".html");
+							}
+							
+    						$entry->parentNode->removeChild($entry);
+						}
+						
+						if ($this->pageCache != null)
+						{
+							// this page is to be cached, see if we have a cached copy
+							// that has not passed not expired, and return it
+							
+							$cacheFilePath = $this->pageCache->getCacheFilePath();
+							$fmtime = filemtime($cacheFilePath);
+							
+							if ($fmtime && $fmtime > time())
+							{
+								// was using this
+								//readfile($cacheFilePath); exit();
+								
+								// but this seems just as quick (tested with ApacheBench)
+								return file_get_contents($cacheFilePath);
+							}
+						}
+						
 						if ($this->script)
 						{
 							$script = $this->script;
@@ -598,6 +698,24 @@
 			else
 			{
 				$output = "<!-- " . $this->document . " not found -->\n";
+			}
+			
+			if ($this->pageCache != null)
+			{
+				// this page is to be cached, save it to the cache directory
+				clearstatcache();
+				
+				$cacheFilePath = $this->pageCache->getCacheFilePath();
+				$tmpfilename = $cacheFilePath . uniqid();
+				
+				if ($f = fopen($tmpfilename, "w+"))
+				{
+					fwrite($f, $output);
+					fclose($f);
+				
+					touch($tmpfilename, time() + $this->pageCache->getTTL());	
+					rename($tmpfilename, $cacheFilePath);
+				}
 			}
 			
 			return $output;

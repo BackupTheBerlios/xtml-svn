@@ -360,8 +360,23 @@
 			    		
 			    		return TOK_NUMBER;
     				}
+    				else if ($c == '@')
+    				{
+		    			$this->text .= $this->expression{$this->pos++};
+			    		
+			    		return TOK_IDENT;
+    				}
     				else
     				{
+    					if ($c == '#')
+    					{
+		    				$this->text .= $this->expression{$this->pos++};
+			    			if ($this->pos < $this->expressionLen)
+			    			{
+			    				$c = $this->expression{$this->pos};
+			    			}
+    					}
+		    			
 			    		while ($this->pos < $this->expressionLen && 
 			    			(
 			    				($c >= 'A' && $c <= 'Z') ||
