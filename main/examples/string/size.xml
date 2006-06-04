@@ -23,7 +23,7 @@
 	</head>
 	<body>
 		<h1>string:size</h1>
-		<p>This pad with spaces or chop a string to it is a specific length.</p>
+		<p>This pads with spaces or chops a string to a specific length.</p>
 		<p><e:lt/>string:size length="10"<e:gt/>Shorten to 10 characters<e:lt/>/string:size<e:gt/> will result in</p>
 		<p><string:size length="10">Shorten to 10 characters</string:size></p>
 		<p><e:lt/>string:size length="40"<e:gt/>Lengthen to 40 characters<e:lt/>/string:size<e:gt/> will result in</p>
