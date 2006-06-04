@@ -43,7 +43,7 @@
 	{
 		ini_set('include_path', "../xtml/src:../src:" . ini_get('include_path'));
 		require_once "XTMLProcessor.class.php";
-	
+
 		/*
 		 * Create a new XTMLProcessor instance.	
 		 * 
