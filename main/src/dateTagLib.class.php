@@ -1,10 +1,10 @@
 <?php
 	/*
-	 * $Author:$
-	 * $LastChangedDate:$
-	 * $LastChangedRevision:$
-	 * $LastChangedBy:$
-	 * $HeadURL:$
+	 * $Author$
+	 * $LastChangedDate$
+	 * $LastChangedRevision$
+	 * $LastChangedBy$
+	 * $HeadURL$
 	 * 
 	 * XTML - eXtensible Tag Markup Language
 	 * 
@@ -29,7 +29,7 @@
 	 * http://developer.berlios.de/projects/xtml/
 	 *
 	 * @link http://developer.berlios.de/projects/xtml/
-	 * @copyright 2005, 2006 by John Allen and others (see AUTHORS file for contributor list).
+	 * @copyright 2005, 2006 by The Classes Are Code Group (see AUTHORS file for contributor list).
 	 * @author John Allen <john.allen@classesarecode.net>
 	 * @version 0.99
 	 * 
@@ -52,7 +52,7 @@
 		function copyright()
 		{
 			return "date - The XTML date Tag Library\n" .
-				"Copyright 2005, 2006 by John Allen and others (see AUTHORS file for contributor list).\n" .
+				"Copyright 2005, 2006 by The Classes Are Code Group (see AUTHORS file for contributor list).\n" .
 				"Released under the GNU GPL v2";
 		}
 		
