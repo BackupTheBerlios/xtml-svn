@@ -163,7 +163,7 @@
 				else if (isset($_SERVER['REDIRECT_URL']))
 				{
 					$path = $_SERVER['DOCUMENT_ROOT'] . 
-						str_replace(".xml", "", $_SERVER['REDIRECT_URL']);
+					str_replace(".xml", "", $_SERVER['REDIRECT_URL']);
 						
 					$this->document = "$path.xml";
 					$this->script = "$path.php";
