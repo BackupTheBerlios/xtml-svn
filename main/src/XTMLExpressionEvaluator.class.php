@@ -371,9 +371,15 @@
     					if ($c == '#')
     					{
 		    				$this->text .= $this->expression{$this->pos++};
+		    				
 			    			if ($this->pos < $this->expressionLen)
 			    			{
 			    				$c = $this->expression{$this->pos};
+			    				
+		    					if ($c == '@')
+		    					{
+		    						$this->text .= $this->expression{$this->pos++};
+		    					}
 			    			}
     					}
 		    			

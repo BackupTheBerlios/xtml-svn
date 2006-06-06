@@ -382,13 +382,12 @@
 				// foreach support for arrays			
 				foreach ($data as $key => $tmp)
 				{
-					$this->xtml->pushVar($asname, $tmp);
-					
 					if ($limit && $count++ == $limit)
 					{
 						break;
 					}
 					
+					$this->xtml->pushVar($asname, $tmp);
 					$this->xtml->pushVar("#$asname", $key);
 					$output .= $this->xtml->process($firstChild);
 					$this->xtml->popVar("#$asname");
