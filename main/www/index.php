@@ -37,6 +37,10 @@
 
 	if ($_SERVER['REQUEST_URI'] == '/')
 	{
+		// redirect to /site/home
+		// this is used because we are using a rewrite rule
+		// to rewrite all /site urls to /index.php/site
+
 		header("Location: /site/home");
 	}
 	else
@@ -45,7 +49,13 @@
 		require_once "XTMLProcessor.class.php";
 
 		/*
-		 * Create a new XTMLProcessor instance.	
+		 * Create a new XTMLProcessor instance, using the default constructor.
+		 * 
+		 * The XTML processor will initialise the document location, and script
+		 * location based on the URL requested.
+		 * 
+		 * eg. for /site/home the document will be /site/home.xml, 
+		 * and the optional script will be /site/home.php	
 		 * 
 		 */
 		$xtml = new XTMLProcessor();

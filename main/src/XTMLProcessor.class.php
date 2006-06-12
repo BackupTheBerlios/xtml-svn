@@ -148,7 +148,22 @@
 		}
 
 		/**
+		 * Rules for setting the path to the .xml & .php files,
+		 * and for determining the directory that the script, or XML
+		 * file is located in.
 		 * 
+		 * 1. $_SERVER['PATH_TRANSLATED'] is set
+		 * 	path = $_SERVER['PATH_TRANSLATED'] ~ ".xml";
+		 *  document = "path" . ".xml"
+		 *  script = "path" . ".php"
+		 * 
+		 * 2. $_SERVER['REDIRECT_URL'] is set
+		 *  document = document root . ".xml"
+		 *  script = document root . ".php"
+		 * 
+		 * 3. Otherwise
+		 *  document = script dir . ".xml"
+		 *  script = script dir . ".php"
 		 */
 		function setPageLocation()
 		{
@@ -163,7 +178,6 @@
 				else if (isset($_SERVER['REDIRECT_URL']))
 				{
 					$path = $_SERVER['DOCUMENT_ROOT'] . 
-					str_replace(".xml", "", $_SERVER['REDIRECT_URL']);
 						
 					$this->document = "$path.xml";
 					$this->script = "$path.php";
