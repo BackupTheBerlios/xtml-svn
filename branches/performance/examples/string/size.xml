@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+ $Author$
+ $LastChangedDate$
+ $LastChangedRevision$
+ $LastChangedBy$
+ $HeadURL$
+ 
+ XTML - PHP Standard Tag Library
+ Copyright 2005, 2006 by The Classes Are Code Group (see AUTHORS file for contributor list).
+ Released under the GNU GPL v2
+ -->
+
+<html
+	xmlns:c = "http://www.classesarecode.net/xtml/core"
+	xmlns:e = "http://www.classesarecode.net/xtml/entity"
+	xmlns:i18n = "http://www.classesarecode.net/xtml/i18n"
+	xmlns:md = "http://www.classesarecode.net/xtml/md"
+	xmlns:string = "http://www.classesarecode.net/xtml/string"
+	xmlns:html = "http://www.classesarecode.net/xtml/html">
+	<head>
+		<title>XTML Documentation - string:size</title>
+	</head>
+	<body>
+		<h1>string:size</h1>
+		<p>This pads with spaces or chops a string to a specific length.</p>
+		<p><e:lt/>string:size length="10"<e:gt/>Shorten to 10 characters<e:lt/>/string:size<e:gt/> will result in</p>
+		<p><string:size length="10">Shorten to 10 characters</string:size></p>
+		<p><e:lt/>string:size length="40"<e:gt/>Lengthen to 40 characters<e:lt/>/string:size<e:gt/> will result in</p>
+		<p><string:size length="40">Lengthen to 40 characters</string:size></p>
+		<p>Note: view the source to see the full effect</p>
+	</body>	
+</html>

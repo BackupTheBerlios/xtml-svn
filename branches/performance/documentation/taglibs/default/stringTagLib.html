@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos  -->
+			<title>Docs For Class stringTagLib</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+						<script src="../media/lib/classTree.js"></script>
+												<script language="javascript" type="text/javascript">
+				var imgPlus = new Image();
+				var imgMinus = new Image();
+				imgPlus.src = "../media/images/plus.png";
+				imgMinus.src = "../media/images/minus.png";
+				
+				function showNode(Node){
+							switch(navigator.family){
+								case 'nn4':
+									// Nav 4.x code fork...
+							var oTable = document.layers["span" + Node];
+							var oImg = document.layers["img" + Node];
+									break;
+								case 'ie4':
+									// IE 4/5 code fork...
+							var oTable = document.all["span" + Node];
+							var oImg = document.all["img" + Node];
+									break;
+								case 'gecko':
+									// Standards Compliant code fork...
+							var oTable = document.getElementById("span" + Node);
+							var oImg = document.getElementById("img" + Node);
+									break;
+							}
+					oImg.src = imgMinus.src;
+					oTable.style.display = "block";
+				}
+				
+				function hideNode(Node){
+							switch(navigator.family){
+								case 'nn4':
+									// Nav 4.x code fork...
+							var oTable = document.layers["span" + Node];
+							var oImg = document.layers["img" + Node];
+									break;
+								case 'ie4':
+									// IE 4/5 code fork...
+							var oTable = document.all["span" + Node];
+							var oImg = document.all["img" + Node];
+									break;
+								case 'gecko':
+									// Standards Compliant code fork...
+							var oTable = document.getElementById("span" + Node);
+							var oImg = document.getElementById("img" + Node);
+									break;
+							}
+					oImg.src = imgPlus.src;
+					oTable.style.display = "none";
+				}
+				
+				function nodeIsVisible(Node){
+							switch(navigator.family){
+								case 'nn4':
+									// Nav 4.x code fork...
+							var oTable = document.layers["span" + Node];
+									break;
+								case 'ie4':
+									// IE 4/5 code fork...
+							var oTable = document.all["span" + Node];
+									break;
+								case 'gecko':
+									// Standards Compliant code fork...
+							var oTable = document.getElementById("span" + Node);
+									break;
+							}
+					return (oTable && oTable.style.display == "block");
+				}
+				
+				function toggleNodeVisibility(Node){
+					if (nodeIsVisible(Node)){
+						hideNode(Node);
+					}else{
+						showNode(Node);
+					}
+				}
+			</script>
+					</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name"><img src="../media/images/Class_logo.png"
+														alt=" Class"
+														title=" Class"
+														style="vertical-align: middle"> stringTagLib</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+															<a href="#sec-method-summary">Tags</a> (<a href="#sec-methods">details</a>)
+						
+			</div>
+	<div class="info-box-body">
+		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The XTML String tag library.</p>
+		<p class="notes">
+			Located in <a class="field" href="_stringTagLib_class_php.html">/stringTagLib.class.php</a> (line <span class="field">42</span>)
+		</p>
+		
+				
+		<pre>XTMLTag
+   |
+   --stringTagLib</pre>
+	
+			</div>
+</div>
+
+
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Tag Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+									<span class="disabled">Tags</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+								
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result"></span>
+										<a href="#string:hide" title="details" class="method-name">string:hide</a>
+											()
+									</div>
+								
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result"></span>
+										<a href="#string:lcase" title="details" class="method-name">string:lcase</a>
+											()
+									</div>
+								
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result"></span>
+										<a href="#string:mask" title="details" class="method-name">string:mask</a>
+											()
+									</div>
+								
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result"></span>
+										<a href="#string:pad" title="details" class="method-name">string:pad</a>
+											()
+									</div>
+								
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result"></span>
+										<a href="#string:replace" title="details" class="method-name">string:replace</a>
+											()
+									</div>
+								
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result"></span>
+										<a href="#string:size" title="details" class="method-name">string:size</a>
+											()
+									</div>
+								
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result"></span>
+										<a href="#string:truncate" title="details" class="method-name">string:truncate</a>
+											()
+									</div>
+								
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result"></span>
+										<a href="#string:ucase" title="details" class="method-name">string:ucase</a>
+											()
+									</div>
+								
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result"></span>
+										<a href="#string:ucfirst" title="details" class="method-name">string:ucfirst</a>
+											()
+									</div>
+								
+				<div class="method-definition">
+					<img src="../media/images/Method.png" alt=" "/>
+											<span class="method-result"></span>
+										<a href="#string:ucwords" title="details" class="method-name">string:ucwords</a>
+											()
+									</div>
+							</div>
+		</div>
+	</div>		
+
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Tags</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+													<a href="#sec-method-summary">Tags</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+<a name="methodstring:hide" id="string:hide"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">string:hide</span> (line <span class="line-number">177</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result"></span>
+		<span class="method-name">
+			string:hide
+		</span>
+					()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodstring:lcase" id="string:lcase"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">string:lcase</span> (line <span class="line-number">121</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result"></span>
+		<span class="method-name">
+			string:lcase
+		</span>
+					()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodstring:mask" id="string:mask"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">string:mask</span> (line <span class="line-number">188</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result"></span>
+		<span class="method-name">
+			string:mask
+		</span>
+					()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodstring:pad" id="string:pad"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">string:pad</span> (line <span class="line-number">142</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result"></span>
+		<span class="method-name">
+			string:pad
+		</span>
+					()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodstring:replace" id="string:replace"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">string:replace</span> (line <span class="line-number">72</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This tag replaces one piece of text with another, in either the body of the  element, or if specified the &quot;value&quot; attribute.</p>
+<p class="description"><p>&lt;string:replace find=&quot;text to find&quot; replace=&quot;text to replace with&quot; value=&quot;text&quot;/&gt;</p><p>&lt;string:replace find=&quot;text to find&quot; replace=&quot;text to replace with&quot;&gt;text&lt;/string:replace&gt;</p></p>
+	
+	<div class="method-signature">
+		<span class="method-result"></span>
+		<span class="method-name">
+			string:replace
+		</span>
+					()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodstring:size" id="string:size"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">string:size</span> (line <span class="line-number">154</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result"></span>
+		<span class="method-name">
+			string:size
+		</span>
+					()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodstring:truncate" id="string:truncate"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">string:truncate</span> (line <span class="line-number">131</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result"></span>
+		<span class="method-name">
+			string:truncate
+		</span>
+					()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodstring:ucase" id="string:ucase"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">string:ucase</span> (line <span class="line-number">91</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The ucase tag converts either the tag body, or the value attribute to uppercase.</p>
+<p class="description"><p>The value attribute, if present, takes precedence over the tag body.</p><p>eg.  &lt;string:ucase&gt;This is a nice day&lt;/string:ucase&gt;</p><p>Will produce the following output:-  THIS IS A NICE DAY</p></p>
+	
+	<div class="method-signature">
+		<span class="method-result"></span>
+		<span class="method-name">
+			string:ucase
+		</span>
+					()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodstring:ucfirst" id="string:ucfirst"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">string:ucfirst</span> (line <span class="line-number">101</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result"></span>
+		<span class="method-name">
+			string:ucfirst
+		</span>
+					()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodstring:ucwords" id="string:ucwords"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../media/images/Method.png" />
+		<span class="method-title">string:ucwords</span> (line <span class="line-number">111</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result"></span>
+		<span class="method-name">
+			string:ucwords
+		</span>
+					()
+			</div>
+	
+		
+		
+	</div>
+						
+		</div>
+	</div>
+	
+	<p class="notes" id="credit">
+		Documentation generated on Wed, 01 Feb 2006 21:52:42 +0000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.2.2</a>
+	</p>
+	</div></body>
+</html>
