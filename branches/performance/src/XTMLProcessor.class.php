@@ -624,24 +624,29 @@
 
 						// Only one c:cache node should be supplied
 						// but if multiple are, then only the last one will be used
-						foreach ($entries as $entry) 
+						if ($entries->length > 0)
 						{
-							if ($cacheEnabled)
+							for ($i = 0; $i < $entries->length; $i++) 
 							{
-								$this->pageCache = new XTMLCache($entry->getAttribute("ttl"));
-	
-								$params = $xpath->query("/html/c:cache//param");
-								$paramKey = $this->document;
-								
-								foreach ($params as $param) 
+   								$entry = $entries->item($i);
+   								
+								if ($cacheEnabled)
 								{
-									$paramKey .= ":" . $param->getAttribute("name") . "=" . $_REQUEST[$param->getAttribute("name")];	
+									$this->pageCache = new XTMLCache($entry->getAttribute("ttl"));
+		
+									$params = $xpath->query("/html/c:cache//param");
+									$paramKey = $this->document;
+									
+									foreach ($params as $param) 
+									{
+										$paramKey .= ":" . $param->getAttribute("name") . "=" . $_REQUEST[$param->getAttribute("name")];	
+									}
+		
+									$this->pageCache->setCacheFile(md5("$paramKey") . ".html");
 								}
-	
-								$this->pageCache->setCacheFile(md5("$paramKey") . ".html");
+								
+	    						$entry->parentNode->removeChild($entry);
 							}
-							
-    						$entry->parentNode->removeChild($entry);
 						}
 						
 						if ($this->pageCache != null)
