@@ -379,8 +379,10 @@
 
 			if (is_array($data))
 			{
-				// foreach support for arrays			
-				foreach ($data as $key => $tmp)
+				// foreach support for arrays
+				reset($data);
+							
+				while (list($key, $tmp) = each($data))
 				{
 					if ($limit && $count++ == $limit)
 					{
@@ -396,6 +398,7 @@
 			}
 			else if (gettype($data) == "resource")
 			{
+				// foreach support for MySQL result resource
 				$type = get_resource_type($data);
 				
 				if ($type == "mysql result")
@@ -415,7 +418,7 @@
 				}
 				else if ($type == "pgsql result")
 				{
-					// PostgreSQL result resource support for loops			
+					// foreach support for PostgreSQL result resource
 					while ($tmp = pg_fetch_object($data))
 					{
 						if ($limit && $count++ == $limit)

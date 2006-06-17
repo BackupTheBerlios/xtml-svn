@@ -581,7 +581,9 @@
 			$output ="";
 			$lines = explode("\n", $text);
 			
-			foreach ($lines as $line)
+			reset($lines);
+			
+			while (list($k, $line) = each($lines))
 			{
 				if (trim($line) == "")
 				{
@@ -622,7 +624,9 @@
 
 						// Only one c:cache node should be supplied
 						// but if multiple are, then only the last one will be used
-						foreach ($entries as $entry) 
+						reset($entries);
+						
+						while (list($k, $entry) = each($entries)) 
 						{
 							if ($cacheEnabled)
 							{
@@ -631,7 +635,8 @@
 								$params = $xpath->query("/html/c:cache//param");
 								$paramKey = $this->document;
 								
-								foreach ($params as $param) 
+								reset($params);
+								while (list($k, $param) = each($params)) 
 								{
 									$paramKey .= ":" . $param->getAttribute("name") . "=" . $_REQUEST[$param->getAttribute("name")];	
 								}

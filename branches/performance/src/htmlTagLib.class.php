@@ -75,7 +75,9 @@
 			$default = $element->getAttribute("default");
 			$output = "<select name='$name'>";
 			
-			foreach ($var as $item)
+			reset($var);
+			
+			while (list($key, $item) = each($var))
 			{
 				$output .= "<option ";
 				if ($item == $default)
@@ -100,7 +102,9 @@
 
 			if (is_array($var))
 			{
-				foreach($var as $item)
+				reset($var);
+				
+				while (list($key, $item) = each($var))
 				{
 					if (is_object($item))
 					{
@@ -155,7 +159,9 @@
 				if (is_array($data))
 				{
 					// foreach support for arrays			
-					foreach ($data as $key => $tmp)
+					reset($data);
+					
+					while (list($key, $tmp) = each($data))
 					{
 						if ($limit && $count++ == $limit)
 						{
