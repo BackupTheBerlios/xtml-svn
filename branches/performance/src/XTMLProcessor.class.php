@@ -624,9 +624,7 @@
 
 						// Only one c:cache node should be supplied
 						// but if multiple are, then only the last one will be used
-						reset($entries);
-						
-						while (list($k, $entry) = each($entries)) 
+						foreach ($entries as $entry) 
 						{
 							if ($cacheEnabled)
 							{
@@ -635,8 +633,7 @@
 								$params = $xpath->query("/html/c:cache//param");
 								$paramKey = $this->document;
 								
-								reset($params);
-								while (list($k, $param) = each($params)) 
+								foreach ($params as $param) 
 								{
 									$paramKey .= ":" . $param->getAttribute("name") . "=" . $_REQUEST[$param->getAttribute("name")];	
 								}
