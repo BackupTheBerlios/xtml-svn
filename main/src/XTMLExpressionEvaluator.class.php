@@ -233,17 +233,35 @@
     			break;
     			
     			case '-':
-    				$this->pos++;
+					$c = $this->expression{++$this->pos};
 
-    				if ($this->expression{$this->pos} == '>')
+    				if ($c == '>')
     				{
    						$this->pos++;
    						return TOK_ARROW_OPERATOR;
     				}
-    				
-    				return TOK_MINUS;
+    	
+    				if (($c >= '0' && $c <= '9'))
+					{
+						$this->text .= "-";
+
+			    		while ($this->pos < $this->expressionLen &&
+			    			($c >= '0' && $c <= '9') || $c == '.')
+			    		{
+			    			$this->text .= $this->expression{$this->pos++};
+			    			
+			    			if ($this->pos < $this->expressionLen)
+			    			{
+			    				$c = $this->expression{$this->pos};
+			    			}
+			    		}
+			    
+			    		return TOK_NUMBER;
+					}
+						
+					return TOK_MINUS;
     			break;
-    			
+
     			case '+':
     				$this->pos++;
     				return TOK_PLUS;
@@ -346,10 +364,10 @@
     			default:
     				$c = $this->expression{$this->pos};
     				
-    				if (($c >= '0' && $c <= '9'))
+    				if (($c >= '0' && $c <= '9') || $c == "-")
     				{
 			    		while ($this->pos < $this->expressionLen &&
-			    			($c >= '0' && $c <= '9') || $c == '.')
+			    			($c >= '0' && $c <= '9') || $c == '.' || $c == '-')
 			    		{
 			    			$this->text .= $this->expression{$this->pos++};
 			    			
@@ -358,7 +376,7 @@
 			    				$c = $this->expression{$this->pos};
 			    			}
 			    		}
-			    		
+			    
 			    		return TOK_NUMBER;
     				}
     				else if ($c == '@')
@@ -571,6 +589,20 @@
     			}
     			break;
     			
+    			case TOK_MINUS:
+    			{
+    				$this->push(TOK_MINUS, "-");
+    				return TOK_MINUS; 
+    			}
+				break;
+    			
+    			case TOK_PLUS:
+    			{
+    				$this->push(TOK_PLUS, "-");
+    				return TOK_PLUS; 
+    			}
+				break;
+    			
     			case TOK_EMPTY:
     			{
     				return TOK_EMPTY; 
@@ -588,6 +620,7 @@
     	 */
     	function push($tok, $value)
     	{
+			//print "<PRE>push($tok, $value)\n";
     		array_push($this->stack, array($tok, $value));
     	}
     	
@@ -667,7 +700,7 @@
     				{
     					$rvalue = $this->execute();
     					$lvalue = $this->execute();
-    					$this->push(TOK_BOOLEAN, $lvalue[1] != $rvalue[1] ? 1:0);
+    					$this->push(TOK_BOOLEAN, $lvalue[1] == $rvalue[1] ? 1:0);
     				}
     				break;
 
@@ -675,7 +708,7 @@
     				{
     					$rvalue = $this->execute();
     					$lvalue = $this->execute();
-    					$this->push(TOK_BOOLEAN, $lvalue[1] == $rvalue[1] ? 1:0);
+    					$this->push(TOK_BOOLEAN, $lvalue[1] != $rvalue[1] ? 1:0);
     				}
     				break;
 
@@ -720,7 +753,7 @@
 						array_push($key, $tok[1]);
 
 						$v = $this->xtml->_getVarWithArrayKey($key);
-						
+					
     					if (is_numeric($v))
     					{
     						return array(TOK_NUMBER, $v);
@@ -813,8 +846,10 @@
     		{
     			$this->stack = $this->cache[$expression];
     		}
-    		
-    		//print_r($this->stack); die();
+   
+			//print "<hr><pre>";
+    		//print_r($this->stack);
+			//die();
     		$result = $this->execute();
     		
     		return $result[1];
