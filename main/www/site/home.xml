@@ -16,13 +16,6 @@
 	xmlns:php = "http://www.classesarecode.net/xtml/php"
 	xmlns:html = "http://www.classesarecode.net/xtml/html">
 
-	<c:cache ttl="300">
-		<!-- example of using a post parameter to allow the same page to be cached
-			based in the input parameters -->
-		<param name="country"/>
-		<param name="city"/>
-	</c:cache>
-	
 <head>
 <title>${Title}</title>
 <link rel="stylesheet" type="text/css" href="/styles/classesarecode.css" />
@@ -32,6 +25,9 @@
 <c:include file="site/header.xml"/>
 <c:include file="site/rightblock.xml"/>
 
+<!-- cache this section in the group home, with an id of content, 
+	and ignoring GET/POST paramaters -->
+<c:cache ttl="300" group="home" id="content" params="">
 <div class="content">
 
 		 <h2>Welcome</h2>
@@ -39,6 +35,7 @@
 		 	XTML 1.0 preview release coming soon
 		 </p>
 </div>
+</c:cache>
 
 <c:include file="site/footer.xml"/>
 
