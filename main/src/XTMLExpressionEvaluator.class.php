@@ -667,6 +667,14 @@
     				{
     					$rvalue = $this->execute();
     					$lvalue = $this->execute();
+    					$this->push(TOK_BOOLEAN, $lvalue[1] != $rvalue[1] ? 1:0);
+    				}
+    				break;
+
+    				case TOK_NEQ:
+    				{
+    					$rvalue = $this->execute();
+    					$lvalue = $this->execute();
     					$this->push(TOK_BOOLEAN, $lvalue[1] == $rvalue[1] ? 1:0);
     				}
     				break;
