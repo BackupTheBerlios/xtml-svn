@@ -40,6 +40,7 @@
 	define('TOK_CALL', "call");
 	define('TOK_WS', "whitespace");
 	define('TOK_NUMBER', "number");
+	define('TOK_RESOURCE', "resource");
 	define('TOK_BOOLEAN', "boolean");
 	define('TOK_LPAREN', "(");
 	define('TOK_RPAREN', ")");
@@ -756,8 +757,12 @@
     				case TOK_IDENT:
     				{
     					$v = $this->xtml->_getVarWithArrayKey(array($tok[1]));
-    					
-    					if (is_numeric($v))
+    				
+    					if (is_resource($v))
+    					{
+    						return array(TOK_RESOURCE, $v);
+    					}    					
+						else if (is_numeric($v))
     					{
     						return array(TOK_NUMBER, $v);
     					}    					

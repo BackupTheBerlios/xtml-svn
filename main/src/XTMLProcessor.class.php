@@ -374,7 +374,7 @@
 			
 			$data = $this->_evaluateExpression($text);
 
-			if (!is_array($data) && !is_object($data))
+			if (!is_array($data) && !is_object($data) && !is_resource($data))
 			{
 				// make sure data becomes string
 				$source = "" . $data;

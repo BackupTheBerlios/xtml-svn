@@ -358,7 +358,7 @@
 			$asname = $element->getAttribute("as");
 			$limit = $element->getAttribute("limit");
 			$count = 0;
-			
+		
 			if (!$asname)
 			{
 				$asname = '@';
@@ -374,7 +374,8 @@
 				$data = $this->xtml->evaluate($data);
 			}
 
-
+			//print "<pre>" . $element->getAttribute("value") . "=" . gettype($data) . "(" . $data . ")";
+			
 			$firstChild = $element->firstChild;
 
 			if (is_array($data))
