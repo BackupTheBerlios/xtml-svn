@@ -41,10 +41,6 @@
 	class phpTagLib
 		extends XTMLTag
 	{
-		private $tables;
-		private $tablesIndex;
-		private $iftable;
-		
 		/**
 		 * @ignore
 		 */

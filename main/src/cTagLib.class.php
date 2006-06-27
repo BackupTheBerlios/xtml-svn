@@ -47,7 +47,6 @@
 	{
 		private $tables;
 		private $tablesIndex;
-		private $iftable;
 		
 		/**
 		 * @ignore
@@ -58,14 +57,6 @@
 			
 			$this->tables = array();
 			$this->tablesIndex = 0;
-			
-			$this->iftable = array(
-				"!=" => "ifneq",
-				"==" => "ifeq",
-				">" => "ifgt",
-				">=" => "ifgte",
-				"<" => "iflt",
-				"<=" => "iflte");
 		}
 
 		/**
@@ -89,19 +80,25 @@
 		}
 		
 		/**
-		 * @ignore
+		 * 
 		 */
-		function ifneq($lvalue, $rvalue)
+		function c_colon_cache($element)
 		{
-			return $lvalue != $rvalue;
-		}
-		
-		/**
-		 * @ignore
-		 */
-		function ifeq($lvalue, $rvalue)
-		{
-			return $lvalue == $rvalue;
+			if ($this->xtml->isCacheEnabled())
+			{
+				// check cache
+				
+				// create content if necessary
+				$content = $this->xtml->process($element->firstChild);
+				
+				// cache the generated content
+			}
+			else
+			{
+				$content = $this->xtml->process($element->firstChild);
+			}
+			
+			return $content;
 		}
 		
 		/**
@@ -375,7 +372,7 @@
 			}
 
 			//print "<pre>" . $element->getAttribute("value") . "=" . gettype($data) . "(" . $data . ")";
-			
+
 			$firstChild = $element->firstChild;
 
 			if (is_array($data))

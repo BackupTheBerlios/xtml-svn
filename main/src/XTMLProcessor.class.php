@@ -96,7 +96,7 @@
  	
 	class XTMLProcessor
 	{
-		private $pageCache;
+		private $cacheEnabled;
 		private $document;
 		private $script;
 		private $noBodyTags;
@@ -112,7 +112,7 @@
 		 */
 		function __construct($document = null, $script = null, $master = null)
 		{
-			$this->pageCache = null;
+			$this->cacheEnabled = false;
 			$this->document = $document;
 			$this->script = $script;
 			$this->setPageLocation();
@@ -198,6 +198,14 @@
 					}
 				}
 			}
+		}
+
+		/**
+		 * 
+		 */
+		function isCacheEnabled()
+		{
+			return $this->cacheEnabled;
 		}
 
 		/**
@@ -612,54 +620,8 @@
 				{
 					if ($this->doc->loadXML($content))
 					{
-						$cacheEnabled = !(isset($_REQUEST['x-cache']) && $_REQUEST['x-cache'] == 'off');
-						//////////////////////////////////////////////////////
-						// Get the Cache tag if it exists
-						//
-						$xpath = new DOMXPath($this->doc);
-						$xpath->registerNamespace("c", "http://www.classesarecode.net/xtml/core");
-						$entries = $xpath->query("/html//c:cache");
+						$this->cacheEnabled = !(isset($_REQUEST['x-cache']) && $_REQUEST['x-cache'] == 'off');
 
-						// Only one c:cache node should be supplied
-						// but if multiple are, then only the last one will be used
-						foreach ($entries as $entry) 
-						{
-							if ($cacheEnabled)
-							{
-								$this->pageCache = new XTMLCache($entry->getAttribute("ttl"));
-	
-								$params = $xpath->query("/html/c:cache//param");
-								$paramKey = $this->document;
-								
-								foreach ($params as $param) 
-								{
-									$paramKey .= ":" . $param->getAttribute("name") . "=" . $_REQUEST[$param->getAttribute("name")];	
-								}
-	
-								$this->pageCache->setCacheFile(md5("$paramKey") . ".html");
-							}
-							
-    						$entry->parentNode->removeChild($entry);
-						}
-						
-						if ($this->pageCache != null)
-						{
-							// this page is to be cached, see if we have a cached copy
-							// that has not passed not expired, and return it
-							
-							$cacheFilePath = $this->pageCache->getCacheFilePath();
-							$fmtime = filemtime($cacheFilePath);
-							
-							if ($fmtime && $fmtime > time())
-							{
-								// was using this
-								//readfile($cacheFilePath); exit();
-								
-								// but this seems just as quick (tested with ApacheBench)
-								return file_get_contents($cacheFilePath);
-							}
-						}
-						
 						if ($this->script)
 						{
 							$script = $this->script;
@@ -712,24 +674,6 @@
 			else
 			{
 				$output = "<!-- " . $this->document . " not found -->\n";
-			}
-			
-			if ($this->pageCache != null)
-			{
-				// this page is to be cached, save it to the cache directory
-				clearstatcache();
-				
-				$cacheFilePath = $this->pageCache->getCacheFilePath();
-				$tmpfilename = $cacheFilePath . uniqid();
-				
-				if ($f = fopen($tmpfilename, "w+"))
-				{
-					fwrite($f, $output);
-					fclose($f);
-				
-					touch($tmpfilename, time() + $this->pageCache->getTTL());	
-					rename($tmpfilename, $cacheFilePath);
-				}
 			}
 			
 			return $output;
