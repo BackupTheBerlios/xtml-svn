@@ -68,6 +68,8 @@
 	define('TOK_ARRAY', "array");
 
 	define('CALL_COUNT', "count");
+	define('CALL_LC', "lc");
+	define('CALL_UC', "uc");
 	
 	/**
 	 * 
@@ -140,6 +142,8 @@
 
 			$this->calls = array();
 			$this->calls[CALL_COUNT]=CALL_COUNT;
+			$this->calls[CALL_LC]=CALL_LC;
+			$this->calls[CALL_UC]=CALL_UC;
     	}
     	
     	/**
