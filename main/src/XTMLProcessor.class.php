@@ -171,7 +171,9 @@
 			{
 				if (isset($_SERVER['PATH_TRANSLATED']))
 				{
-					$path = str_replace(".xml", "", $_SERVER['PATH_TRANSLATED']);
+					$path = $_SERVER['PATH_TRANSLATED'];
+					$path = str_replace(".xml", "", $path);
+					$path = str_replace(".php", "", $path);
 					$this->document = "$path.xml";
 					$this->script = "$path.php";
 				}
