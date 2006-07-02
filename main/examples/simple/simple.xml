@@ -6,7 +6,7 @@
  $LastChangedBy$
  $HeadURL$
  
- XTML - eXtensible Tage Markup Language
+ XTML - eXtensible Tag Markup Language
  Copyright 2005, 2006 by The Classes Are Code Group (see AUTHORS file for contributor list).
  Released under the GNU GPL v2
  -->
@@ -20,8 +20,8 @@
 	xmlns:php = "http://www.classesarecode.net/xtml/php"
 	xmlns:html = "http://www.classesarecode.net/xtml/html">
 	
-	<!-- example of using a post parameter to allow the same page to be cached
-		based in the input parameters -->
+	<!-- example of allowing a same page to be cached
+		based on the request parameters -->
 	<c:cache ttl="300" params="country,city">
 		<c:set var="productName">XTML</c:set>
 		

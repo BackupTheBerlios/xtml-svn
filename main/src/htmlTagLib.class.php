@@ -162,15 +162,15 @@
 							break;
 						}
 
-						$this->xtml->pushVar($asname, $tmp);
-						$this->xtml->pushVar("#$asname", $key);
+						$this->xtml->getDataModel()->push($asname, $tmp);
+						$this->xtml->getDataModel()->push("#$asname", $key);
 			
 						$output .= $this->xtml->_totext($element);
 						$output .= $this->xtml->process($firstChild);
 						$output .= "</" . $tag[1] . ">";
 			
-						$this->xtml->popVar("#$asname");
-						$this->xtml->popVar($asname);
+						$this->xtml->getDataModel()->pop("#$asname");
+						$this->xtml->getDataModel()->pop($asname);
 					}
 				}
 			}

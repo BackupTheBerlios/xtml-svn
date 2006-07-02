@@ -35,42 +35,101 @@
 	 * 
 	 */
 
-	// set the include path for XTML relative to this script
-	ini_set('include_path', "../../src:" . ini_get('include_path'));
-	
-	require_once "XTMLProcessor.class.php";
-	 
-	class Language
-	{
-		var $name;
-		var $description;
-		var $cssClass;
-		
-		function Language($name, $description, $cssClass="main")
-		{
-			$this->name = $name;
-			$this->description = $description;
-			$this->cssClass = $cssClass;
-		}
-	}
-
-	/*
-	 * Create a new XTMLProcessor instance. The template we want to use is called "simple.xml"
-	 * The XTMLProcessor will load the tag file from the same directory as the script.	
+	/**
 	 * 
 	 */
-	$xtml = new XTMLProcessor("simple.xml");
+	class XTMLDataModel
+	{
+		/**
+		 * 
+		 */
+		private $data;
+		
+		/**
+		 * 
+		 */
+		public function __construct()
+		{
+			$this->data = array();
+		}
+		
+		/**
+		 * 
+		 */
+		public function set($name, $value)
+		{
+			$this->data[$name] = array($value);
+		}
 
-	$a = array(
-		new Language("Java", "A modern pure object oriented language"),
-		new Language("C++", "An extension of the original C language, adding object oriented features"),
-		new Language("C", "A high level procedural language, that can still be used for programming the bare metal"),
-		new Language("PHP", "A procedural web site scripting language , with object oriented features")
-	);
+		/**
+		 * 
+		 */
+		public function push($name, $value)
+		{		
+			if (isset($this->data[$name]))
+			{
+				array_push($this->data[$name], $value);
+			}
+			else
+			{
+				$this->data[$name] = array($value);
+			}
+		}
+		
+		/**
+		 * 
+		 */
+		function pop($name)
+		{
+			array_pop($this->data[$name]);
+			
+			if (count($this->data[$name]) == 0)
+			{
+				unset($this->data[$name]);
+			}
+		}
+		
+		/**
+		 * 
+		 */
+		function clear($name)
+		{
+			unset($this->data[$name]);
+		}
 
-	$dataModel = $xtml->getDataModel();
-	$dataModel->set("languages", $a);
-	$dataModel->set("logo", "../logo");
-
-	$xtml->render();
+		/**
+		 * 
+		 */
+		public function get($name)
+		{
+			if (isset($this->data[$name]))
+			{
+				return $this->data[$name];
+			}
+			else
+			{
+				$this->data[$name] = $this->load($name);
+			}
+		}
+		
+		/**
+		 * 
+		 */
+		function notNull($name)
+		{
+			return isset($this->data[$name]) && count($this->data[$name]) > 0;
+		}
+		
+		/**
+		 * Default function to set undefined variables
+		 * 
+		 * An application should inherit from this class, and 
+		 * over-ride this method to provide dynamic data
+		 * loading.
+		 */
+		protected function load($name)
+		{
+			die("DataModel error value " . $name . " not set");
+		}
+	}
 ?>

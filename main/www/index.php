@@ -59,8 +59,9 @@
 		 * 
 		 */
 		$xtml = new XTMLProcessor();
-		$xtml->setVar("Title", "Classes Are Code");
-		$xtml->setVar("QuoteOfTheDay", "An <em>OpenSource</em> development group.");
+		$dataModel = $xtml->getDataModel();
+		$dataModel->set("Title", "Classes Are Code");
+		$dataModel->set("QuoteOfTheDay", "An <em>OpenSource</em> development group.");
 		$xtml->render();
 	}
 ?>

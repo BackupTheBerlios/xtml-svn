@@ -127,7 +127,7 @@
 			$var = $element->getAttribute("var");
 			$value = $this->xtml->_getAttributeOrBody($element, "value", XTFLAG_DISCARD_WS_TEXT_NODES | XTFLAG_EVALUATE);
 
-			$this->xtml->setVar($var, $value);
+			$this->xtml->getDataModel()->set($var, $value);
 			
 			return "";
 		}
@@ -200,7 +200,7 @@
 		{
 			$var = $element->getAttribute("var");
 			
-			if ($this->xtml->hasData($var))
+			if ($this->xtml->getDataModel()->notNull($var))
 			{
 				return $this->xtml->process($element->firstChild);
 			}
@@ -385,11 +385,11 @@
 						break;
 					}
 					
-					$this->xtml->pushVar($asname, $tmp);
-					$this->xtml->pushVar("#$asname", $key);
+					$this->xtml->getDataModel()->push($asname, $tmp);
+					$this->xtml->getDataModel()->push("#$asname", $key);
 					$output .= $this->xtml->process($firstChild);
-					$this->xtml->popVar("#$asname");
-					$this->xtml->popVar($asname);
+					$this->xtml->getDataModel()->pop("#$asname");
+					$this->xtml->getDataModel()->pop($asname);
 				}
 			}
 			else if (gettype($data) == "resource")
@@ -406,9 +406,9 @@
 							break;
 						}
 					
-						$this->xtml->pushVar($asname, $tmp);
+						$this->xtml->getDataModel()->push($asname, $tmp);
 						$output .= $this->xtml->process($firstChild);
-						$this->xtml->popVar($asname);
+						$this->xtml->getDataModel()->pop($asname);
 					}
 				}
 				else if ($type == "pgsql result")
@@ -421,9 +421,9 @@
 							break;
 						}
 					
-						$this->xtml->pushVar($asname, $tmp);
+						$this->xtml->getDataModel()->push($asname, $tmp);
 						$output .= $this->xtml->process($firstChild);
-						$this->xtml->popVar($asname);
+						$this->xtml->getDataModel()->pop($asname);
 					}
 				}
 			}

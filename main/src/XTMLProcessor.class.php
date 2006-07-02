@@ -45,54 +45,7 @@
 	define('XTFLAG_TRIM', 					0x00000002);
 	define('XTFLAG_EVALUATE', 				0x00000004);
  	
- 	class XTMLCache
- 	{
-		private $ttl;
-		private $cacheDir;
-		private $cacheFile;
-		
-		function __construct($ttl = 300, $cacheDir = "/var/x-cache", $cacheFile = null)
-		{
-			$this->ttl = $ttl;
-			$this->cacheDir = $cacheDir;
-			$this->cacheFile = $cacheFile;
-		}
-		
-		function getTTL()
-		{
-			return $this->ttl;
-		}
-		
-		function setTTL($ttl)
-		{
-			$this->ttl = $ttl;
-		}
-		
-		function getCacheDir()
-		{
-			return $this->cacheDir;
-		}
-		
-		function setCacheDir($cacheDir)
-		{
-			$this->cacheDir = $cacheDir;
-		}
-		
-		function getCacheFile()
-		{
-			return $this->cacheFile;
-		}
-		
-		function setCacheFile($cacheFile)
-		{
-			$this->cacheFile = $cacheFile;
-		}
-
-		function getCacheFilePath()
-		{
-			return $this->cacheDir . "/" . $this->cacheFile;
-		}
- 	}
+ 	require_once "XTMLDataModel.class.php";
  	
 	class XTMLProcessor
 	{
@@ -130,7 +83,9 @@
 				$this->expressionEvaluator = new XTMLExpressionEvaluator($this);
 				$this->previewMode = false;
 				$this->classCache = array();
-				$this->data = array();
+				
+				// Initialise with the default data model implementation
+				$this->data = new XTMLDataModel();
 	
 				// TODO: expand to include the complete list of HTML tags
 				// that do not contain a body
@@ -140,7 +95,7 @@
 					);
 	
 				// TODO: remove, when php:ini() tag is implemented				
-				$this->setVar("include_path", ini_get('include_path'));
+				$this->data->set("include_path", ini_get('include_path'));
 			}
 
 			$this->doc = new DOMDocument();
@@ -205,6 +160,14 @@
 		/**
 		 * 
 		 */
+		public function getDataModel()
+		{
+			return $this->data;
+		}
+
+		/**
+		 * 
+		 */
 		function isCacheEnabled()
 		{
 			return $this->cacheEnabled;
@@ -241,7 +204,7 @@
 		/**
 		 * 
 		 */
-		function _totext($s, $nobody = false)
+		function _totext($s, $noBody = false)
 		{
 			if (is_object($s))
 			{
@@ -270,9 +233,9 @@
 						}
 					}
 
-					if ($nobody)
+					if ($noBody)
 					{
-						$text .= " />";
+						$text .= "/>";
 					}
 					else
 					{
@@ -289,14 +252,6 @@
 			{
 				return $s;
 			}
-		}
-		
-		/**
-		 * 
-		 */
-		function hasData($key)
-		{
-			return isset($this->data[$key]) && count($this->data[$key]) > 0; 
 		}
 		
 		/**
@@ -328,7 +283,7 @@
 		 */
 		function getObjectData($key)
 		{
-			return $this->_getObjectData(end($this->data[$key[0]]), $key, 1);
+			return $this->_getObjectData(end($this->data->get($key[0])), $key, 1);
 		}
 		
 		/**
@@ -336,7 +291,7 @@
 		 */
 		function _getVarWithArrayKey($key)
 		{
-			if ($this->hasData($key[0]))
+			if ($this->data->notNull($key[0]))
 			{
 				if (count($key) > 1)
 				{
@@ -344,7 +299,7 @@
 				}
 				else
 				{
-					return $this->_evaluate(end($this->data[$key[0]]));
+					return $this->_evaluate(end($this->data->get($key[0])));
 				}
 			}
 		}
@@ -460,50 +415,6 @@
 			}
 		}
 		
-		/**
-		 * 
-		 */
-		function setVar($key, $data)
-		{
-			$this->data[$key] = array($data);
-		}
-		
-		/**
-		 * 
-		 */
-		function pushVar($key, $data)
-		{
-			if (isset($this->data[$key]))
-			{
-				array_push($this->data[$key], $data);
-			}
-			else
-			{
-				$this->data[$key] = array($data);
-			}
-		}
-		
-		/**
-		 * 
-		 */
-		function popVar($key)
-		{
-			array_pop($this->data[$key]);
-			
-			if (count($this->data[$key]) == 0)
-			{
-				unset($this->data[$key]);
-			}
-		}
-		
-		/**
-		 * 
-		 */
-		function unsetVar($key)
-		{
-			unset($this->data[$key]);
-		}
-
 		/**
 		 * Returns true if this tag should not contain a body
 		 * eg. <img/>, <link/>
