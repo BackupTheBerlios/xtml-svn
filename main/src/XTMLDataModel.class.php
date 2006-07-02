@@ -102,14 +102,12 @@
 		 */
 		public function get($name)
 		{
-			if (isset($this->data[$name]))
+			if (!isset($this->data[$name]))
 			{
-				return $this->data[$name];
+				$this->load($name);
 			}
-			else
-			{
-				$this->data[$name] = $this->load($name);
-			}
+			
+			return $this->data[$name];
 		}
 		
 		/**

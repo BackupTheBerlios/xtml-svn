@@ -55,7 +55,7 @@
 		private $noBodyTags;
 		private $classCache;
 		private $copyrights;
-		private $data;
+		private $model;
 		private $doc;
 		private $previewMode;
 		private $expressionEvaluator;
@@ -75,7 +75,7 @@
 				$this->expressionEvaluator = $master->expressionEvaluator; 
 				$this->previewMode = $master->previewMode;
 				$this->classCache = $master->classCache;
-				$this->data = $master->data;
+				$this->model = $master->model;
 				$this->noBodyTags = $master->noBodyTags;
 			}
 			else
@@ -85,7 +85,7 @@
 				$this->classCache = array();
 				
 				// Initialise with the default data model implementation
-				$this->data = new XTMLDataModel();
+				$this->model = new XTMLDataModel();
 	
 				// TODO: expand to include the complete list of HTML tags
 				// that do not contain a body
@@ -95,7 +95,7 @@
 					);
 	
 				// TODO: remove, when php:ini() tag is implemented				
-				$this->data->set("include_path", ini_get('include_path'));
+				$this->model->set("include_path", ini_get('include_path'));
 			}
 
 			$this->doc = new DOMDocument();
@@ -162,7 +162,15 @@
 		 */
 		public function getDataModel()
 		{
-			return $this->data;
+			return $this->model;
+		}
+
+		/**
+		 * 
+		 */
+		public function setDataModel($model)
+		{
+			return $this->model = $model;
 		}
 
 		/**
@@ -283,7 +291,7 @@
 		 */
 		function getObjectData($key)
 		{
-			return $this->_getObjectData(end($this->data->get($key[0])), $key, 1);
+			return $this->_getObjectData(end($this->model->get($key[0])), $key, 1);
 		}
 		
 		/**
@@ -291,16 +299,13 @@
 		 */
 		function _getVarWithArrayKey($key)
 		{
-			if ($this->data->notNull($key[0]))
+			if (count($key) > 1)
 			{
-				if (count($key) > 1)
-				{
-					return $this->_evaluate($this->getObjectData($key));
-				}
-				else
-				{
-					return $this->_evaluate(end($this->data->get($key[0])));
-				}
+				return $this->_evaluate($this->getObjectData($key));
+			}
+			else
+			{
+				return $this->_evaluate(end($this->model->get($key[0])));
 			}
 		}
 
@@ -542,7 +547,7 @@
 							if (file_exists($this->script) && !is_dir($this->script))
 							{
 								require_once $this->script;
-								XTMLScript($this);
+								XTMLInitialisePage($this);
 							} 
 						}
 						
