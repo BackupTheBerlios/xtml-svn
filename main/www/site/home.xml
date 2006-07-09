@@ -22,12 +22,15 @@
 </head>
 <body>
 <div class="container">
+<c:cache ttl="300" params="">
 <c:include file="site/header.xml"/>
+</c:cache>
+<c:cache ttl="300" params="">
 <c:include file="site/rightblock.xml"/>
+</c:cache>
 
-<!-- cache this section in the group home, with an id of content, 
-	and ignoring GET/POST paramaters -->
-<c:cache ttl="300" group="home" id="content" params="">
+<!-- cache this section ignoring GET/POST paramaters -->
+<c:cache ttl="300" params="">
 <div class="content">
 
 		 <h2>Welcome</h2>
@@ -37,7 +40,9 @@
 </div>
 </c:cache>
 
+<c:cache ttl="300" params="">
 <c:include file="site/footer.xml"/>
+</c:cache>
 
 </div>
 </body>
