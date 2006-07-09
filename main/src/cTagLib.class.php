@@ -47,6 +47,7 @@
 	{
 		private $tables;
 		private $tablesIndex;
+		private $cacheId;
 		
 		/**
 		 * @ignore
@@ -57,6 +58,7 @@
 			
 			$this->tables = array();
 			$this->tablesIndex = 0;
+			$this->cacheId = 0;
 		}
 
 		/**
@@ -82,16 +84,70 @@
 		/**
 		 * 
 		 */
+		function _getElementPath($element, $path)
+		{
+			if ($element->parentNode != null)
+			{
+				return $this->_getElementPath($element->parentNode, "/" . $element->tagName . $path); 
+			}
+			
+			return $element->tagName . $path; 
+		}
+
+		/**
+		 * 
+		 */
+		function getElementPath($element)
+		{
+			return $this->_getElementPath($element, "");
+		}
+		
+		/**
+		 * This tag omit's all content enclosed in it
+		 */
+		function c_colon_omit($element)
+		{
+			return "";
+		}
+		
+		/**
+		 * 
+		 */
 		function c_colon_cache($element)
 		{
+			$this->cacheId++;
+			
 			if ($this->xtml->isCacheEnabled())
 			{
 				// check cache
-				
-				// create content if necessary
-				$content = $this->xtml->process($element->firstChild);
-				
-				// cache the generated content
+				// TODO: include specified parameters in the cache file name
+				// md5() the cache file name
+				$cacheFileName = $this->xtml->getScriptPath() . "/cache/" . $this->cacheId;  
+				$ttl = $element->getAttribute("ttl");
+				$si = stat($cacheFileName);
+
+				if ($si !== FALSE && $si['mtime'] + $ttl > time())
+				{
+					$content = "<!-- cached -->" . file_get_contents($cacheFileName);
+				}
+				else
+				{
+					// create content
+					$content = $this->xtml->process($element->firstChild);
+					
+					if (!($cacheFile = @fopen($cacheFileName, "w")))
+					{
+						mkdir($this->xtml->getScriptPath());
+						mkdir($this->xtml->getScriptPath() . "/cache");
+						$cacheFile = @fopen($cacheFileName, "w");
+					}
+					
+					if ($cacheFile)
+					{
+						fwrite($cacheFile, $content);
+						fclose($cacheFile);
+					}
+				}
 			}
 			else
 			{

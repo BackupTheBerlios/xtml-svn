@@ -52,6 +52,7 @@
 		private $cacheEnabled;
 		private $document;
 		private $script;
+		private $scriptPath;
 		private $noBodyTags;
 		private $classCache;
 		private $copyrights;
@@ -126,18 +127,29 @@
 			{
 				if (isset($_SERVER['PATH_TRANSLATED']))
 				{
-					$path = $_SERVER['PATH_TRANSLATED'];
-					$path = str_replace(".xml", "", $path);
-					$path = str_replace(".php", "", $path);
-					$this->document = "$path.xml";
-					$this->script = "$path.php";
+					$this->scriptPath = $_SERVER['PATH_TRANSLATED'];
+					$this->scriptPath = str_replace(".xml", "", $this->scriptPath);
+					$this->scriptPath = str_replace(".php", "", $this->scriptPath);
+
+					if ($this->scriptPath{strlen($this->scriptPath)} == "/")
+					{
+						$this->scriptPath = substr($this->scriptPath, 0, strlen($this->scriptPath)-1); 
+					}
+					
+					$this->document = $this->scriptPath . ".xml";
+					$this->script = $this->scriptPath . ".php";
 				}
 				else if (isset($_SERVER['REDIRECT_URL']))
 				{
-					$path = $_SERVER['DOCUMENT_ROOT'] . 
-						
-					$this->document = "$path.xml";
-					$this->script = "$path.php";
+					$this->scriptPath = $_SERVER['DOCUMENT_ROOT']; 
+
+					if ($this->scriptPath{strlen($this->scriptPath)} == "/")
+					{
+						$this->scriptPath = substr($this->scriptPath, 0, strlen($this->scriptPath)-1); 
+					}
+					
+					$this->document = $this->scriptPath . ".xml";
+					$this->script = $this->scriptPath . ".php";
 				}
 				else
 				{
@@ -146,17 +158,27 @@
 					if (file_exists($xmlFile))
 					{
 						$this->document = $xmlFile; 
+						$this->scriptPath = substr($xmlFile, 0, strrpos($xmlFile, "/"));
 					}
 					else
 					{
 						$scriptName = basename($_SERVER['SCRIPT_FILENAME']);
-						$scriptDir = str_replace($scriptName, "", $_SERVER['SCRIPT_FILENAME']);
-						$this->document = $scriptDir . "/index.xml";
+						$this->scriptPath = str_replace($scriptName, "", $_SERVER['SCRIPT_FILENAME']);
+				
+						$this->document = $this->scriptPath . "/index.xml";
 					}
 				}
 			}
 		}
 
+		/**
+		 * 
+		 */
+		function getScriptPath()
+		{
+			return $this->scriptPath;
+		}
+		
 		/**
 		 * 
 		 */
