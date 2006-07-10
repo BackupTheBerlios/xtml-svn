@@ -574,7 +574,7 @@
 							if (file_exists($this->script) && !is_dir($this->script))
 							{
 								require_once $this->script;
-								XTMLInitialisePage($this);
+								XTMLInitialiseDataModel($this);
 							} 
 						}
 						
