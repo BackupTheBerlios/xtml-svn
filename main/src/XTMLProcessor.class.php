@@ -104,6 +104,19 @@
 		}
 
 		/**
+		 *
+		 */
+		function chopTrailingSlash($s)
+		{
+			if ($s{strlen($s)-1} == "/")
+			{
+				return substr($s, 0, strlen($s)-1); 
+			}
+
+			return $s;
+		}
+		
+		/**
 		 * Rules for setting the path to the .xml & .php files,
 		 * and for determining the directory that the script, or XML
 		 * file is located in.
@@ -130,24 +143,16 @@
 					$this->scriptPath = $_SERVER['PATH_TRANSLATED'];
 					$this->scriptPath = str_replace(".xml", "", $this->scriptPath);
 					$this->scriptPath = str_replace(".php", "", $this->scriptPath);
+					$this->scriptPath = $this->chopTrailingSlash($this->scriptPath);
 
-					if ($this->scriptPath{strlen($this->scriptPath)} == "/")
-					{
-						$this->scriptPath = substr($this->scriptPath, 0, strlen($this->scriptPath)-1); 
-					}
-					
 					$this->document = $this->scriptPath . ".xml";
 					$this->script = $this->scriptPath . ".php";
 				}
 				else if (isset($_SERVER['REDIRECT_URL']))
 				{
 					$this->scriptPath = $_SERVER['DOCUMENT_ROOT']; 
+					$this->scriptPath = $this->chopTrailingSlash($this->scriptPath);
 
-					if ($this->scriptPath{strlen($this->scriptPath)} == "/")
-					{
-						$this->scriptPath = substr($this->scriptPath, 0, strlen($this->scriptPath)-1); 
-					}
-					
 					$this->document = $this->scriptPath . ".xml";
 					$this->script = $this->scriptPath . ".php";
 				}
