@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+ $Author$
+ $LastChangedDate$
+ $LastChangedRevision$
+ $LastChangedBy$
+ $HeadURL$
+ 
+ XTML - PHP Standard Tag Library
+ Copyright 2005, 2006 by The Classes Are Code Group (see AUTHORS file for contributor list).
+ Released under the GNU GPL v2
+ -->
+
+<html
+	xmlns:c = "http://www.classesarecode.net/xtml/core"
+	xmlns:e = "http://www.classesarecode.net/xtml/entity"
+	xmlns:i18n = "http://www.classesarecode.net/xtml/i18n"
+	xmlns:md = "http://www.classesarecode.net/xtml/md"
+	xmlns:string = "http://www.classesarecode.net/xtml/string"
+	xmlns:html = "http://www.classesarecode.net/xtml/html">
+	<head>
+		<title>XTML Documentation - string:ucase</title>
+	</head>
+	<body>
+		<h1>string:ucase</h1>
+		<p>This tag will uppercase an entire string.</p>
+		<p><e:lt/>string:ucase<e:gt/>upper case this string<e:lt/>/string:ucase<e:gt/> will result in</p>
+		<p><string:ucase>upper case this string</string:ucase></p>
+	</body>	
+</html>

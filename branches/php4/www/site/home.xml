@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ $Author$
+ $LastChangedDate$
+ $LastChangedRevision$
+ $LastChangedBy$
+ $HeadURL$
+ -->
+
+<html 
+	xmlns:c = "http://www.classesarecode.net/xtml/core"
+	xmlns:e = "http://www.classesarecode.net/xtml/entity"
+	xmlns:i18n = "http://www.classesarecode.net/xtml/i18n"
+	xmlns:md = "http://www.classesarecode.net/xtml/md"
+	xmlns:string = "http://www.classesarecode.net/xtml/string"
+	xmlns:php = "http://www.classesarecode.net/xtml/php"
+	xmlns:html = "http://www.classesarecode.net/xtml/html">
+
+<head>
+<title>${Title}</title>
+<link rel="stylesheet" type="text/css" href="/styles/classesarecode.css" />
+</head>
+<body>
+<div class="container">
+<c:cache ttl="300" params="">
+<c:include file="site/header.xml"/>
+</c:cache>
+<c:cache ttl="300" params="">
+<c:include file="site/rightblock.xml"/>
+</c:cache>
+
+<!-- cache this section ignoring GET/POST paramaters -->
+<c:cache ttl="300" params="">
+<div class="content">
+
+		 <h2>Welcome</h2>
+		 <p>
+		 	XTML 1.0 preview release coming soon
+		 </p>
+</div>
+</c:cache>
+
+<c:cache ttl="300" params="">
+<c:include file="site/footer.xml"/>
+</c:cache>
+
+</div>
+</body>
+</html>
