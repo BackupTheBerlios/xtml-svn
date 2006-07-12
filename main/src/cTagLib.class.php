@@ -122,7 +122,7 @@
 				// check cache
 				// TODO: include specified parameters in the cache file name
 				// md5() the cache file name
-				$cacheFileName = $this->xtml->getScriptPath() . "/cache/" . $this->cacheId;  
+				$cacheFileName = $this->xtml->getScriptPath() . "-cache/" . $this->cacheId;  
 				$ttl = $element->getAttribute("ttl");
 				$si = stat($cacheFileName);
 
@@ -137,8 +137,7 @@
 					
 					if (!($cacheFile = @fopen($cacheFileName, "w")))
 					{
-						mkdir($this->xtml->getScriptPath());
-						mkdir($this->xtml->getScriptPath() . "/cache");
+						mkdir($this->xtml->getScriptPath() . "-cache");
 						$cacheFile = @fopen($cacheFileName, "w");
 					}
 					
