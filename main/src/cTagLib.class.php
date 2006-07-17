@@ -122,9 +122,28 @@
 				// check cache
 				// TODO: include specified parameters in the cache file name
 				// md5() the cache file name
-				$cacheDir = $this->xtml->getCacheDir();
-				$cacheFileName = $cacheDir . "/" . md5($this->xtml->getScriptPath() . $this->cacheId);
+				$cacheDir = $this->xtml->getCacheDir() . "/" . md5($this->xtml->getScriptPath());
+				$cacheFileName = $cacheDir . "/" . $this->cacheId;
 				$ttl = $element->getAttribute("ttl");
+				$params = $element->getAttribute("params");
+				
+				if ($params)
+				{
+					$params = explode(",", $element->getAttribute("params"));
+					
+					if (count($params) > 0)
+					{
+						$tmp = "";
+	
+						foreach ($params as $param)
+						{
+							$tmp .= $_REQUEST[$param];
+						}
+						
+						$cacheFileName .= "-" . md5($tmp);
+					}
+				}
+								
 				$siCacheFile = @stat($cacheFileName);
 				$siXML = @stat($cacheFileName);
 
