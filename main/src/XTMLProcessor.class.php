@@ -50,6 +50,7 @@
 	class XTMLProcessor
 	{
 		private $cacheEnabled;
+		private $configuration;
 		private $document;
 		private $script;
 		private $scriptPath;
@@ -67,6 +68,7 @@
 		function __construct($document = null, $script = null, $master = null)
 		{
 			$this->cacheEnabled = false;
+			$this->configuration = new DOMDocument();
 			$this->document = $document;
 			$this->script = $script;
 			$this->setPageLocation();
@@ -103,6 +105,40 @@
 			$this->doc->preserveWhiteSpace = true;
 		}
 
+		/**
+		 * setConfiguration Sets the XTML global XML configuration document
+		 */
+		function setConfiguration($configuration)
+		{
+			$this->configuration = $configuration;
+		}
+		
+		function getConfigurationItem($item, $defaultValue)
+		{
+			$nodes = $this->configuration->getElementsByTagName("XTML");
+
+			if ($nodes->length > 0)
+			{
+				$element = $nodes->item(0);
+				$value = $element->getAttribute($item);
+        	}
+        	
+        	if (!isset($value) || $value == "")
+        	{
+        		$VALUE = $defaultValue;
+        	}
+        	
+        	return $defaultValue;
+		}
+		
+		/**
+		 * getCacheDir
+		 */
+		function getCacheDir()
+		{
+			return $this->getConfigurationItem("CacheDir", "/var/cache/xtml");
+		}
+		
 		/**
 		 *
 		 */

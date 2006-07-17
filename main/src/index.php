@@ -35,14 +35,14 @@
 	 * 
 	 */
 
-	$doc = new DOMDocument();
+	$configuration = new DOMDocument();
 	$scriptName = basename($_SERVER['SCRIPT_FILENAME']);
 	$scriptDir =  str_replace($scriptName, "", $_SERVER['SCRIPT_FILENAME']);
 	$configFile = $scriptDir . "config/config.xml";
 
-	if (file_exists($configFile) && $doc->load($configFile))
+	if (file_exists($configFile) && $configuration->load($configFile))
 	{
-		$nodes = $doc->getElementsByTagName("Initialisation");
+		$nodes = $configuration->getElementsByTagName("Initialisation");
 
 		if ($nodes->length > 0)
 		{
@@ -55,5 +55,6 @@
 	require_once "XTMLProcessor.class.php";
 	 
 	$xtml = new XTMLProcessor();
+	$xtml->setConfiguration($configuration);
 	$xtml->render();
 ?>
