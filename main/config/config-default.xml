@@ -2,4 +2,7 @@
 <Configuration>
 	<Initialisation
 		include_path=".:"/>
+		
+	<XTML
+		CacheDirectory="/var/cache/xtml"/>
 </Configuration>
