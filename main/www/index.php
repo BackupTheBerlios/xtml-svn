@@ -1,4 +1,4 @@
-<?
+<?php
 	/*
 	 * $Author: johnallen $
 	 * $LastChangedDate: 2006-02-01 22:17:14Z $
