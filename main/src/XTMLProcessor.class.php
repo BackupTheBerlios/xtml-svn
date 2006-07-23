@@ -35,6 +35,7 @@
 	 * 
 	 */
 
+	require_once("XTML.class.php");
 	require_once("XTMLTag.class.php");
 
 	define('XTFLAG_DISCARD_WS_TEXT_NODES', 	0x00000001);
