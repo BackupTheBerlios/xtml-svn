@@ -36,98 +36,40 @@
 	 */
 
 	/**
-	 * 
+	 *
 	 */
-	class XTMLDataModel
+	class XTMLApplication
 	{
-		/**
-		 * 
-		 */
-		private $data;
-		
-		/**
-		 * 
-		 */
-		public function __construct()
-		{
-			$this->data = array();
-		}
-		
-		/**
-		 * 
-		 */
-		public function set($name, $value)
-		{
-			$this->data[$name] = array($value);
-		}
+		private $home;
+		private $xtml;
 
 		/**
 		 * 
 		 */
-		public function push($name, $value)
-		{		
-			if (isset($this->data[$name]))
+		function XTMLApplication($home)
+		{
+			$this->home = $home;
+
+			// make this configurable
+			ini_set('include_path', "../xtml/src:../src:" . ini_get('include_path'));
+			require_once "XTMLProcessor.class.php";
+	
+			$xtml = new XTMLProcessor();
+		}
+		
+		/**
+		 * 
+		 */
+		function go()
+		{
+			if ($_SERVER['REQUEST_URI'] == '/')
 			{
-				array_push($this->data[$name], $value);
+				header("Location: " . $this->home);
 			}
 			else
 			{
-				$this->data[$name] = array($value);
+				$xtml->render();
 			}
-		}
-		
-		/**
-		 * 
-		 */
-		function pop($name)
-		{
-			array_pop($this->data[$name]);
-			
-			if (count($this->data[$name]) == 0)
-			{
-				unset($this->data[$name]);
-			}
-		}
-		
-		/**
-		 * 
-		 */
-		function clear($name)
-		{
-			unset($this->data[$name]);
-		}
-
-		/**
-		 * 
-		 */
-		public function get($name)
-		{
-			if (!isset($this->data[$name]))
-			{
-				$this->load($name);
-			}
-			
-			return $this->data[$name];
-		}
-		
-		/**
-		 * 
-		 */
-		function notNull($name)
-		{
-			return isset($this->data[$name]) && count($this->data[$name]) > 0;
-		}
-		
-		/**
-		 * Default function to set undefined variables
-		 * 
-		 * An application should inherit from this class, and 
-		 * over-ride this method to provide dynamic data
-		 * loading.
-		 */
-		protected function load($name)
-		{
-			die("DataModel error value " . $name . " not set");
 		}
 	}
 ?>

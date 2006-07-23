@@ -35,17 +35,14 @@
 	 * 
 	 */
 
-	function __autoload($class_name) 
-	{
-		$file = $class_name . '.class.php';
-		require_once $file;
- 	}
+	require_once("XTMLTag.class.php");
 
 	define('XTFLAG_DISCARD_WS_TEXT_NODES', 	0x00000001);
 	define('XTFLAG_TRIM', 					0x00000002);
 	define('XTFLAG_EVALUATE', 				0x00000004);
  	
  	require_once "XTMLDataModel.class.php";
+ 	require_once "XTMLExpressionEvaluator.class.php";
  	
 	class XTMLProcessor
 	{
@@ -113,6 +110,9 @@
 			$this->configuration = $configuration;
 		}
 		
+		/**
+		 * 
+		 */
 		function getConfigurationItem($item, $defaultValue)
 		{
 			$nodes = $this->configuration->getElementsByTagName("XTML");
@@ -495,13 +495,11 @@
 		/**
 		 * 
 		 */
-		function getTagClassInstance($tagClass)
+		function getTagClassInstance($tag)
 		{
-			if (!class_exists($tagClass))
-			{
-				print "<b>$tag[0]</b>: required class '$tagClass' not found<br>";
-				die();
-			}
+			XTML::loadTagLibrary($tag);
+
+			$tagClass = $tag . "TagLib";
 			
 			if (!isset($this->classCache[$tagClass]))
 			{
@@ -700,7 +698,7 @@
 					{
 						$_tagClassName = $tag[0] . "TagLib";
 						$_methodName = $tag[0] . "_colon_" . $tag[1];
-						$_class = $this->getTagClassInstance($_tagClassName);
+						$_class = $this->getTagClassInstance($tag[0]);
 	
 						//print $tag[0] . "->" . "$_method\n";
 						
