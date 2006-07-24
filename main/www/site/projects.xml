@@ -21,9 +21,15 @@
 </head>
 <body>
 <div class="container">
+<c:cache ttl="300" params="">
 <c:include file="site/header.xml"/>
+</c:cache>
+<c:cache ttl="300" params="">
 <c:include file="site/rightblock.xml"/>
+</c:cache>
 
+<!-- cache this section ignoring GET/POST paramaters -->
+<c:cache ttl="300" params="">
 <div class="content">
 
 		 <h2>XTML</h2>
@@ -48,8 +54,11 @@
 		 	The correct pronunciation is "Squidge it".
 		 </p>
 </div>
+</c:cache>
 
+<c:cache ttl="300" params="">
 <c:include file="site/footer.xml"/>
+</c:cache>
 
 </div>
 </body>
