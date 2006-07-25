@@ -145,8 +145,9 @@
 				$siCacheFile = @stat($cacheFileName);
 				$siXML = @stat($this->xtml->getDocument());
 
-				if ($siCacheFile['mtime'] > $siXML['mtime'] ||					
-					($siCacheFile !== FALSE && $siCacheFile['mtime'] + $ttl > time()))
+				if ($siCacheFile !== FALSE &&
+					$siCacheFile['mtime'] > $siXML['mtime'] &&					
+					!($siCacheFile['mtime'] + $ttl > time()))
 				{
 					$content = "<!-- cached -->" . file_get_contents($cacheFileName);
 				}
