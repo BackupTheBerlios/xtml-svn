@@ -154,7 +154,11 @@
 			<h1>A partially replaced string</h1>
 			<p><e:lt/>string:replace find="tags/release-" replace=""<e:gt/>XTML tags/release-0.99.0.0<e:lt/>/string:replace<e:gt/></p>
 			<p><string:replace find="tags/release-" replace="">XTML tags/release-0.99.0.0</string:replace></p>
-			<p><a href="http://validator.w3.org/check/referer">Validate XHTML 1.1 Strict</a></p>
+		    <p><e:copy/> 2005, 2006 by The Classes Are Code Group.</p>
+			<p>
+			    <a href="http://validator.w3.org/check?uri=referer"><img
+			        src="http://www.w3.org/Icons/valid-xhtml11" alt="Valid XHTML 1.1" height="31" width="88" /></a>
+			</p>
 		</body>
 	</c:cache>
 </html>
