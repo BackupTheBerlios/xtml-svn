@@ -546,15 +546,6 @@
 				else
 				{
 					$output .= $content;
-					
-					if (function_exists("mime_content_type"))
-					{
-						header("Content-type: " . mime_content_type($this->document) . "; charset=utf-8");
-					}
-					else
-					{
-						header("Content-type: text/html; charset=utf-8");
-					}
 				}
 			}
 			else
@@ -599,6 +590,15 @@
 			{
 				$started = microtime(true);
 				$content = file_get_contents($this->document);
+					
+				if (function_exists("mime_content_type"))
+				{
+					header("Content-type: " . mime_content_type($this->document) . "; charset=utf-8");
+				}
+				else
+				{
+					header("Content-type: text/html; charset=utf-8");
+				}
 				
 				if (strncmp("<?xml ", $content, 6) == 0)
 				{
