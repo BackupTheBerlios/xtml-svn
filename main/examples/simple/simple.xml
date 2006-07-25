@@ -53,7 +53,7 @@
 		<body>
 			<!-- include the logo.xml -->
 			<c:preview>
-				<c:include file="../examples/${logo}.xml"/>
+				<c:include file="../examples/logo.xml"/>
 			<c:else/>
 				<c:include file="${logo}.xml"/>
 			</c:preview>
