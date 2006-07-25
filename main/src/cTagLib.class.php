@@ -151,7 +151,7 @@
 					!($siCacheFile['mtime'] + $ttl > time()))
 				{
 					$content = 
-					"<!-- cached " . $siCacheFile['mtime'] . " -->" . 
+					"<!-- cached " . $siCacheFile['mtime'] . " + " . $ttl . " gt " . time() . " -->" . 
 					file_get_contents($cacheFileName);
 				}
 				else
