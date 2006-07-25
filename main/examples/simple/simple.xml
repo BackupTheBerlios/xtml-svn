@@ -123,7 +123,7 @@
 				<hr/>
 				<h1>An unordered list (using html:li)</h1>
 				<ul>
-					<html:li foreach="${languages}"><a href="#"">${@.name}</a></html:li>
+					<html:li foreach="${languages}"><a href="#">${@.name}</a></html:li>
 				</ul>
 		
 				<hr/>
