@@ -143,7 +143,7 @@
 				}
 								
 				$siCacheFile = @stat($cacheFileName);
-				$siXML = @stat($cacheFileName);
+				$siXML = @stat($this->xtml->getDocument());
 
 				if ($siCacheFile['mtime'] > $siXML['mtime'] ||					
 					($siCacheFile !== FALSE && $siCacheFile['mtime'] + $ttl > time()))

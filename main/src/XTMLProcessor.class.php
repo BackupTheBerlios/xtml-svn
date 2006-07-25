@@ -217,6 +217,14 @@
 		/**
 		 * 
 		 */
+		function getDocument()
+		{
+			return $this->document;
+		}
+		
+		/**
+		 * 
+		 */
 		function getScriptPath()
 		{
 			return $this->scriptPath;
