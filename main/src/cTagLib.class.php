@@ -148,11 +148,9 @@
 				if ($siCacheFile !== FALSE &&
 					$siXML !== FALSE &&
 					$siCacheFile['mtime'] > $siXML['mtime'] &&					
-					!($siCacheFile['mtime'] + $ttl > time()))
+					$siCacheFile['mtime'] + $ttl > time())
 				{
-					$content = 
-					"<!-- cached " . $siCacheFile['mtime'] . " + " . $ttl . " gt " . time() . " -->" . 
-					file_get_contents($cacheFileName);
+					$content = "<!-- cached -->". file_get_contents($cacheFileName);
 				}
 				else
 				{
