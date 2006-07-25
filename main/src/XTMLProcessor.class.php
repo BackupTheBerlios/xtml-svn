@@ -65,7 +65,7 @@
 		 */
 		function __construct($document = null, $script = null, $master = null)
 		{
-			$this->cacheEnabled = false;
+			$this->cacheEnabled = true;
 			$this->configuration = new DOMDocument();
 			$this->document = $document;
 			$this->script = $script;
@@ -78,6 +78,7 @@
 				$this->classCache = $master->classCache;
 				$this->model = $master->model;
 				$this->noBodyTags = $master->noBodyTags;
+				$this->cacheEnabled = $master->cacheEnabled;
 			}
 			else
 			{
@@ -243,6 +244,22 @@
 		function isCacheEnabled()
 		{
 			return $this->cacheEnabled;
+		}
+
+		/**
+		 * 
+		 */
+		function enableCache()
+		{
+			$this->cacheEnabled = true;
+		}
+
+		/**
+		 * 
+		 */
+		function disableCache()
+		{
+			$this->cacheEnabled = false;
 		}
 
 		/**
@@ -604,7 +621,10 @@
 				{
 					if ($this->doc->loadXML($content))
 					{
-						$this->cacheEnabled = !(isset($_REQUEST['x-cache']) && $_REQUEST['x-cache'] == 'off');
+						if (isset($_REQUEST['x-cache']) && $_REQUEST['x-cache'] == 'off')
+						{
+							$this->disableCache();
+						}
 
 						if ($this->script)
 						{

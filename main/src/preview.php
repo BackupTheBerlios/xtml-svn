@@ -42,5 +42,6 @@
 	 * 
 	 */
 	$xtml = new XTMLProcessor($_REQUEST['xml']);
+	$xtml->disableCache();
 	$xtml->preview();
 ?>
