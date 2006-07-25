@@ -549,7 +549,7 @@
 					
 					if (function_exists("mime_content_type"))
 					{
-						header("Content-type: " + mime_content_type($this->document));
+						header("Content-type: " . mime_content_type($this->document));
 					}
 				}
 			}
