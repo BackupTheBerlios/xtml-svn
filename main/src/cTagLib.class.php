@@ -120,8 +120,6 @@
 			if ($this->xtml->isCacheEnabled())
 			{
 				// check cache
-				// TODO: include specified parameters in the cache file name
-				// md5() the cache file name
 				$cacheDir = $this->xtml->getCacheDir() . "/" . md5($this->xtml->getScriptPath());
 				$cacheFileName = $cacheDir . "/" . $this->cacheId;
 				$ttl = $element->getAttribute("ttl");
@@ -147,8 +145,8 @@
 				$siCacheFile = @stat($cacheFileName);
 				$siXML = @stat($cacheFileName);
 
-				if ($siCacheFile['mtime'] < $siXML['mtime'] ||					
-					$siCacheFile !== FALSE && $siCacheFile['mtime'] + $ttl > time())
+				if ($siCacheFile['mtime'] > $siXML['mtime'] ||					
+					($siCacheFile !== FALSE && $siCacheFile['mtime'] + $ttl > time()))
 				{
 					$content = "<!-- cached -->" . file_get_contents($cacheFileName);
 				}
