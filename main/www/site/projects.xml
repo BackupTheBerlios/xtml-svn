@@ -45,6 +45,10 @@
 		 <h3>API documentation</h3>
 		 <p>Click <a href="/documentation">here</a> for API documentation</p>
 
+		 <h3>Source code</h3>
+		 <p>Click <a href="http://svn.berlios.de/wsvn/xtml">here</a> for source code</p>
+
+
 		 <h2>Squidget</h2>
 		 <p>
 		 	Squidget is a Squid proxy redirector. Squidget is written in Java, and is still in
