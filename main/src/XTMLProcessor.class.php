@@ -549,7 +549,11 @@
 					
 					if (function_exists("mime_content_type"))
 					{
-						header("Content-type: " . mime_content_type($this->document));
+						header("Content-type: " . mime_content_type($this->document) . "; charset=utf-8");
+					}
+					else
+					{
+						header("Content-type: text/html; charset=utf-8");
 					}
 				}
 			}
