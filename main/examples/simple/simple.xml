@@ -35,7 +35,6 @@
 					<c:object name="Python" description="An interpreted typeless object oriented language"/>
 				</c:array>
 			</c:set>
-			<c:set var="logo">logo</c:set>
 		</c:preview>
 		
 		<!-- set a variable "title" to the translated message -->
@@ -54,7 +53,7 @@
 		<body>
 			<!-- include the logo.xml -->
 			<c:preview>
-				<c:include file="../examples/${logo}.xml"/>
+				<c:include file="../examples/logo.xml"/>
 			<c:else/>
 				<c:include file="${logo}.xml"/>
 			</c:preview>
