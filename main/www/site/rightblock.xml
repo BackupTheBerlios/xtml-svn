@@ -10,8 +10,12 @@
 
 <div class="rightcontainer">
 
-	<div class="rightbox"><h2>News</h2><h3>XTML</h3>
-	<p>The expression evaluator is now integrated into the core.</p></div>
+	<div class="rightbox">
+		<h2>News</h2>
+			<h3>XTML</h3>
+				<p>Caching has now been implemented, and supports caching sections of a page, with 
+				dynamic loading of data when those sections need to be re-generated.</p>
+	</div>
 
   <div class="rightbox linkbox"><h2><i18n:message>Links</i18n:message></h2>
   		 <a href="http://www.google.com/" title="Google">Google</a>
