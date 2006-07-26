@@ -12,9 +12,13 @@
 
 	<div class="rightbox">
 		<h2>News</h2>
-			<h3>XTML</h3>
-				<p>Caching has now been implemented, and supports caching sections of a page, with 
-				dynamic loading of data when those sections need to be re-generated.</p>
+			<p>Caching has now been added to XTML. Caching is implemented in the c:cache tag,
+			allowing sections of a page to be cached independently.</p>
+			<p>Dynamic loading of data has also been implemented. When an undefined variable
+			is referenced, XTML will call the load method in your DataModel instance passing
+			the name of the variable, thus allowing you to load the data. The default DataModel
+			implementation calls die(), so you must inherit from DataModel, and call setDataModel()
+			on the XTMLProcessor instance to enable this functionality.</p>
 	</div>
 
   <div class="rightbox linkbox"><h2><i18n:message>Links</i18n:message></h2>
