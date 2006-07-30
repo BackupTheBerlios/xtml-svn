@@ -455,8 +455,9 @@
 			if (is_array($data))
 			{
 				// foreach support for arrays
-				//reset($data)			
-				foreach ($data as $key => $tmp)
+				reset($data);
+				
+				while (list($key, $tmp) = each($data))			
 				{
 					if ($limit && $count++ == $limit)
 					{
