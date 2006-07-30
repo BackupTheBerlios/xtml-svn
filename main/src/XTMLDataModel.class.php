@@ -127,6 +127,7 @@
 		 */
 		protected function load($name)
 		{
+			header("Content-type: text/plain; charset=utf-8");
 			die("DataModel error value " . $name . " not set");
 		}
 	}

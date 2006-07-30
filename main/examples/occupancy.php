@@ -1,10 +1,10 @@
 <?php
 	/*
-	 * $Author$
-	 * $LastChangedDate$
-	 * $LastChangedRevision$
-	 * $LastChangedBy$
-	 * $HeadURL$
+	 * $Author: johnallen $
+	 * $LastChangedDate: 2006-07-18 20:06:44Z $
+	 * $LastChangedRevision: 354 $
+	 * $LastChangedBy: johnallen $
+	 * $HeadURL: svn+ssh://johnallen@svn.berlios.de/svnroot/repos/xtml/main/examples/simple/simple.php $
 	 * 
 	 * XTML - eXtensible Tag Markup Language
 	 * 
@@ -36,41 +36,54 @@
 	 */
 
 	// set the include path for XTML relative to this script
-	ini_set('include_path', "../../src:" . ini_get('include_path'));
+	ini_set('include_path', "../src:" . ini_get('include_path'));
 	
 	require_once "XTMLProcessor.class.php";
 	 
-	class Language
+	class Details
 	{
-		var $name;
-		var $description;
-		var $cssClass;
-		
-		function Language($name, $description, $cssClass="main")
+		public function __construct()
 		{
-			$this->name = $name;
-			$this->description = $description;
-			$this->cssClass = $cssClass;
+			$this->TypeName = "B&B";
+			$this->Default = "Open";
+			$this->Beds = 100;
+			$this->Sold = 100;
+			$this->Percentage = 100;
 		}
 	}
-
+	class Summary
+	{
+		public function __construct()
+		{
+			$this->Date = time();
+			$this->Beds=100;
+			$this->Sold = 100;
+			$this->Percentage = 100;
+			
+			for ($i=0; $i < 2; $i++)
+			{
+				$this->details[] = new Details();
+			}		
+		}
+	}
 	/*
-	 * Create a new XTMLProcessor instance. The template we want to use is called "simple.xml"
-	 * The XTMLProcessor will load the tag file from the same directory as the script.	
+	 * Create a new XTMLProcessor instance. The template we want to use is called "occupancy.xml"
 	 * 
 	 */
-	$xtml = new XTMLProcessor("simple.xml");
+	$xtml = new XTMLProcessor("occupancy.xml");
 
-	$a = array(
-		new Language("Java", "A modern pure object oriented language"),
-		new Language("C++", "An extension of the original C language, adding object oriented features"),
-		new Language("C", "A high level procedural language, that can still be used for programming the bare metal"),
-		new Language("PHP", "A procedural web site scripting language , with object oriented features")
-	);
+	for ($i=0; $i < 1000; $i++)
+	{
+		$summary[] = new Summary();
+	}
 
 	$dataModel = $xtml->getDataModel();
-	$dataModel->set("languages", $a);
-	$dataModel->set("logo", "../logo");
-
+	$dataModel->set("selectFromDate", time());
+	$dataModel->set("selectToDate", time());
+	$dataModel->set("printFromDate", time());
+	$dataModel->set("printToDate", time());
+	$dataModel->set("imageDir", "images");
+	$dataModel->set("summary", $summary);
+	
 	$xtml->render();
 ?>

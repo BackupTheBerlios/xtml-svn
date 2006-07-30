@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+        $Author$
+        $LastChangedDate$
+        $LastChangedRevision$
+        $LastChangedBy$
+        $HeadURL$
+-->
+<html 
+	xmlns:c = "http://www.classesarecode.net/xtml/core"
+	xmlns:e = "http://www.classesarecode.net/xtml/entity"
+	xmlns:date = "http://www.classesarecode.net/xtml/date"
+	xmlns:i18n = "http://www.classesarecode.net/xtml/i18n"
+	xmlns:md = "http://www.classesarecode.net/xtml/md"
+	xmlns:string = "http://www.classesarecode.net/xtml/string"
+	xmlns:php = "http://www.classesarecode.net/xtml/php"
+	xmlns:html = "http://www.classesarecode.net/xtml/html">
+
+<c:cache ttl="300">
+<body>
+<p><br/>
+<table cellpadding="0" cellspacing="1" align="center" border="0" width="770">
+	<tr>
+	<td colspan="2">
+	
+	 <table cellpadding="0" cellspacing="0" width="100%" border="0">
+	   <tr height="45">
+	    <td><h1 style="font-size: 20px; margin-bottom: 5px;"><i18n:message>OCCUPANCYANALYSISREPORT</i18n:message></h1></td>
+	    <td align="center">
+
+	    <div class="screen">
+		<table border="0" cellspacing="0" cellpadding="1">
+		  <tr>
+		   <td nowrap="nowrap"><h5><i18n:message>SELECTDATE</i18n:message></h5></td>
+		   <td><i18n:message>FROM</i18n:message></td>
+		   <td><date:date format="d/m/Y">${selectFromDate}</date:date></td>
+		   <td nowrap="nowrap"><i18n:message>TO</i18n:message></td>
+		   <td><date:date format="d/m/Y">${selectToDate}</date:date></td>
+		   <td width="23" align="right"><input name="Generate" type="submit" class="BTN_blue" value="!!GENERATE!!"/></td>
+		   <td align="right"><a href="#" onClick="javascript: parent.print();"><img src="${imageDir}/print_icon.gif" border="0" align="absmiddle"/> <b><i18n:message>PRINTVERSION</i18n:message></b></a></td>
+		  </tr>
+		 </table>
+		</div>
+
+		<div class="print">
+		<table border="0" cellspacing="0" cellpadding="1">
+		<tr>
+			<td style="text-align: left"><h5><i18n:message>DATERANGE</i18n:message></h5></td>
+			<td style="text-align: left"><i18n:message>FROM</i18n:message> <date:date format="d/m/Y">${printFromDate}</date:date></td>
+			<td style="text-align: left"><i18n:message>TO</i18n:message> <date:date format="d/m/Y">${printToDate}</date:date></td>
+		  </tr>
+		 </table>
+		</div>
+
+	    </td>
+	   </tr>
+	  </table>
+	 
+	 </td>
+	</tr>
+	<tr>
+	 <td class="TAB_tablehead" align="center"><h1><i18n:message>SUMMARY</i18n:message></h1></td>
+	 <td class="TAB_tablehead" align="center"><h1><i18n:message>OCCUPANCYANALYSISREPORT</i18n:message></h1></td>
+	</tr>
+	<c:ifset var="summary">
+		<tr valign="top">
+		 <td class="TAB_tableFadeBack" width="200">
+			
+		  <table cellpadding="2" cellspacing="1" width="190" align="center">
+		   <tr>
+		    <td colspan="4"><img src="${imageDir}/images/trans.gif" height="3" width="1"/></td>
+		   </tr>
+		   <tr>
+		    <td class="TAB_bookingDetails" align="center"><b><i18n:message>DATE</i18n:message></b></td>
+		    <td class="TAB_bookingDetails" align="center"><b><i18n:message>BEDS</i18n:message></b></td>
+		    <td class="TAB_bookingDetails" align="center"><b><i18n:message>SOLD</i18n:message></b></td>
+		    <td class="TAB_bookingDetails" align="center"><b>%</b></td>
+		   </tr>
+			<c:foreach value="${summary}" as="row">
+		   <tr>
+		   <td class="TAB_bookingDetails" align="center"><date:date format="d/m/Y">${row.Date}</date:date></td>
+		    <td class="TAB_bookingDetails" align="center">${row.Beds}</td>
+		    <td class="TAB_bookingDetails" align="center">${row.Sold}</td>
+		    <td class="TAB_bookingDetails" align="center">${row.Percentage}</td>
+		   </tr>
+			</c:foreach>
+		  </table>
+		 </td>
+		 <td class="TAB_tableFadeBack" width="570">
+	
+			<table cellpadding="10" cellspacing="0" width="100%">
+			  <tr>
+			   <td>
+	
+				<table align="center" cellpadding="0" cellspacing="0" border="0" class="TAB_Border" width="100%">
+					<tr>
+						<td class="TAB_bookingHeadSects"><i18n:message>DATE</i18n:message></td>
+						<td class="TAB_divideHead"><img src="${imageDir}/trans.gif" width="2" height="1"/></td>
+						
+						 <td class="TAB_bookingHeadSects"><i18n:message>TYPE</i18n:message></td>
+						 <td class="TAB_divideHead"><img src="${imageDir}/trans.gif" width="2" height="1"/></td>
+						 <td class="TAB_bookingHeadSects"><i18n:message>DEFAULT</i18n:message></td>
+						 <td class="TAB_divideHead"><img src="${imageDir}/trans.gif" width="2" height="1"/></td>
+						 <td class="TAB_bookingHeadSects"><i18n:message>BEDS</i18n:message></td>
+						 <td class="TAB_divideHead"><img src="${imageDir}/trans.gif" width="2" height="1"/></td>
+						 <td class="TAB_bookingHeadSects"><i18n:message>SOLD</i18n:message></td>
+						 <td class="TAB_divideHead"><img src="${imageDir}/trans.gif" width="2" height="1"/></td>
+						 <td class="TAB_bookingHeadSects">%</td>
+						 <td class="TAB_divideHead"><img src="${imageDir}/trans.gif" width="2" height="1"/></td>
+					</tr>
+	
+				<c:foreach value="${summary}" as="date">
+					<tr height="18">
+						<td class="TAB_generalBack" align="center" rowspan="${date.NumTypes}" valign="top"><date:date format="d/m/Y">${date.Date}</date:date></td>
+						<td class="TAB_divide" rowspan="${date.NumTypes}"></td>
+						<c:foreach value="${date.details}" as="detail">
+						 <td class="TAB_generalBack" align="center">${detail.TypeName}</td>
+						 <td class="TAB_divide"></td>
+						 <td class="TAB_generalBack" align="center">${detail.Default}</td>
+						 <td class="TAB_divide"></td>
+						 <td class="TAB_generalBack" align="center">${detail.Beds}</td>
+						 <td class="TAB_divide"></td>
+						 <td class="TAB_generalBack" align="center">${detail.Sold}</td>
+						 <td class="TAB_divide"></td>
+						 <td class="TAB_generalBack" align="center">${detail.Percentage}</td>
+						 <td class="TAB_divide"></td>
+						</c:foreach>
+					 </tr>
+					<tr>
+						 <td colspan="12" class="TAB_divideRow"></td>
+					 </tr>
+				</c:foreach>
+				</table>
+	
+			     </td>
+			    </tr>
+			   </table>
+	
+			</td>
+			</tr>
+		<c:else/>
+		<tr valign="top"><td colspan="4"><P STYLE="color: red;" id="error"><i18n:message>NOBOOKINGANALYSIS</i18n:message></P></td>
+		</tr>
+		</c:ifset>
+</table>
+</p>
+</body>
+</c:cache>
+</html>
