@@ -17,8 +17,13 @@
 				{
 					case XML_ELEMENT_NODE:
 					{
-						print $element->tagName . "\n";
-						$this->_transform($element->firstChild);
+						if ($element->tagName !== "")
+						{
+							print "Element=" . $element->tagName . "<br>\n";
+							$tag = $element->tagName . "_tag";
+							$tag($element);
+							//$this->_transform($element->firstChild);
+						}
 					}
 					break;
 				}
