@@ -354,71 +354,6 @@
 		/**
 		 * 
 		 */
-		function _getObjectData($object, $key, $index)
-		{
-			if (!is_object($object))
-			{
-				return $object;
-			}
-			else
-			{
-				$vars = get_object_vars($object);
-				
-				if (isset($vars[$key[$index]]))
-				{
-					return $this->_getObjectData($vars[$key[$index]], $key, ++$index);
-				}
-				else
-				{
-					return "";
-				}
-			}
-		}
-		
-		/**
-		 * 
-		 */
-		function getObjectData($key)
-		{
-			return $this->_getObjectData(end($this->model->get($key[0])), $key, 1);
-		}
-		
-		/**
-		 * 
-		 */
-		function _getVarWithArrayKey($key)
-		{
-			if (count($key) > 1)
-			{
-				return $this->_evaluate($this->getObjectData($key));
-			}
-			else
-			{
-				return $this->_evaluate(end($this->model->get($key[0])));
-			}
-		}
-
-		/**
-		 * 
-		 */
-		function _evaluateExpression($expr)
-		{
-			if ($expr && $expr{0} == '$' && $expr{1} == '{')
-			{
-				$exprlen = strlen($expr);
-				
-				if ($expr{$exprlen-1} == '}')
-				{
-					return $this->expressionEvaluator->evaluate(substr($expr, 2, $exprlen-3));
-				}
-			}
-
-			return $expr;
-		}
-
-		/**
-		 * 
-		 */
 		function _evaluate($text)
 		{
 			if (is_array($text))
@@ -431,56 +366,35 @@
 				return $text;
 			}
 			
-			$data = $this->_evaluateExpression($text);
-
-			if (!is_array($data) && !is_object($data) && !is_resource($data))
+			//print "<pre>text=$text\n";
+    		
+			if ($text && $text{0} == '$' && $text{1} == '{')
 			{
-				// make sure data becomes string
-				$source = "" . $data;
-				$pos = 0;
-				$len = strlen($source);
-				$data = "";
-				$key="";
+				$exprlen = strlen($text);
+				$dataModel = $this->getDataModel();
 				
-				while ($pos < $len)
+				if ($text{$exprlen-1} == '}')
 				{
-					if ($source{$pos} == '\\')
-					{
-						$pos++;
-						$data .= $source{$pos++};
-					}
-					else if ($source{$pos} == '$' && $source{$pos+1} == '{')
-					{
-						$key .= $source{$pos++};
-						$key .= $source{$pos++};
-						
-						while ($pos < $len &&
-							($c = $source{$pos}) != '}')
-						{
-							$key .= $source{$pos};
-							$pos++;
-						}
-						
-						if ($c != '}')
-						{
-							// missing close }
-							// XML file is probably faulty
-							$key .= "}";
-						}
-						else
-						{
-							$key .= $source{$pos};
-							$pos++;
-						}
-						
-						$data .= $this->evaluate($key);
-						$key="";
-					}
-					else
-					{
-						$data .= $source{$pos++};
-					}
+		    		$parts = explode(".", substr($text, 2, $exprlen-3));
+		    		
+		    		if (($count = count($parts)) > 1)
+		    		{
+		    			$data = end($dataModel->get($parts[0]));
+		    			
+		    			for ($i=1; $i < $count; $i++)
+		    			{
+		    				$data = $data->$parts[$i];
+		    			}
+		    		}
+		    		else
+		    		{
+		    			$data = end($dataModel->get($parts[0]));
+		    		}
 				}
+			}
+			else
+			{
+				return $text;
 			}
 			
 			return $data;

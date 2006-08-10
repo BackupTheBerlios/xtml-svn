@@ -838,7 +838,7 @@
     	/**
     	 *  
     	 */
-    	function evaluate($expression)
+    	function x_evaluate($expression)
     	{
     		if (!isset($this->cache[$expression]))
     		{
@@ -857,6 +857,28 @@
     		$result = $this->execute();
     		
     		return $result[1];
+    	}
+    	
+    	/**
+    	 *  
+    	 */
+    	function evaluate($expression)
+    	{
+    		$parts = explode(".", $expression);
+    		
+    		if (($count = count($parts)) > 1)
+    		{
+    			$var = end($this->xtml->getDataModel()->get($parts[0]));
+    			
+    			for ($i=1; $i < $count; $i++)
+    			{
+    				$var = $var->$parts[$i];
+    			}
+    		}
+    		else
+    		{
+    			return end($this->xtml->getDataModel()->get($expression));
+    		}
     	}
 	}
 

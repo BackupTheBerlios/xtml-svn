@@ -463,7 +463,8 @@
 					{
 						break;
 					}
-					
+				
+					//print "<pre>" . $key . "="; print_r($tmp);	
 					$this->xtml->getDataModel()->push($asname, $tmp);
 					$this->xtml->getDataModel()->push("#$asname", $key);
 					$output .= $this->xtml->process($firstChild);
