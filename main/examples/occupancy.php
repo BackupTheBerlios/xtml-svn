@@ -35,6 +35,7 @@
 	 * 
 	 */
 
+	// phpinfo(); die();
 	// set the include path for XTML relative to this script
 	ini_set('include_path', "../src:" . ini_get('include_path'));
 	

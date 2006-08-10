@@ -354,20 +354,8 @@
 		/**
 		 * 
 		 */
-		function _evaluate($text)
+		function _evalVariable($text)
 		{
-			if (is_array($text))
-			{
-				return $text;
-			}
-			
-			if (strlen(trim($text)) == 0)
-			{
-				return $text;
-			}
-			
-			//print "<pre>text=$text\n";
-    		
 			if ($text && $text{0} == '$' && $text{1} == '{')
 			{
 				$exprlen = strlen($text);
@@ -391,13 +379,33 @@
 		    			$data = end($dataModel->get($parts[0]));
 		    		}
 				}
+				
+				return $data;
 			}
-			else
+			
+			return $text;
+		}
+		
+		/**
+		 * 
+		 */
+		function _evaluate($text)
+		{
+
+			if (is_array($text))
 			{
 				return $text;
 			}
-			
-			return $data;
+
+/*
+			if (strlen(trim($text)) == 0)
+			{
+				return $text;
+			}
+	*/		
+			//print "<pre>text=$text\n";
+    		
+			return $this->_evalVariable($text);
 		}
 		
 		/**
@@ -405,6 +413,8 @@
 		 */
 		function evaluate($text, $flags = XTFLAG_EVALUATE)
 		{
+			
+			/*
 			if (XTMLProcessor::isFlagSet($flags, XTFLAG_DISCARD_WS_TEXT_NODES))
 			{
 				if (trim($text) == "")
@@ -412,8 +422,9 @@
 					return "";
 				}
 			}
-			
-			if (XTMLProcessor::isFlagSet($flags, XTFLAG_EVALUATE))
+			*/
+
+			if (($flags & XTFLAG_EVALUATE))
 			{
 				return $this->_evaluate($text, $flags);
 			}
