@@ -35,15 +35,17 @@
 	 * 
 	 */
 
-	require_once("XTML.class.php");
-	require_once("XTMLTag.class.php");
+	function __autoload($class_name) 
+	{
+		$file = $class_name . '.class.php';
+		require_once $file;
+ 	}
 
 	define('XTFLAG_DISCARD_WS_TEXT_NODES', 	0x00000001);
 	define('XTFLAG_TRIM', 					0x00000002);
 	define('XTFLAG_EVALUATE', 				0x00000004);
  	
  	require_once "XTMLDataModel.class.php";
- 	require_once "XTMLExpressionEvaluator.class.php";
  	
 	class XTMLProcessor
 	{
@@ -65,7 +67,7 @@
 		 */
 		function __construct($document = null, $script = null, $master = null)
 		{
-			$this->cacheEnabled = true;
+			$this->cacheEnabled = false;
 			$this->configuration = new DOMDocument();
 			$this->document = $document;
 			$this->script = $script;
@@ -78,7 +80,6 @@
 				$this->classCache = $master->classCache;
 				$this->model = $master->model;
 				$this->noBodyTags = $master->noBodyTags;
-				$this->cacheEnabled = $master->cacheEnabled;
 			}
 			else
 			{
@@ -112,9 +113,6 @@
 			$this->configuration = $configuration;
 		}
 		
-		/**
-		 * 
-		 */
 		function getConfigurationItem($item, $defaultValue)
 		{
 			$nodes = $this->configuration->getElementsByTagName("XTML");
@@ -217,14 +215,6 @@
 		/**
 		 * 
 		 */
-		function getDocument()
-		{
-			return $this->document;
-		}
-		
-		/**
-		 * 
-		 */
 		function getScriptPath()
 		{
 			return $this->scriptPath;
@@ -252,22 +242,6 @@
 		function isCacheEnabled()
 		{
 			return $this->cacheEnabled;
-		}
-
-		/**
-		 * 
-		 */
-		function enableCache()
-		{
-			$this->cacheEnabled = true;
-		}
-
-		/**
-		 * 
-		 */
-		function disableCache()
-		{
-			$this->cacheEnabled = false;
 		}
 
 		/**
@@ -521,11 +495,13 @@
 		/**
 		 * 
 		 */
-		function getTagClassInstance($tag)
+		function getTagClassInstance($tagClass)
 		{
-			XTML::loadTagLibrary($tag);
-
-			$tagClass = $tag . "TagLib";
+			if (!class_exists($tagClass))
+			{
+				print "<b>$tag[0]</b>: required class '$tagClass' not found<br>";
+				die();
+			}
 			
 			if (!isset($this->classCache[$tagClass]))
 			{
@@ -571,6 +547,11 @@
 				else
 				{
 					$output .= $content;
+					
+					if (function_exists("mime_content_type"))
+					{
+						header("Content-type: " + mime_content_type($this->document));
+					}
 				}
 			}
 			else
@@ -615,24 +596,12 @@
 			{
 				$started = microtime(true);
 				$content = file_get_contents($this->document);
-					
-				if (function_exists("mime_content_type"))
-				{
-					header("Content-type: " . mime_content_type($this->document) . "; charset=utf-8");
-				}
-				else
-				{
-					header("Content-type: text/html; charset=utf-8");
-				}
 				
 				if (strncmp("<?xml ", $content, 6) == 0)
 				{
 					if ($this->doc->loadXML($content))
 					{
-						if (isset($_REQUEST['x-cache']) && $_REQUEST['x-cache'] == 'off')
-						{
-							$this->disableCache();
-						}
+						$this->cacheEnabled = !(isset($_REQUEST['x-cache']) && $_REQUEST['x-cache'] == 'off');
 
 						if ($this->script)
 						{
@@ -731,7 +700,7 @@
 					{
 						$_tagClassName = $tag[0] . "TagLib";
 						$_methodName = $tag[0] . "_colon_" . $tag[1];
-						$_class = $this->getTagClassInstance($tag[0]);
+						$_class = $this->getTagClassInstance($_tagClassName);
 	
 						//print $tag[0] . "->" . "$_method\n";
 						
