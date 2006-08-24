@@ -676,6 +676,11 @@
 					$output .= "<!-- " . $this->document . " STARTS -->\n";
 					$output .= $content;
 					$output .= "<!-- " . $this->document . " ENDS -->\n";
+
+					if (function_exists("mime_content_type"))
+					{
+						header("Content-type: " + mime_content_type($this->document));
+					}
 				}
 			}
 			else
