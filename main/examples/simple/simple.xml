@@ -20,7 +20,7 @@
 	xmlns:php = "http://www.classesarecode.net/xtml/php"
 	xmlns:html = "http://www.classesarecode.net/xtml/html">
 	
-	<!-- example of allowing a same page to be cached
+	<!-- example of allowing the same page to be cached
 		based on the request parameters -->
 	<c:cache ttl="300" params="country,city">
 		<c:set var="productName">XTML</c:set>
