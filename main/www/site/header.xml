@@ -11,8 +11,7 @@
 <div class="titleblock">
 	<table width="100%">
 		<tr valign="top"><td><img src="/images/ClassesAreCodeLogo-2.png" alt="Classes Are Code"/></td><td align="right">
-			<a href="http://why.openoffice.org"><img src="http://why.openoffice.org/campaign_images/ooo_getlegal_120x60.png" alt="Get legal. Get OpenOffice.org"/></a>
-			<a href="http://why.openoffice.org/getlegal.html">
+			<a href="http://why.openoffice.org/getlegal.html"><img src="http://why.openoffice.org/campaign_images/ooo_getlegal_120x60.png" alt="Get legal. Get OpenOffice.org"/></a>
 		</td></tr>
 	</table>
 	<p><e:ldquot/>${QuoteOfTheDay}<e:rdquot/></p>
