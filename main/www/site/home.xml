@@ -29,7 +29,7 @@
 <c:include file="site/rightblock.xml"/>
 </c:cache>
 
-<!-- cache this section ignoring GET/POST paramaters -->
+<!-- cache this section ignoring GET/POST parameters -->
 <c:cache ttl="300" params="">
 <div class="content">
 
