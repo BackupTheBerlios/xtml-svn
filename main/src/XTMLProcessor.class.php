@@ -174,13 +174,17 @@
 		 */
 		function setPageLocation()
 		{
+			//phpinfo(); die();
+
 			if ($this->document == null)
 			{
 				if (isset($_SERVER['PATH_TRANSLATED']))
 				{
-					$this->scriptPath = $_SERVER['PATH_TRANSLATED'];
+					// changed for compatibility with Apache 2.0.x on Debian Etch
+					$this->scriptPath = $_SERVER['DOCUMENT_ROOT'] . $_SERVER['PATH_INFO'];
 					$this->scriptPath = str_replace(".xml", "", $this->scriptPath);
 					$this->scriptPath = str_replace(".php", "", $this->scriptPath);
+					$this->scriptPath = str_replace("redirect:", "", $this->scriptPath);
 					$this->scriptPath = $this->chopTrailingSlash($this->scriptPath);
 
 					$this->document = $this->scriptPath . ".xml";
