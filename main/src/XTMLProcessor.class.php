@@ -181,7 +181,7 @@
 				if (isset($_SERVER['PATH_TRANSLATED']))
 				{
 					// changed for compatibility with Apache 2.0.x on Debian Etch
-					$this->scriptPath = $_SERVER['DOCUMENT_ROOT'] . $_SERVER['PATH_INFO'];
+					$this->scriptPath = $_SERVER['DOCUMENT_ROOT'] . $_SERVER['REQUEST_URI'];
 					$this->scriptPath = str_replace(".xml", "", $this->scriptPath);
 					$this->scriptPath = str_replace(".php", "", $this->scriptPath);
 					$this->scriptPath = str_replace("redirect:", "", $this->scriptPath);
