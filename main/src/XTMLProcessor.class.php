@@ -144,11 +144,16 @@
 		/**
 		 *
 		 */
-		function chopTrailingSlash($s)
+		function chopTrailingTrash($s)
 		{
+			if ($pos = strpos($s, "?"))
+			{
+				$s = substr($s, 0, $pos);
+			}
+
 			if ($s{strlen($s)-1} == "/")
 			{
-				return substr($s, 0, strlen($s)-1); 
+				$s = substr($s, 0, strlen($s)-1); 
 			}
 
 			return $s;
@@ -185,7 +190,7 @@
 					$this->scriptPath = str_replace(".xml", "", $this->scriptPath);
 					$this->scriptPath = str_replace(".php", "", $this->scriptPath);
 					$this->scriptPath = str_replace("redirect:", "", $this->scriptPath);
-					$this->scriptPath = $this->chopTrailingSlash($this->scriptPath);
+					$this->scriptPath = $this->chopTrailingTrash($this->scriptPath);
 
 					$this->document = $this->scriptPath . ".xml";
 					$this->script = $this->scriptPath . ".php";
@@ -193,7 +198,7 @@
 				else if (isset($_SERVER['REDIRECT_URL']))
 				{
 					$this->scriptPath = $_SERVER['DOCUMENT_ROOT']; 
-					$this->scriptPath = $this->chopTrailingSlash($this->scriptPath);
+					$this->scriptPath = $this->chopTrailingTrash($this->scriptPath);
 
 					$this->document = $this->scriptPath . ".xml";
 					$this->script = $this->scriptPath . ".php";
