@@ -507,10 +507,8 @@
 			{
 				return $this->_evaluate($text, $flags);
 			}
-			else
-			{
-				return $text;
-			}
+
+			return $text;
 		}
 		
 		/**

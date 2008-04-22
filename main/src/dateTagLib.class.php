@@ -61,7 +61,7 @@
 		 */
 		function date_colon_date($element)
 		{
-			if (!($val = $this->xtml->_getAttributeorBody($element, "value")))
+			if (!($val = $this->xtml->_getAttributeOrBody($element, "value")))
 			{
 				return "";
 			}

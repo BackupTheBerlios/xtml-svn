@@ -159,7 +159,8 @@
 					
 					if (!($cacheFile = @fopen($cacheFileName, "w")))
 					{
-						mkdir($cacheDir);
+						// ignore errors making cache directory
+						@mkdir($cacheDir);
 						$cacheFile = @fopen($cacheFileName, "w");
 					}
 					
